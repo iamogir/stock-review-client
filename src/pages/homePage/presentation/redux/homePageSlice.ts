@@ -1,5 +1,6 @@
 import {createSlice, SliceCaseReducers} from "@reduxjs/toolkit";
 import {HomePageState} from "./types.ts";
+import {getAllProductsAsyncAction} from "./acyncActions.ts";
 
 const homePageSlice = createSlice<HomePageState, SliceCaseReducers<HomePageState>>(
     {
