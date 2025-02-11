@@ -1,8 +1,8 @@
 import './App.css'
 import {Route, Routes} from "react-router-dom";
-import HomePage from "../pages/components/homePage/HomePage.tsx";
-import WareHouse from "../pages/components/wareHouse/WareHouse.tsx";
-import StartPage from "../pages/components/startPage/StartPage.tsx";
+import HomePage from "../pages/homePage/HomePage.tsx";
+import WareHouse from "../pages/wareHouse/WareHouse.tsx";
+import StartPage from "../pages/startPage/StartPage.tsx";
 
 function App() {
 
