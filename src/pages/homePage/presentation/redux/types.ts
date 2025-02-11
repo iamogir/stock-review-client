@@ -1,3 +1,5 @@
+import {Product} from "../../domain/model/Product.ts";
+
 export type HomePageState = {
     products: Product[],
     loading: boolean,
