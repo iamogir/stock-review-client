@@ -1,8 +1,8 @@
-import {createSlice, SliceCaseReducers} from "@reduxjs/toolkit";
+import {createSlice, SliceCaseReducers, SliceSelectors} from "@reduxjs/toolkit";
 import {HomePageState} from "./types.ts";
 import {getAllProductsAsyncAction} from "./acyncActions.ts";
 
-const homePageSlice = createSlice<HomePageState, SliceCaseReducers<HomePageState>>(
+const homePageSlice = createSlice<HomePageState, SliceCaseReducers<HomePageState>, "homePage", SliceSelectors<HomePageState>>(
     {
         name: 'homePage',
         initialState: {
@@ -12,6 +12,7 @@ const homePageSlice = createSlice<HomePageState, SliceCaseReducers<HomePageState
         },
         reducers: {},
         extraReducers: (builder) => {
+            builder
             .addCase(
                 (getAllProductsAsyncAction.pending),
                 (state) => {
@@ -24,7 +25,7 @@ const homePageSlice = createSlice<HomePageState, SliceCaseReducers<HomePageState
                     (getAllProductsAsyncAction.rejected),
                     (state, action) => {
                         state.loading = false;
-                        state.error = action.error.message;
+                        state.error = action.error.message as string;
                     }
                 )
                 .addCase(
@@ -37,3 +38,5 @@ const homePageSlice = createSlice<HomePageState, SliceCaseReducers<HomePageState
                 )
         }
 })
+
+export default homePageSlice.reducer;
