@@ -30,7 +30,3 @@ export type ProductInitState = {
     loading: boolean;
     error: string | null;
 }
-
-export type ResponseProducts = {
-    products: ProductDto[]
-}

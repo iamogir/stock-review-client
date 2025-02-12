@@ -1,6 +1,6 @@
 import {Product, ProductDto} from "../model/types.ts";
 
-export function fromJSON(json: string): ProductDto {
+export function fromJSON(json: string): Product {
     const obj = JSON.parse(json);
     return fromServerObject(obj);
 }
