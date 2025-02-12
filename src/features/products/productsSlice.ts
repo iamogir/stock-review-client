@@ -1,15 +1,17 @@
 import {createSlice, SliceCaseReducers, SliceSelectors} from "@reduxjs/toolkit";
-import {HomePageState} from "./types.ts";
-import {getAllProductsAsyncAction} from "./acyncActions.ts";
+import {getAllProductsAsyncAction} from "./productAcyncActions.ts";
+import {ProductInitState} from "../../entities/product/model/types.ts";
 
-const homePageSlice = createSlice<HomePageState, SliceCaseReducers<HomePageState>, "homePage", SliceSelectors<HomePageState>>(
+const initialState: ProductInitState = {
+    products: [],
+    loading: false,
+    error: 'Any error'
+}
+
+const productsSlice = createSlice<ProductInitState, SliceCaseReducers<ProductInitState>, "products", SliceSelectors<ProductInitState>>(
     {
-        name: 'homePage',
-        initialState: {
-            products: [],
-            loading: false,
-            error: 'Any error'
-        },
+        name: 'products',
+        initialState,
         reducers: {},
         extraReducers: (builder) => {
             builder
@@ -32,11 +34,11 @@ const homePageSlice = createSlice<HomePageState, SliceCaseReducers<HomePageState
                     (getAllProductsAsyncAction.fulfilled),
                     (state, action) => {
                         state.loading = false;
-                        state.products = state.products.const(action.payload.products);
+                        state.products = state.products ? state.products.concat(action.payload.products) : state.products;
                         state.error = '';
                     }
                 )
         }
 })
 
-export default homePageSlice.reducer;
+export default productsSlice.reducer;
