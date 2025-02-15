@@ -26,7 +26,19 @@ export interface Product {
 }
 
 export type ProductInitState = {
-    products: ProductDto[] | undefined;
+    products: Product[] | undefined;
     loading: boolean;
     error: string | null;
+}
+
+export type ProductsResponse = {
+    products: Product[] | null;
+}
+
+export type AppStore = {
+    homePage: HomePageState
+}
+
+export type HomePageState = {
+    products: Product[];
 }

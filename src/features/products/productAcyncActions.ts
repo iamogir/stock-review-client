@@ -1,14 +1,13 @@
 
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {Product} from "../../entities/product/model/types.ts";
-import {fromJSON} from "../../entities/product/lib/mapProduct.ts";
+import {Product, ProductDto, ProductsResponse} from "../../entities/product/model/types.ts";
+import {fromServerObject} from "../../entities/product/lib/mapProduct.ts";
 
 const API = import.meta.env.VITE_API_URL;
 
-export const getAllProductsAsyncAction = createAsyncThunk<Product[]>(
+export const getAllProductsAsyncAction = createAsyncThunk<ProductsResponse>(
     'home/get_all_products',
-    async(): Promise<Product[]> => {
-        // eslint-disable-next-line no-useless-catch
+    async(): Promise<ProductsResponse> => {
         try {
             const products: Product[] = [];
             const response = await fetch(API + '/products/get_all_products');
@@ -16,12 +15,12 @@ export const getAllProductsAsyncAction = createAsyncThunk<Product[]>(
                 const json = await response.json();
                 console.log(json);
 
-                json.map((el: string) => products.push(fromJSON(el)));
+                json.products.map((el: ProductDto) => products.push(fromServerObject(el)));
 
                 if (products.length === 0) {
-                    throw new Error("no data");
+                    throw new Error("no data " + response.statusText);
                 } else {
-                    return products;
+                    return { products };
                 }
 
             } else {
@@ -29,6 +28,7 @@ export const getAllProductsAsyncAction = createAsyncThunk<Product[]>(
             }
         } 
         catch (error) {
+            console.error('get_all_products ' + error);
             throw error;
         }
     }
