@@ -9,7 +9,7 @@ const HomePage = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
-    const {products} = useSelector((state: RootState) => state.products);
+    const {products, loading} = useSelector((state: RootState) => state.products);
 
     useEffect(() => {
         console.log(products)
@@ -17,6 +17,7 @@ const HomePage = () => {
     }, [])
 
     return (
+        loading ? <div>Loading...</div> :
         <div>
             <button onClick={() => navigate("/warehouse")}>to warehouse</button>
             <button>add product</button>
@@ -24,6 +25,7 @@ const HomePage = () => {
             <br/>
             {products?.map((pr: Product) => <li>{pr.name}</li>)}
             <li>lol</li>
+            <button onClick={() => console.log(products)}>tap</button>
         </div>
     );
 };
