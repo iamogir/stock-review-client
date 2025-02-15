@@ -25,7 +25,7 @@ export interface Product {
     status: string,
 }
 
-export type ProductInitState = {
+export type ProductsInitState = {
     products: Product[] | undefined;
     loading: boolean;
     error: string | null;
@@ -33,12 +33,4 @@ export type ProductInitState = {
 
 export type ProductsResponse = {
     products: Product[] | null;
-}
-
-export type AppStore = {
-    homePage: HomePageState
-}
-
-export type HomePageState = {
-    products: Product[];
 }

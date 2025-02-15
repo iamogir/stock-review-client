@@ -1,9 +1,9 @@
 import {configureStore} from "@reduxjs/toolkit";
-import homePageReducer from '../../features/products/productsSlice.ts'
+import productsReducer from '../../features/products/productsSlice.ts'
 
 export const store = configureStore({
     reducer: {
-        homePage: homePageReducer
+        products: productsReducer
     }
 })
 

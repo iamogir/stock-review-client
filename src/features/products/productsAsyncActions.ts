@@ -10,7 +10,9 @@ export const getAllProductsAsyncAction = createAsyncThunk<ProductsResponse>(
     async(): Promise<ProductsResponse> => {
         try {
             const products: Product[] = [];
+            console.log(API + " api")
             const response = await fetch(API + '/products/get_all_products');
+            console.log(response)
             if (response.status === 200 || response.status === 304) {
                 const json = await response.json();
                 console.log(json);
