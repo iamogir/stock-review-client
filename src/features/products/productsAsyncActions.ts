@@ -19,7 +19,7 @@ export const getAllProductsAsyncAction = createAsyncThunk<ProductsResponse>(
                 if (products.length === 0) {
                     throw new Error("no data " + response.statusText);
                 } else {
-                    console.log({ products });
+                    console.log('return')
                     return { products };
                 }
 

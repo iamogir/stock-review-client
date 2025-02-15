@@ -9,10 +9,10 @@ const HomePage = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
-    const {products, loading} = useSelector((state: RootState) => state.products);
+    const {products, loading, error} = useSelector((state: RootState) => state.products);
 
     useEffect(() => {
-        console.log(products)
+        console.log(error)
         dispatch(getAllProductsAsyncAction())
     }, [])
 
@@ -23,7 +23,7 @@ const HomePage = () => {
             <button>add product</button>
             <h3>Status</h3>
             <br/>
-            {products?.map((pr: Product) => <li>{pr.name}</li>)}
+            {products && products.length > 0 ? products?.map((pr: Product) => <li>{pr.name}</li>) : <li>{error}</li>}
             <li>lol</li>
             <button onClick={() => console.log(products)}>tap</button>
         </div>
