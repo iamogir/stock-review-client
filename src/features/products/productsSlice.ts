@@ -34,7 +34,8 @@ const productsSlice = createSlice<ProductsInitState, SliceCaseReducers<ProductsI
                     (state, action) => {
                         state.loading = false;
                         console.log(action.payload.products)
-                        state.products = (state.products ?? []).concat(action.payload.products || []);
+                        state.products ??= [];
+                        state.products.push(...action.payload.products || []);
                     }
                 )
         }
