@@ -9,10 +9,9 @@ const HomePage = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
-    const {products, loading, error} = useSelector((state: RootState) => state.products);
+    const {products, loading} = useSelector((state: RootState) => state.products);
 
     useEffect(() => {
-        console.log(error)
         dispatch(getAllProductsAsyncAction())
     }, [])
 
@@ -21,10 +20,15 @@ const HomePage = () => {
         <div>
             <button onClick={() => navigate("/warehouse")}>to warehouse</button>
             <button>add product</button>
-            <h3>Status</h3>
-            <br/>
-            {products && products.length > 0 ? products?.map((pr: Product) => <li>{pr.name}</li>) : <li>{error}</li>}
-            <li>lol</li>
+            <h3>All products in stock</h3>
+            {products && products.length > 0 ? products?.filter(pr => pr.status === 'in stock').map((pr: Product) =>
+                <div>
+                    <h4>{pr.name}</h4>
+                    <p>{pr.category}</p>
+                    </div>) :
+                <li>no products in stock</li>}
+            <h3>All products out of stock</h3>
+            {products && products.length > 0 ? products?.filter(pr => pr.status === 'out stock').map((pr: Product) => <li>{pr.name}</li>) : <p>no products out of stock</p>}
             <button onClick={() => console.log(products)}>tap</button>
         </div>
     );
