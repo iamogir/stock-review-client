@@ -10,14 +10,11 @@ export const getAllProductsAsyncAction = createAsyncThunk<ProductsResponse>(
     async(): Promise<ProductsResponse> => {
         try {
             const products: Product[] = [];
-            console.log(API + " api")
-            const response = await fetch(API + '/products/get_all_products');
-            console.log(response)
+            const response = await fetch(API + 'products/get_all_products');
             if (response.status === 200 || response.status === 304) {
                 const json = await response.json();
-                console.log(json);
 
-                json.products.map((el: ProductDto) => products.push(fromServerObject(el)));
+                json.map((el: ProductDto) => products.push(fromServerObject(el)));
 
                 if (products.length === 0) {
                     throw new Error("no data " + response.statusText);

@@ -20,7 +20,6 @@ const productsSlice = createSlice<ProductsInitState, SliceCaseReducers<ProductsI
                 (state) => {
                     state.loading = true;
                     state.products = undefined;
-                    state.error = 'Loading products...';
                 }
             )
                 .addCase(
@@ -34,10 +33,8 @@ const productsSlice = createSlice<ProductsInitState, SliceCaseReducers<ProductsI
                     (getAllProductsAsyncAction.fulfilled),
                     (state, action) => {
                         state.loading = false;
-                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                        // @ts-expect-error
-                        state.products = state.products?.concat(action.payload.products);
-                        state.error = '';
+                        state.products ??= [];
+                        state.products.push(...action.payload.products || []);
                     }
                 )
         }
