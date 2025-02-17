@@ -7,7 +7,7 @@ interface Props {
 
 const ProductCard = ({product}: Props) => {
 
-    console.log(product.expirationDate)
+    const dateExpiration = new Date(product.expirationDate);
 
     return (
         <div>
@@ -17,7 +17,7 @@ const ProductCard = ({product}: Props) => {
             <h4>Category: {product.category}</h4>
             <p>In stock: {product.quantityUnits} units</p>
             <p>General weight: {product.quantityKg} {product.unitWeight}</p>
-            <p className={style.temp}>Sell by: {}</p>
+            <p className={style.temp}>Sell by: {dateExpiration.getDate()}/{dateExpiration.getUTCMonth() + 1}/{dateExpiration.getFullYear()}</p>
             <p>Location: {product.storageLocation}</p>
             <h3>Status: {product.status}</h3>
         </div>

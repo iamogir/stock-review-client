@@ -24,10 +24,10 @@ const HomePage = () => {
             <button>add product</button>
             <h2>All products in stock</h2>
             {products && products.length > 0 ? products?.filter(pr => pr.status === 'in stock').map((pr: Product) =>
-                <ProductCard product={pr}/>) :
+                <ProductCard product={pr} key={pr.name}/>) :
                 <li>no products in stock</li>}
             <h2>All products out of stock</h2>
-            {products && products.length > 0 ? products?.filter(pr => pr.status === 'out stock').map((pr: Product) => <li>{pr.name}</li>) : <p>no products out of stock</p>}
+            {products && products.length > 0 ? products?.filter(pr => pr.status === 'out stock').map((pr: Product) => <ProductCard product={pr} key={pr.name}/>) : <p>no products out of stock</p>}
             <button onClick={() => console.log(products)}>tap</button>
         </div>
     );
