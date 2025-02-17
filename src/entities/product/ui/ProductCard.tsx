@@ -16,10 +16,10 @@ const ProductCard = ({product}: Props) => {
             <h3>Supplier: {product.supplier}</h3>
             <h4>Category: {product.category}</h4>
             <p>In stock: {product.quantityUnits} units</p>
-            <p>General weight: {product.quantityKg} {product.unitWeight}</p>
+            <p>General weight: {product.weight} {product.unitWeight}</p>
             <p className={style.temp}>Sell by: {dateExpiration.getDate()}/{dateExpiration.getUTCMonth() + 1}/{dateExpiration.getFullYear()}</p>
             <p>Location: {product.storageLocation}</p>
-            <h3>Status: {product.status}</h3>
+            <h3>Status: {product.status ? 'in stock' : 'out of stock'}</h3>
         </div>
     );
 };

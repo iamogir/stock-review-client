@@ -5,11 +5,12 @@ export function fromJSON(json: string): Product {
     return fromServerObject(obj);
 }
 
-export function fromServerObject(obj: ProductDto): Product{
+export function fromServerObject(obj: ProductDto): Product {
     return {
+        id: obj._id,
         name: obj.name,
         category: obj.category,
-        quantityKg: obj.quantityKg,
+        weight: obj.weight,
         unitWeight: obj.unitWeight,
         quantityUnits: obj.quantityUnits,
         expirationDate: obj.expirationDate,
@@ -17,6 +18,4 @@ export function fromServerObject(obj: ProductDto): Product{
         storageLocation: obj.storageLocation,
         status: obj.status,
     }
-    // new Product(obj.name, obj.category, obj.quantityKg, obj.unitWeight, obj.quantityUnits, obj.expirationDate, obj.createdAt, obj.updatedAt,
-    //     obj.barcode, obj.supplier, obj.storageLocation, obj.status);
 }
