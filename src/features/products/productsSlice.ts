@@ -33,7 +33,6 @@ const productsSlice = createSlice<ProductsInitState, SliceCaseReducers<ProductsI
                     (getAllProductsAsyncAction.fulfilled),
                     (state, action) => {
                         state.loading = false;
-                        console.log(action.payload.products)
                         state.products ??= [];
                         state.products.push(...action.payload.products || []);
                     }
