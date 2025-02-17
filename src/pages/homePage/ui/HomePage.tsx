@@ -21,7 +21,7 @@ const HomePage = () => {
         <div>
             <h1>Stock review</h1>
             <button onClick={() => navigate("/warehouse")}>to warehouse</button>
-            <button>add product</button>
+            <button onClick={() => navigate("/add_product")}>add product</button>
             <h2>All products in stock</h2>
             {products && products.length > 0 ? products?.filter(pr => pr.status).map((pr: Product) =>
                 <ProductCard product={pr} key={pr.name}/>) :
