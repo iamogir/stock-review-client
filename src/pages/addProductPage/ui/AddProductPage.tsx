@@ -1,9 +1,9 @@
-// import style from './addProductPage.module.css'
+import style from './addProductPage.module.css'
 
 const AddProductPage = () => {
     return (
         <div>
-            <form>
+            <form className={style.form}>
                 <label>Name</label>
                 <input name={'name'} />
                 <label>Category</label>
