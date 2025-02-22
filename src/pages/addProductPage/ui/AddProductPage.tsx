@@ -1,20 +1,34 @@
 import style from './addProductPage.module.css'
 import {FormEvent } from "react";
+import {Product} from "../../../entities/product/model/types.ts";
 
 const AddProductPage = () => {
 
     const addProduct = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const infoObject = {};
-        const form = document.querySelector("#addForm");
-        console.log(event.target)
+        const eventTarget = event.target as HTMLFormElement;
+        console.log(event)
+        const infoObject: Product = {
+            id: '0',
+            name: eventTarget['namee'].value,
+            category: eventTarget['category'].value,
+            weight: eventTarget['weight'].value,
+            unitWeight: eventTarget['unit'].value,
+            quantityUnits: 1,
+            expirationDate: new Date(Date.now()),
+            supplier: eventTarget['supplier'].value,
+            storageLocation: eventTarget['location'].value,
+            status: eventTarget['status'].value,
+        };
+
+        console.log(infoObject);
     }
 
     return (
         <div>
-            <form id={"addForm"} className={style.form} onSubmit={addProduct}>
+            <form className={style.form} onSubmit={addProduct}> {/*novalidate - disable browser validation*/}
                 <label>Name</label>
-                <input name={'name'} />
+                <input name={'namee'} />
                 <label>Category</label>
                 <input name={'category'} />
                 <label>Weight</label>
