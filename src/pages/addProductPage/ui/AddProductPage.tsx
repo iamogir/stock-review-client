@@ -1,9 +1,18 @@
 import style from './addProductPage.module.css'
+import {FormEvent } from "react";
 
 const AddProductPage = () => {
+
+    const addProduct = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const infoObject = {};
+        const form = document.querySelector("#addForm");
+        console.log(event.target)
+    }
+
     return (
         <div>
-            <form className={style.form}>
+            <form id={"addForm"} className={style.form} onSubmit={addProduct}>
                 <label>Name</label>
                 <input name={'name'} />
                 <label>Category</label>
@@ -24,7 +33,9 @@ const AddProductPage = () => {
                 <input name={'location'} />
                 <label>Status</label>
                 <input name={'status'} />
+                <input type="submit" value="Add product" />
             </form>
+
         </div>
     );
 };
