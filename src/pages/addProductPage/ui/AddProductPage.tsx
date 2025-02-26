@@ -9,13 +9,12 @@ const AddProductPage = () => {
         const eventTarget = event.target as HTMLFormElement;
         console.log(event)
         const infoObject: Product = {
-            id: '0',
-            name: eventTarget['namee'].value,
+            name: eventTarget['productName'].value,
             category: eventTarget['category'].value,
             weight: eventTarget['weight'].value,
-            unitWeight: eventTarget['unit'].value,
-            quantityUnits: 1,
-            expirationDate: new Date(Date.now()),
+            unitWeight: eventTarget['unitWeight'].value,
+            quantityUnits: eventTarget['quantity'].value,
+            expirationDate: eventTarget['expDate'].value,
             supplier: eventTarget['supplier'].value,
             storageLocation: eventTarget['location'].value,
             status: eventTarget['status'].value,
@@ -27,22 +26,23 @@ const AddProductPage = () => {
     return (
         <div>
             <form className={style.form} onSubmit={addProduct}> {/*novalidate - disable browser validation*/}
+
                 <label>Name</label>
-                <input name={'namee'} />
+                <input name={'productName'} />
                 <label>Category</label>
                 <input name={'category'} />
                 <label>Weight</label>
                 <input name={'weight'} />
-                <label>Unit</label>
-                <input name={'unit'} />
-                <label>Exp date</label>
+                <label>Unit of thw weight</label>
+                <input name={'unitWeight'} />
+                <label>Quantity units</label>
+                <input name={'quantity'} />
+                <label>Best before:</label>
                 <input name={'expDate'} />
                 <label>Barcode</label>
                 <input name={'barcode'} />
                 <label>Supplier</label>
                 <input name={'supplier'} />
-                <label>Price</label>
-                <input name={'price'} />
                 <label>Location</label>
                 <input name={'location'} />
                 <label>Status</label>

@@ -15,7 +15,7 @@ export type ProductDto = {
 }
 
 export interface Product {
-    id: string,
+    id?: string,
     name: string,
     category: string,
     weight: number,
