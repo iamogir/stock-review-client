@@ -1,5 +1,5 @@
 import {createSlice, SliceCaseReducers, SliceSelectors} from "@reduxjs/toolkit";
-import {getAllProductsAsyncAction} from "./productsAsyncActions.ts";
+import {addNewProductAsyncAction, getAllProductsAsyncAction} from "./productsAsyncActions.ts";
 import {ProductsInitState} from "../../entities/product/model/types.ts";
 
 const initialState: ProductsInitState = {
@@ -15,13 +15,14 @@ const productsSlice = createSlice<ProductsInitState, SliceCaseReducers<ProductsI
         reducers: {},
         extraReducers: (builder) => {
             builder
-            .addCase(
-                (getAllProductsAsyncAction.pending),
-                (state) => {
-                    state.loading = true;
-                    state.products = undefined;
-                }
-            )
+                .addCase(
+                    (getAllProductsAsyncAction.pending),
+                    (state) => {
+                        state.loading = true;
+                        state.products = undefined;
+                        state.error = null;
+                    }
+                )
                 .addCase(
                     (getAllProductsAsyncAction.rejected),
                     (state, action) => {
@@ -35,6 +36,32 @@ const productsSlice = createSlice<ProductsInitState, SliceCaseReducers<ProductsI
                         state.loading = false;
                         state.products ??= [];
                         state.products.push(...action.payload.products || []);
+                    }
+                )
+                .addCase(
+                    (addNewProductAsyncAction.pending),
+                    (state) => {
+                        state.loading = true;
+                        state.error = null;
+                    }
+                )
+                .addCase(
+                    (addNewProductAsyncAction.rejected),
+                    (state, action) => {
+                        state.loading = false;
+                        state.error = action.error.message as string;
+                    }
+                )
+                .addCase(
+                    (addNewProductAsyncAction.fulfilled),
+                    (state, action) => {
+                        state.loading = false;
+                        state.error = null;
+                        if (state.products) {
+                            state.products.push(action.payload);
+                        } else {
+                            state.products = [ action.payload ];
+                        }
                     }
                 )
         }

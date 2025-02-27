@@ -1,8 +1,13 @@
 import style from './addProductPage.module.css'
 import {FormEvent } from "react";
 import {Product} from "../../../entities/product/model/types.ts";
+import {useDispatch} from "react-redux";
+import {addNewProductAsyncAction} from "../../../features/products/productsAsyncActions.ts";
+import {AppDispatch} from "../../../app/redux/store.ts";
 
 const AddProductPage = () => {
+
+    const dispatch = useDispatch<AppDispatch>();
 
     const addProduct = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -20,6 +25,8 @@ const AddProductPage = () => {
         };
 
         console.log(infoObject);
+
+        dispatch(addNewProductAsyncAction(infoObject));
     }
 
     return (
