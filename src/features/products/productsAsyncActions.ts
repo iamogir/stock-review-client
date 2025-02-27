@@ -6,7 +6,7 @@ import {fromServerObject} from "../../entities/product/lib/mapProduct.ts";
 const API = import.meta.env.VITE_API_URL;
 
 export const getAllProductsAsyncAction = createAsyncThunk<ProductsResponse>(
-    'warehouse/get_all_products',
+    'product/get_all_products',
     async(): Promise<ProductsResponse> => {
         try {
             const products: Product[] = [];
@@ -33,16 +33,18 @@ export const getAllProductsAsyncAction = createAsyncThunk<ProductsResponse>(
     }
 )
 
-export const addNewProductAsyncAction = createAsyncThunk<Product>(
-    'warehouse/add_new_product',
-    async(): Promise<Product> => {
+export const addNewProductAsyncAction = createAsyncThunk<Product, Product, { rejectValue: string }>(
+    'product/add_new_product',
+    async(newProduct: Product, thunkAPI): Promise<Product | ReturnType<typeof thunkAPI.rejectWithValue>> => {
         try {
-            const newProduct: Product = {};
+
 
             return newProduct;
         } catch (error) {
             console.log('add_new_product', error);
-            throw error;
+            return thunkAPI.rejectWithValue(
+                error instanceof Error ? error.message : 'Something went wrong'
+            );
         }
     }
 )
