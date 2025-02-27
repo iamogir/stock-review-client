@@ -6,7 +6,7 @@ import {fromServerObject} from "../../entities/product/lib/mapProduct.ts";
 const API = import.meta.env.VITE_API_URL;
 
 export const getAllProductsAsyncAction = createAsyncThunk<ProductsResponse>(
-    'home/get_all_products',
+    'warehouse/get_all_products',
     async(): Promise<ProductsResponse> => {
         try {
             const products: Product[] = [];
@@ -28,6 +28,20 @@ export const getAllProductsAsyncAction = createAsyncThunk<ProductsResponse>(
         } 
         catch (error) {
             console.error('get_all_products ' + error);
+            throw error;
+        }
+    }
+)
+
+export const addNewProductAsyncAction = createAsyncThunk<Product>(
+    'warehouse/add_new_product',
+    async(): Promise<Product> => {
+        try {
+            const newProduct: Product = {};
+
+            return newProduct;
+        } catch (error) {
+            console.log('add_new_product', error);
             throw error;
         }
     }

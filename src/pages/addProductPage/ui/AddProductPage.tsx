@@ -7,7 +7,6 @@ const AddProductPage = () => {
     const addProduct = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const eventTarget = event.target as HTMLFormElement;
-        console.log(event)
         const infoObject: Product = {
             name: eventTarget['productName'].value,
             category: eventTarget['category'].value,

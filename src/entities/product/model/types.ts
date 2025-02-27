@@ -8,7 +8,7 @@ export type ProductDto = {
     expirationDate: Date,
     createdAt: Date,
     updatedAt: Date,
-    barcode: string,
+    barcode?: string,
     supplier: string,
     storageLocation: string,
     status: boolean,
