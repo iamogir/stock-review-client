@@ -4,10 +4,12 @@ import {Product} from "../../../entities/product/model/types.ts";
 import {useDispatch} from "react-redux";
 import {addNewProductAsyncAction} from "../../../features/products/productsAsyncActions.ts";
 import {AppDispatch} from "../../../app/redux/store.ts";
+import {useNavigate} from "react-router-dom";
 
 const AddProductPage = () => {
 
     const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
 
     const addProduct = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -18,19 +20,20 @@ const AddProductPage = () => {
             weight: eventTarget['weight'].value,
             unitWeight: eventTarget['unitWeight'].value,
             quantityUnits: eventTarget['quantity'].value,
-            expirationDate: eventTarget['expDate'].value,
+            expirationDate: new Date(eventTarget['expDate'].value),
             supplier: eventTarget['supplier'].value,
             storageLocation: eventTarget['location'].value,
             status: eventTarget['status'].value,
         };
 
-        console.log(infoObject);
+        console.log(eventTarget['expDate'].value);
 
         dispatch(addNewProductAsyncAction(infoObject));
     }
 
     return (
         <div>
+            <button onClick={() => navigate('/warehouse')}>To warehouse</button>
             <form className={style.form} onSubmit={addProduct}> {/*novalidate - disable browser validation*/}
 
                 <label>Name</label>
@@ -44,7 +47,7 @@ const AddProductPage = () => {
                 <label>Quantity units</label>
                 <input name={'quantity'} />
                 <label>Best before:</label>
-                <input name={'expDate'} />
+                <input name={'expDate'} type="date" />
                 <label>Barcode</label>
                 <input name={'barcode'} />
                 <label>Supplier</label>
