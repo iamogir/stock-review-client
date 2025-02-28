@@ -1,6 +1,6 @@
 import style from './addProductPage.module.css'
 import {FormEvent, useEffect, useRef} from "react";
-import {Product} from "../../../entities/product/model/types.ts";
+import {Listener, Product} from "../../../entities/product/model/types.ts";
 import {useDispatch} from "react-redux";
 import {addNewProductAsyncAction} from "../../../features/products/productsAsyncActions.ts";
 import {AppDispatch} from "../../../app/redux/store.ts";
@@ -12,7 +12,7 @@ const AddProductPage = () => {
 
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
-    const dropMenuRef = useRef(null);
+    const dropMenuRef = useRef<HTMLElement[]>([]);
 
     const addProduct = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -46,8 +46,12 @@ const AddProductPage = () => {
 
     const closeDropMenu = (event) => {
         const eventTarget = event.target as HTMLFormElement;
-        if (eventTarget.contains(dropMenuRef.current))
-            dropMenuRef.current.classList.remove(style.openMenu);
+        dropMenuRef.current.map(el => {
+            if (eventTarget.contains(el))
+                el.classList.remove(style.openMenu);
+        })
+        // if (eventTarget.contains(dropMenuRef.current))
+        //     dropMenuRef.current.classList.remove(style.openMenu);
     }
 
     useEffect(() => {
@@ -70,7 +74,8 @@ const AddProductPage = () => {
                 <label htmlFor={'unitWeight'}>Unit of thw weight</label>
                 <input type={'hidden'} id={'unitWeight'} name={'unitWeight'} />
                 <div className={style.menuHeader} onClick={openCloseDropMenu}>Choose</div>
-                <div className={style.dropMenu} ref={dropMenuRef}>
+                <div className={style.dropMenu}
+                     ref={(el) => {if (el) {dropMenuRef.current.push(el)}}}>
                     <div data-unit={'choose'}>Choose</div>
                     {weightUnits.map(unit => <div key={unit.key} data-unit={unit.key}>{unit.value}</div>)}
                 </div>
@@ -87,7 +92,7 @@ const AddProductPage = () => {
                 <label htmlFor={'status'}>Status</label>
                 <input type={'hidden'} id={'status'} name={'status'} />
                 <div className={style.menuHeader} onClick={openCloseDropMenu}>Choose</div>
-                <div className={style.dropMenu} ref={dropMenuRef}>
+                <div className={style.dropMenu} ref={(el) => {if (el) {dropMenuRef.current.push(el)}}}>
                     <div data-unit={'choose'}>Choose</div>
                     {statusUnits.map(unit => <div key={unit.key} data-unit={unit.key}>{unit.value}</div>)}
                 </div>
