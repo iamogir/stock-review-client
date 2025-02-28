@@ -32,6 +32,12 @@ const AddProductPage = () => {
         dispatch(addNewProductAsyncAction(infoObject));
     }
 
+    const openCloseMenu = (event) => {
+        const menu = event.target.nextElementSibling;
+        console.log(menu);
+        menu.classList.toggle(style.openMenu);
+    }
+
     return (
         <div>
             <button onClick={() => navigate('/home')}>Home</button>
@@ -44,7 +50,9 @@ const AddProductPage = () => {
                 <input type={'text'} name={'category'} />
                 <label>Weight</label>
                 <input type={'hidden'} name={'weight'} />
+                <div className={style.menuHeader} onClick={openCloseMenu}>Choose</div>
                 <div className={style.dropMenu}>
+                    <div data-unit={'choose'}>Choose</div>
                     {weightUnits.map(unit => <div key={unit.key} data-unit={unit.key}>{unit.value}</div>)}
                 </div>
                 <label>Unit of thw weight</label>
