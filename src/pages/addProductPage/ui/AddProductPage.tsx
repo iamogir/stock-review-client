@@ -1,6 +1,6 @@
 import style from './addProductPage.module.css'
 import {FormEvent, useEffect, useRef} from "react";
-import {Listener, Product} from "../../../entities/product/model/types.ts";
+import {Product} from "../../../entities/product/model/types.ts";
 import {useDispatch} from "react-redux";
 import {addNewProductAsyncAction} from "../../../features/products/productsAsyncActions.ts";
 import {AppDispatch} from "../../../app/redux/store.ts";
@@ -44,11 +44,14 @@ const AddProductPage = () => {
         menu.classList.toggle(style.openMenu);
     }
 
-    const closeDropMenu = (event) => {
+    const closeDropMenu = (event: MouseEvent) => {
         const eventTarget = event.target as HTMLFormElement;
+
         dropMenuRef.current.map(el => {
-            if (eventTarget.contains(el))
-                el.classList.remove(style.openMenu);
+            if (el !== null && eventTarget !== el)
+                el.nextElementSibling?.classList.remove(style.openMenu);
+
+
         })
         // if (eventTarget.contains(dropMenuRef.current))
         //     dropMenuRef.current.classList.remove(style.openMenu);
@@ -73,9 +76,9 @@ const AddProductPage = () => {
                 <input type={'number'} id={'weight'} name={'weight'} />
                 <label htmlFor={'unitWeight'}>Unit of thw weight</label>
                 <input type={'hidden'} id={'unitWeight'} name={'unitWeight'} />
-                <div className={style.menuHeader} onClick={openCloseDropMenu}>Choose</div>
-                <div className={style.dropMenu}
-                     ref={(el) => {if (el) {dropMenuRef.current.push(el)}}}>
+                <div className={style.menuHeader} onClick={openCloseDropMenu}
+                     ref={(el) => {if (el) {dropMenuRef.current.push(el)}}}>Choose</div>
+                <div className={style.dropMenu} >
                     <div data-unit={'choose'}>Choose</div>
                     {weightUnits.map(unit => <div key={unit.key} data-unit={unit.key}>{unit.value}</div>)}
                 </div>
@@ -91,11 +94,13 @@ const AddProductPage = () => {
                 <input type={'text'} id={'location'} name={'location'} />
                 <label htmlFor={'status'}>Status</label>
                 <input type={'hidden'} id={'status'} name={'status'} />
-                <div className={style.menuHeader} onClick={openCloseDropMenu}>Choose</div>
-                <div className={style.dropMenu} ref={(el) => {if (el) {dropMenuRef.current.push(el)}}}>
+                <div className={style.menuHeader} onClick={openCloseDropMenu}
+                     ref={(el) => {if (el) {dropMenuRef.current.push(el)}}}>Choose</div>
+                <div className={style.dropMenu} >
                     <div data-unit={'choose'}>Choose</div>
                     {statusUnits.map(unit => <div key={unit.key} data-unit={unit.key}>{unit.value}</div>)}
                 </div>
+
                 <button>
                     <span>Add product</span>
                     <input type="submit" style={{display: 'none'}}/>

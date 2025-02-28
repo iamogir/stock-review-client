@@ -41,7 +41,3 @@ export type FormatObject = {
     key: string,
     value: string
 }
-
-// export type Listener = {
-//     elements: HTMLElement[] | null[];
-// }
