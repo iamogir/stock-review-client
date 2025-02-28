@@ -1,28 +1,30 @@
 export type ProductDto = {
+    _id: string,
     name: string,
     category: string,
-    quantityKg: number,
+    weight: number,
     unitWeight: string,
     quantityUnits: number,
     expirationDate: Date,
     createdAt: Date,
     updatedAt: Date,
-    barcode: string,
+    barcode?: string,
     supplier: string,
     storageLocation: string,
-    status: string,
+    status: boolean,
 }
 
 export interface Product {
+    id?: string,
     name: string,
     category: string,
-    quantityKg: number,
+    weight: number,
     unitWeight: string,
     quantityUnits: number,
     expirationDate: Date,
     supplier: string,
     storageLocation: string,
-    status: string,
+    status: boolean,
 }
 
 export type ProductsInitState = {
@@ -33,4 +35,9 @@ export type ProductsInitState = {
 
 export type ProductsResponse = {
     products: Product[] | null;
+}
+
+export type FormatObject = {
+    key: string,
+    value: string
 }
