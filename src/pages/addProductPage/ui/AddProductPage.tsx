@@ -34,6 +34,19 @@ const AddProductPage = () => {
         dispatch(addNewProductAsyncAction(infoObject));
     }
 
+    const setDropMenuValue = (event: React.MouseEvent<HTMLElement>) => {
+        const eventTarget = event.target as HTMLElement;
+        const menuHeader = (eventTarget.parentElement as HTMLElement).previousSibling as HTMLElement;
+        const inputElement = menuHeader.previousSibling as HTMLInputElement;
+        const value = eventTarget.dataset.unit;
+        if (value) {
+            console.log(eventTarget)
+            inputElement.value = value;
+            menuHeader.textContent = eventTarget.textContent;
+        }
+
+    }
+
     const openCloseDropMenu = (event: React.MouseEvent<HTMLElement>) => {
         const eventTarget = event.target as HTMLFormElement;
         const menu = eventTarget.nextElementSibling;
@@ -50,11 +63,7 @@ const AddProductPage = () => {
         dropMenuRef.current.map(el => {
             if (el !== null && eventTarget !== el)
                 el.nextElementSibling?.classList.remove(style.openMenu);
-
-
         })
-        // if (eventTarget.contains(dropMenuRef.current))
-        //     dropMenuRef.current.classList.remove(style.openMenu);
     }
 
     useEffect(() => {
@@ -73,21 +82,20 @@ const AddProductPage = () => {
                 <label htmlFor={'category'}>Category</label>
                 <input type={'text'} id={'category'} name={'category'} />
                 <label htmlFor={'weight'}>Weight</label>
-                <input type={'number'} id={'weight'} name={'weight'} />
+                <input type={'number'} min={0} id={'weight'} name={'weight'} />
                 <label htmlFor={'unitWeight'}>Unit of thw weight</label>
                 <input type={'hidden'} id={'unitWeight'} name={'unitWeight'} />
                 <div className={style.menuHeader} onClick={openCloseDropMenu}
                      ref={(el) => {if (el) {dropMenuRef.current.push(el)}}}>Choose</div>
                 <div className={style.dropMenu} >
-                    <div data-unit={'choose'}>Choose</div>
-                    {weightUnits.map(unit => <div key={unit.key} data-unit={unit.key}>{unit.value}</div>)}
+                    {weightUnits.map(unit => <div key={unit.key} data-unit={unit.key} onClick={setDropMenuValue}>{unit.value}</div>)}
                 </div>
                 <label htmlFor={'quantity'}>Quantity units</label>
-                <input type={'number'} id={'quantity'} name={'quantity'} />
+                <input type={'number'} min={0} id={'quantity'} name={'quantity'} />
                 <label htmlFor={'expDate'}>Best before:</label>
                 <input type={'date'} id={'expDate'} name={'expDate'} />
                 <label htmlFor={'barcode'}>Barcode</label>
-                <input type={'number'} id={'barcode'} name={'barcode'} />
+                <input type={'number'} min={100000000000} id={'barcode'} name={'barcode'} />
                 <label htmlFor={'supplier'}>Supplier</label>
                 <input type={'text'} id={'supplier'} name={'supplier'} />
                 <label htmlFor={'location'}>Location</label>
@@ -97,10 +105,10 @@ const AddProductPage = () => {
                 <div className={style.menuHeader} onClick={openCloseDropMenu}
                      ref={(el) => {if (el) {dropMenuRef.current.push(el)}}}>Choose</div>
                 <div className={style.dropMenu} >
-                    <div data-unit={'choose'}>Choose</div>
-                    {statusUnits.map(unit => <div key={unit.key} data-unit={unit.key}>{unit.value}</div>)}
+                    {statusUnits.map(unit => <div key={unit.key} data-unit={unit.key} onClick={setDropMenuValue}>{unit.value}</div>)}
                 </div>
 
+                <br/>
                 <button>
                     <span>Add product</span>
                     <input type="submit" style={{display: 'none'}}/>
