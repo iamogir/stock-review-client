@@ -5,6 +5,7 @@ import {useDispatch} from "react-redux";
 import {addNewProductAsyncAction} from "../../../features/products/productsAsyncActions.ts";
 import {AppDispatch} from "../../../app/redux/store.ts";
 import {useNavigate} from "react-router-dom";
+import {weightUnits} from "../../../shared/consts/product.ts";
 
 const AddProductPage = () => {
 
@@ -33,15 +34,19 @@ const AddProductPage = () => {
 
     return (
         <div>
+            <button onClick={() => navigate('/home')}>Home</button>
             <button onClick={() => navigate('/warehouse')}>To warehouse</button>
             <form className={style.form} onSubmit={addProduct}> {/*novalidate - disable browser validation*/}
 
                 <label>Name</label>
-                <input name={'productName'} />
+                <input type={'text'} name={'productName'} />
                 <label>Category</label>
-                <input name={'category'} />
+                <input type={'text'} name={'category'} />
                 <label>Weight</label>
-                <input name={'weight'} />
+                <input type={'hidden'} name={'weight'} />
+                <div className={style.dropMenu}>
+                    {weightUnits.map(unit => <div key={unit.key} data-unit={unit.key}>{unit.value}</div>)}
+                </div>
                 <label>Unit of thw weight</label>
                 <input name={'unitWeight'} />
                 <label>Quantity units</label>

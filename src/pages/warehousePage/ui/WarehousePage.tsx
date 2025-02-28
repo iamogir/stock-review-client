@@ -19,6 +19,7 @@ const WareHouse = () => {
     return (
         loading ? <div>Loading...</div> :
         <div>
+            <button onClick={() => navigate('/home')}>Home</button>
             <button onClick={() => navigate("/add_product")}>add product</button>
             <h2>All products in stock</h2>
             {products && products.length > 0 ? products?.filter(pr => pr.status).map((pr: Product) =>
