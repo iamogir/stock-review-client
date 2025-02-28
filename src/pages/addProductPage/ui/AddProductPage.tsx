@@ -1,16 +1,18 @@
 import style from './addProductPage.module.css'
-import {FormEvent } from "react";
+import {FormEvent, useEffect, useRef} from "react";
 import {Product} from "../../../entities/product/model/types.ts";
 import {useDispatch} from "react-redux";
 import {addNewProductAsyncAction} from "../../../features/products/productsAsyncActions.ts";
 import {AppDispatch} from "../../../app/redux/store.ts";
 import {useNavigate} from "react-router-dom";
-import {weightUnits} from "../../../shared/consts/product.ts";
+import {statusUnits, weightUnits} from "../../../shared/consts/product.ts";
+import * as React from "react";
 
 const AddProductPage = () => {
 
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
+    const dropMenuRef = useRef(null);
 
     const addProduct = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -32,11 +34,26 @@ const AddProductPage = () => {
         dispatch(addNewProductAsyncAction(infoObject));
     }
 
-    const openCloseMenu = (event) => {
-        const menu = event.target.nextElementSibling;
-        console.log(menu);
+    const openCloseDropMenu = (event: React.MouseEvent<HTMLElement>) => {
+        const eventTarget = event.target as HTMLFormElement;
+        const menu = eventTarget.nextElementSibling;
+        if (!menu) {
+            console.log('No menu');
+            return;
+        }
         menu.classList.toggle(style.openMenu);
     }
+
+    const closeDropMenu = (event) => {
+        const eventTarget = event.target as HTMLFormElement;
+        if (eventTarget.contains(dropMenuRef.current))
+            dropMenuRef.current.classList.remove(style.openMenu);
+    }
+
+    useEffect(() => {
+        document.addEventListener('click', closeDropMenu);
+        return () => document.removeEventListener('click', closeDropMenu);
+    }, []);
 
     return (
         <div>
@@ -44,32 +61,40 @@ const AddProductPage = () => {
             <button onClick={() => navigate('/warehouse')}>To warehouse</button>
             <form className={style.form} onSubmit={addProduct}> {/*novalidate - disable browser validation*/}
 
-                <label>Name</label>
-                <input type={'text'} name={'productName'} />
-                <label>Category</label>
-                <input type={'text'} name={'category'} />
-                <label>Weight</label>
-                <input type={'hidden'} name={'weight'} />
-                <div className={style.menuHeader} onClick={openCloseMenu}>Choose</div>
-                <div className={style.dropMenu}>
+                <label htmlFor={'productName'}>Name</label>
+                <input type={'text'} id={'productName'} name={'productName'} />
+                <label htmlFor={'category'}>Category</label>
+                <input type={'text'} id={'category'} name={'category'} />
+                <label htmlFor={'weight'}>Weight</label>
+                <input type={'number'} id={'weight'} name={'weight'} />
+                <label htmlFor={'unitWeight'}>Unit of thw weight</label>
+                <input type={'hidden'} id={'unitWeight'} name={'unitWeight'} />
+                <div className={style.menuHeader} onClick={openCloseDropMenu}>Choose</div>
+                <div className={style.dropMenu} ref={dropMenuRef}>
                     <div data-unit={'choose'}>Choose</div>
                     {weightUnits.map(unit => <div key={unit.key} data-unit={unit.key}>{unit.value}</div>)}
                 </div>
-                <label>Unit of thw weight</label>
-                <input name={'unitWeight'} />
-                <label>Quantity units</label>
-                <input name={'quantity'} />
-                <label>Best before:</label>
-                <input name={'expDate'} type="date" />
-                <label>Barcode</label>
-                <input name={'barcode'} />
-                <label>Supplier</label>
-                <input name={'supplier'} />
-                <label>Location</label>
-                <input name={'location'} />
-                <label>Status</label>
-                <input name={'status'} />
-                <input type="submit" value="Add product" />
+                <label htmlFor={'quantity'}>Quantity units</label>
+                <input type={'number'} id={'quantity'} name={'quantity'} />
+                <label htmlFor={'expDate'}>Best before:</label>
+                <input type={'date'} id={'expDate'} name={'expDate'} />
+                <label htmlFor={'barcode'}>Barcode</label>
+                <input type={'number'} id={'barcode'} name={'barcode'} />
+                <label htmlFor={'supplier'}>Supplier</label>
+                <input type={'text'} id={'supplier'} name={'supplier'} />
+                <label htmlFor={'location'}>Location</label>
+                <input type={'text'} id={'location'} name={'location'} />
+                <label htmlFor={'status'}>Status</label>
+                <input type={'hidden'} id={'status'} name={'status'} />
+                <div className={style.menuHeader} onClick={openCloseDropMenu}>Choose</div>
+                <div className={style.dropMenu} ref={dropMenuRef}>
+                    <div data-unit={'choose'}>Choose</div>
+                    {statusUnits.map(unit => <div key={unit.key} data-unit={unit.key}>{unit.value}</div>)}
+                </div>
+                <button>
+                    <span>Add product</span>
+                    <input type="submit" style={{display: 'none'}}/>
+                </button>
             </form>
 
         </div>

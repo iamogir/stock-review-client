@@ -5,4 +5,9 @@ export const weightUnits: FormatObject[] = [
     { key: 'g', value: 'G'},
     { key: 'lt', value: 'LT'},
     { key: 'ml', value: 'ML'},
-] ;
+];
+
+export const statusUnits: FormatObject[] = [
+    { key: 'true', value: 'In stock'},
+    { key: 'false', value: 'Out of stock'},
+];
