@@ -29,6 +29,7 @@ export interface Product {
 
 export type ProductsInitState = {
     products: Product[] | undefined;
+    expiredProducts: Product[] | undefined;
     loading: boolean;
     error: string | null;
 }
