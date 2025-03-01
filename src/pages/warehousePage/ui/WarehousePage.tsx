@@ -14,7 +14,6 @@ const WareHouse = () => {
 
     useEffect(() => {
         if (!products || products.length === 0) {
-            console.log('dispatched products in Warehouse');
             dispatch(getAllProductsAsyncAction())
         }
     }, [])

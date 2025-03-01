@@ -70,6 +70,7 @@ export const addNewProductAsyncAction = createAsyncThunk<Product, Product, { rej
 export const getExpiredProductsAsyncAction = createAsyncThunk<ProductsResponse>(
     'product/get_expired_products',
     async(): Promise<ProductsResponse> => {
+        console.log('get_expired_products');
         try{
             const expiredProducts: Product[] = [];
             const response = await fetch(API + 'products/get_expired_products');

@@ -1,19 +1,25 @@
 import {useNavigate} from "react-router-dom";
 import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {getAllProductsAsyncAction} from "../../../features/products/productsAsyncActions.ts";
+import {
+    getAllProductsAsyncAction,
+    getExpiredProductsAsyncAction
+} from "../../../features/products/productsAsyncActions.ts";
 import {AppDispatch, RootState} from "../../../app/redux/store.ts";
+import ProductCard from "../../../entities/product/ui/ProductCard.tsx";
 
 const HomePage = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
-    const {products, loading} = useSelector((state: RootState) => state.products);
+    const {products, expiredProducts, loading} = useSelector((state: RootState) => state.products);
 
     useEffect(() => {
         if (!products || products.length === 0) {
-            console.log('dispatched products in HomePage');
             dispatch(getAllProductsAsyncAction())
+        }
+        if (!expiredProducts || expiredProducts.length === 0) {
+            dispatch(getExpiredProductsAsyncAction)
         }
     }, [])
 
@@ -23,6 +29,7 @@ const HomePage = () => {
             <h1>Stock review</h1>
             <button onClick={() => navigate("/warehouse")}>to warehouse</button>
             <button onClick={() => navigate("/add_product")}>add product</button>
+            {expiredProducts && expiredProducts.map((pr) => <ProductCard product={pr}/>)}
         </div>
     );
 };
