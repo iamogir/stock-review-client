@@ -19,7 +19,7 @@ const HomePage = () => {
             dispatch(getAllProductsAsyncAction())
         }
         if (!expiredProducts || expiredProducts.length === 0) {
-            dispatch(getExpiredProductsAsyncAction)
+            dispatch(getExpiredProductsAsyncAction())
         }
     }, [])
 
@@ -29,7 +29,8 @@ const HomePage = () => {
             <h1>Stock review</h1>
             <button onClick={() => navigate("/warehouse")}>to warehouse</button>
             <button onClick={() => navigate("/add_product")}>add product</button>
-            {expiredProducts && expiredProducts.map((pr) => <ProductCard product={pr}/>)}
+            <h2>Expired products:</h2>
+            {expiredProducts && expiredProducts.map((pr) => <ProductCard key={pr.name} product={pr}/>)}
         </div>
     );
 };
