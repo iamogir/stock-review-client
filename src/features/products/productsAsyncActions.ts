@@ -66,3 +66,29 @@ export const addNewProductAsyncAction = createAsyncThunk<Product, Product, { rej
         }
     }
 )
+
+export const getExpiredProductsAsyncAction = createAsyncThunk<ProductsResponse>(
+    'product/get_expired_products',
+    async(): Promise<ProductsResponse> => {
+        try{
+            const expiredProducts: Product[] = [];
+            const response = await fetch(API + 'products/get_expired_products');
+            if (response.status === 200 || response.status === 304) {
+                const json = await response.json();
+
+                json.map((pr: ProductDto) => expiredProducts.push(fromServerObject(pr)));
+
+                if (expiredProducts.length === 0) {
+                    throw new Error('No expired products. Great job!');
+                } else {
+                    return { products: expiredProducts };
+                }
+            } else {
+                throw new Error(response.statusText);
+            }
+        } catch (error) {
+            console.log('get_expired_products ' + error);
+            throw error;
+        }
+    }
+)
