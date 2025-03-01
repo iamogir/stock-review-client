@@ -11,7 +11,10 @@ const HomePage = () => {
     const {products, loading} = useSelector((state: RootState) => state.products);
 
     useEffect(() => {
-        dispatch(getAllProductsAsyncAction())
+        if (!products || products.length === 0) {
+            console.log('dispatched products in HomePage');
+            dispatch(getAllProductsAsyncAction())
+        }
     }, [])
 
     return (

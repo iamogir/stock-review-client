@@ -13,7 +13,10 @@ const WareHouse = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        dispatch(getAllProductsAsyncAction())
+        if (!products || products.length === 0) {
+            console.log('dispatched products in Warehouse');
+            dispatch(getAllProductsAsyncAction())
+        }
     }, [])
 
     return (
