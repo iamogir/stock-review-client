@@ -36,7 +36,7 @@ const HomePage = () => {
 
     return (
         loading ? <div>
-                    <div>{currentDate.getDate()}</div>
+                    <div className={style.date}>{currentDate.getDate()}</div>
                     <div>Loading...</div>
                 </div> :
         <div>
