@@ -32,11 +32,11 @@ export const getExpiredProductsAsyncAction = createAsyncThunk<ProductsResponse>(
 )
 
 export const getExpiringSoonProductsAsyncAction = createAsyncThunk<ProductsResponse, number, { rejectValue: string }> (
-    'products/get_expired_soon',
+    'products/get_expiring_soon',
     async(countDays: number, thunkAPI ): Promise<ProductsResponse | ReturnType<typeof thunkAPI.rejectWithValue>> => {
         try {
             const products: Product[] = [];
-            const response = await fetch(API + 'products/get_expired_soon/' + countDays);
+            const response = await fetch(API + 'products/get_expiring_soon/' + countDays);
             if (response.status === 200 || response.status === 304) {
                 const json = await response.json();
 

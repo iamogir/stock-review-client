@@ -2,3 +2,7 @@
     color: rgba(90, 223, 211, 0.4);
     background-color: brown;
 }
+
+.expProducts {
+    display: flex;
+}

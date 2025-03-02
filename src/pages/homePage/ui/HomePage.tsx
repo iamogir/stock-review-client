@@ -45,7 +45,7 @@ const HomePage = () => {
             <h1>Stock review</h1>
             <button onClick={() => navigate("/warehouse")}>to warehouse</button>
             <button onClick={() => navigate("/add_product")}>add product</button>
-            <div>
+            <div className={style.expProducts}>
                 <div>
                     <h2>Expired products:</h2>
                     {expiredProducts && expiredProducts.map((pr) => <ProductCard key={pr.name} product={pr}/>)}
