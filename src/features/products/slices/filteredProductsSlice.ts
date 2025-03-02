@@ -1,6 +1,9 @@
 import {FilteredProductsInitState} from "../../../entities/product/model/types.ts";
 import {createSlice, SliceCaseReducers, SliceSelectors} from "@reduxjs/toolkit";
-import {getExpiredProductsAsyncAction} from "../actions/filteredProductsAsyncActions.ts";
+import {
+    getExpiredProductsAsyncAction,
+    getExpiringSoonProductsAsyncAction
+} from "../actions/filteredProductsAsyncActions.ts";
 
 const initialState: FilteredProductsInitState = {
     expiredProducts: [],
@@ -38,6 +41,29 @@ const filteredProductsSlice = createSlice<FilteredProductsInitState, SliceCaseRe
                         state.expiredProducts = undefined;
                         state.expiredProducts ??= [];
                         state.expiredProducts.push(...action.payload.products || [] );
+                    }
+                )
+                .addCase(
+                    (getExpiringSoonProductsAsyncAction.pending),
+                    (state) => {
+                        state.loading = true;
+                        state.expiringSoonProducts = undefined;
+                        state.error = null;
+                    }
+                )
+                .addCase(
+                    (getExpiringSoonProductsAsyncAction.rejected),
+                    (state, action) => {
+                        state.loading = false;
+                        state.error = action.error.message as string;
+                    }
+                )
+                .addCase(
+                    (getExpiringSoonProductsAsyncAction.fulfilled),
+                    (state, action) => {
+                        state.loading = false;
+                        state.expiringSoonProducts ??= [];
+                        state.expiringSoonProducts.push(...action.payload.products || []);
                     }
                 )
         }
