@@ -6,7 +6,11 @@ import {
 } from "../../../features/products/actions/productsAsyncActions.ts";
 import {AppDispatch, RootState} from "../../../app/redux/store.ts";
 import ProductCard from "../../../entities/product/ui/ProductCard.tsx";
-import {getExpiredProductsAsyncAction} from "../../../features/products/actions/filteredProductsAsyncActions.ts";
+import {
+    getExpiredProductsAsyncAction,
+    getExpiringSoonProductsAsyncAction
+} from "../../../features/products/actions/filteredProductsAsyncActions.ts";
+import {EXPIRING_SOON_DAYS} from "../../../shared/consts/product.ts";
 
 const HomePage = () => {
 
@@ -22,6 +26,9 @@ const HomePage = () => {
         if (!expiredProducts || expiredProducts.length === 0) {
             dispatch(getExpiredProductsAsyncAction())
         }
+        if (!expiringSoonProducts || expiringSoonProducts.length === 0) {
+            dispatch(getExpiringSoonProductsAsyncAction(EXPIRING_SOON_DAYS))
+        }
     }, [])
 
     return (
@@ -30,8 +37,17 @@ const HomePage = () => {
             <h1>Stock review</h1>
             <button onClick={() => navigate("/warehouse")}>to warehouse</button>
             <button onClick={() => navigate("/add_product")}>add product</button>
-            <h2>Expired products:</h2>
-            {expiredProducts && expiredProducts.map((pr) => <ProductCard key={pr.name} product={pr}/>)}
+            <div>
+                <div>
+                    <h2>Expired products:</h2>
+                    {expiredProducts && expiredProducts.map((pr) => <ProductCard key={pr.name} product={pr}/>)}
+                </div>
+                <div>
+                    <h2>Expire in {EXPIRING_SOON_DAYS} days:</h2>
+                    {expiringSoonProducts && expiringSoonProducts.map((pr) => <ProductCard key={pr.name + '_exp'} product={pr}/>)}
+                </div>
+            </div>
+
         </div>
     );
 };
