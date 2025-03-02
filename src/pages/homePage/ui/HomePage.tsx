@@ -52,7 +52,8 @@ const HomePage = () => {
                 </div>
                 <div>
                     <h2>Expire in {EXPIRING_SOON_DAYS} days:</h2>
-                    {expiringSoonProducts && expiringSoonProducts.map((pr) => <ProductCard key={pr.name + '_exp'} product={pr}/>)}
+                    {expiringSoonProducts && expiringSoonProducts.length > 0 ? expiringSoonProducts.map((pr) => <ProductCard key={pr.name + '_exp'} product={pr}/>) :
+                    <p>No expired products for next {EXPIRING_SOON_DAYS} days. Great job!</p>}
                 </div>
             </div>
 
