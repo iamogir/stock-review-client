@@ -34,6 +34,13 @@ export type ProductsInitState = {
     error: string | null;
 }
 
+export type FilteredProductsInitState = {
+    expiredProducts: Product[] | undefined;
+    expiringSoonProducts: Product[] | undefined;
+    loading: boolean;
+    error: string | null;
+}
+
 export type ProductsResponse = {
     products: Product[] | null;
 }
