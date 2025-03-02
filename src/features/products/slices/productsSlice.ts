@@ -2,8 +2,8 @@ import {createSlice, SliceCaseReducers, SliceSelectors} from "@reduxjs/toolkit";
 import {
     addNewProductAsyncAction,
     getAllProductsAsyncAction,
-} from "./productsAsyncActions.ts";
-import {ProductsInitState} from "../../entities/product/model/types.ts";
+} from "../actions/productsAsyncActions.ts";
+import {ProductsInitState} from "../../../entities/product/model/types.ts";
 
 const initialState: ProductsInitState = {
     products: [],

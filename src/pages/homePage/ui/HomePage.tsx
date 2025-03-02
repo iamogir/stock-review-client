@@ -3,16 +3,17 @@ import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {
     getAllProductsAsyncAction,
-    getExpiredProductsAsyncAction
-} from "../../../features/products/productsAsyncActions.ts";
+} from "../../../features/products/actions/productsAsyncActions.ts";
 import {AppDispatch, RootState} from "../../../app/redux/store.ts";
 import ProductCard from "../../../entities/product/ui/ProductCard.tsx";
+import {getExpiredProductsAsyncAction} from "../../../features/products/actions/filteredProductsAsyncActions.ts";
 
 const HomePage = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
-    const {products, expiredProducts, loading} = useSelector((state: RootState) => state.products);
+    const {products, loading} = useSelector((state: RootState) => state.products);
+    const {expiredProducts, expiringSoonProducts} = useSelector((state: RootState)=> state.filteredProducts)
 
     useEffect(() => {
         if (!products || products.length === 0) {
