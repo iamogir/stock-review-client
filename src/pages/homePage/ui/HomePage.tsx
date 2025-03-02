@@ -11,6 +11,7 @@ import {
     getExpiringSoonProductsAsyncAction
 } from "../../../features/products/actions/filteredProductsAsyncActions.ts";
 import {EXPIRING_SOON_DAYS} from "../../../shared/consts/product.ts";
+import style from './homePage.module.css'
 
 const HomePage = () => {
 
@@ -18,6 +19,8 @@ const HomePage = () => {
     const dispatch = useDispatch<AppDispatch>();
     const {products, loading} = useSelector((state: RootState) => state.products);
     const {expiredProducts, expiringSoonProducts} = useSelector((state: RootState)=> state.filteredProducts)
+
+    const currentDate = new Date();
 
     useEffect(() => {
         if (!products || products.length === 0) {
@@ -32,8 +35,12 @@ const HomePage = () => {
     }, [])
 
     return (
-        loading ? <div>Loading...</div> :
+        loading ? <div>
+                    <div>{currentDate.getDate()}</div>
+                    <div>Loading...</div>
+                </div> :
         <div>
+            <div className={style.date}>{currentDate.getDate()}</div>
             <h1>Stock review</h1>
             <button onClick={() => navigate("/warehouse")}>to warehouse</button>
             <button onClick={() => navigate("/add_product")}>add product</button>
