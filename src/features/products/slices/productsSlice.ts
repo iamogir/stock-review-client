@@ -1,6 +1,6 @@
 import {createSlice, SliceCaseReducers, SliceSelectors} from "@reduxjs/toolkit";
 import {
-    addNewProductAsyncAction,
+    addNewProductAsyncAction, deleteProductByIdAsyncAction,
     getAllProductsAsyncAction,
 } from "../actions/productsAsyncActions.ts";
 import {ProductsInitState} from "../../../entities/product/model/types.ts";
@@ -66,6 +66,28 @@ const productsSlice = createSlice<ProductsInitState, SliceCaseReducers<ProductsI
                         } else {
                             state.products = [ action.payload ];
                         }
+                    }
+                )
+                .addCase(
+                    (deleteProductByIdAsyncAction.pending),
+                    (state) => {
+                        state.loading = true;
+                        state.error = null;
+                    }
+                )
+                .addCase(
+                    (deleteProductByIdAsyncAction.rejected),
+                    (state, action) => {
+                        state.loading = false;
+                        state.error = action.error.message as string;
+                    }
+                )
+                .addCase(
+                    (deleteProductByIdAsyncAction.fulfilled),
+                    (state, action) => {
+                        state.loading = false;
+                        state.error = null;
+                        state.products = state.products?.filter((pr) => pr.id !== action.payload);
                     }
                 )
         }
