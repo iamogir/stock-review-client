@@ -65,3 +65,23 @@ export const addNewProductAsyncAction = createAsyncThunk<Product, Product, { rej
         }
     }
 )
+
+export const deleteProductByIdAsyncAction = createAsyncThunk<string, string, { rejectValue: string }>(
+    'product/delete_product_ by_ id',
+    async(id: string, thunkAPI): Promise<string | ReturnType<typeof thunkAPI.rejectWithValue>> => {
+        try{
+            const response = await fetch(API + '/delete_product_by_id/' + id);
+            if (response.status === 200 || response.status === 204) {
+                const json = await response.json();
+                return json.id;
+            } else {
+                throw new Error(response.statusText);
+            }
+        } catch (error) {
+            console.log('delete_product_by_id', error);
+            return thunkAPI.rejectWithValue(
+                error instanceof Error ? error.message : 'Something went wrong'
+            )
+        }
+    }
+)
