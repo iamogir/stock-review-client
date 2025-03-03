@@ -47,6 +47,7 @@ const productsSlice = createSlice<ProductsInitState, SliceCaseReducers<ProductsI
                     (state) => {
                         state.loading = true;
                         state.error = null;
+                        console.log('pending');
                     }
                 )
                 .addCase(
@@ -54,6 +55,7 @@ const productsSlice = createSlice<ProductsInitState, SliceCaseReducers<ProductsI
                     (state, action) => {
                         state.loading = false;
                         state.error = action.error.message as string;
+                        console.log('rejected');
                     }
                 )
                 .addCase(
@@ -61,6 +63,7 @@ const productsSlice = createSlice<ProductsInitState, SliceCaseReducers<ProductsI
                     (state, action) => {
                         state.loading = false;
                         state.error = null;
+                        console.log('fullfilled');
                         if (state.products) {
                             state.products = [ ...state.products, action.payload ];
                         } else {

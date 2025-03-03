@@ -56,7 +56,6 @@ const HomePage = () => {
                     <p>No expired products for next {EXPIRING_SOON_DAYS} days. Great job!</p>}
                 </div>
             </div>
-
         </div>
     );
 };

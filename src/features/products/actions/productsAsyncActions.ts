@@ -41,10 +41,10 @@ export const addNewProductAsyncAction = createAsyncThunk<Product, Product, { rej
                 method: "POST",
                 headers: { "Content-Type": "application/json"},
                 body: JSON.stringify(newProduct)});
-            console.log(JSON.stringify(newProduct))
-            if (response.status === 200 || response.status === 304) {
+            console.log(response.status)
+
+            if (response.status === 201) {
                 const json = await response.json();
-                console.log(json);
 
                 const returnedProduct = fromJSON(json);
 
