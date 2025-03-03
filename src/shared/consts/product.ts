@@ -1,5 +1,7 @@
 import {FormatObject} from "../../entities/product/model/types.ts";
 
+export const EXPIRING_SOON_DAYS = 3;
+
 export const weightUnits: FormatObject[] = [
     { key: 'kg', value: 'KG'},
     { key: 'g', value: 'G'},

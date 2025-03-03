@@ -2,7 +2,7 @@ import style from './addProductPage.module.css'
 import {FormEvent, useEffect, useRef} from "react";
 import {Product} from "../../../entities/product/model/types.ts";
 import {useDispatch} from "react-redux";
-import {addNewProductAsyncAction} from "../../../features/products/productsAsyncActions.ts";
+import {addNewProductAsyncAction} from "../../../features/products/actions/productsAsyncActions.ts";
 import {AppDispatch} from "../../../app/redux/store.ts";
 import {useNavigate} from "react-router-dom";
 import {statusUnits, weightUnits} from "../../../shared/consts/product.ts";

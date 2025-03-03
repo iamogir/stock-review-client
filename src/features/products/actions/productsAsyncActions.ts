@@ -1,7 +1,7 @@
 
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {Product, ProductDto, ProductsResponse} from "../../entities/product/model/types.ts";
-import {fromJSON, fromServerObject} from "../../entities/product/lib/mapProduct.ts";
+import {Product, ProductDto, ProductsResponse} from "../../../entities/product/model/types.ts";
+import {fromServerObject} from "../../../entities/product/lib/mapProduct.ts";
 
 const API = import.meta.env.VITE_API_URL;
 
@@ -41,12 +41,11 @@ export const addNewProductAsyncAction = createAsyncThunk<Product, Product, { rej
                 method: "POST",
                 headers: { "Content-Type": "application/json"},
                 body: JSON.stringify(newProduct)});
-            console.log(JSON.stringify(newProduct))
-            if (response.status === 200 || response.status === 304) {
+
+            if (response.status === 201) {
                 const json = await response.json();
                 console.log(json);
-
-                const returnedProduct = fromJSON(json);
+                const returnedProduct = fromServerObject(json);
 
                 if (!returnedProduct) {
                     throw new Error('Unable to add product ' + response.statusText);

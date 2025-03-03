@@ -1,6 +1,9 @@
 import {createSlice, SliceCaseReducers, SliceSelectors} from "@reduxjs/toolkit";
-import {addNewProductAsyncAction, getAllProductsAsyncAction} from "./productsAsyncActions.ts";
-import {ProductsInitState} from "../../entities/product/model/types.ts";
+import {
+    addNewProductAsyncAction,
+    getAllProductsAsyncAction,
+} from "../actions/productsAsyncActions.ts";
+import {ProductsInitState} from "../../../entities/product/model/types.ts";
 
 const initialState: ProductsInitState = {
     products: [],
@@ -34,8 +37,9 @@ const productsSlice = createSlice<ProductsInitState, SliceCaseReducers<ProductsI
                     (getAllProductsAsyncAction.fulfilled),
                     (state, action) => {
                         state.loading = false;
-                        state.products ??= [];
-                        state.products.push(...action.payload.products || []);
+                        // state.products ??= [];
+                        if (action.payload.products)
+                            state.products =  [ ...action.payload.products ];
                     }
                 )
                 .addCase(
@@ -58,7 +62,7 @@ const productsSlice = createSlice<ProductsInitState, SliceCaseReducers<ProductsI
                         state.loading = false;
                         state.error = null;
                         if (state.products) {
-                            state.products.push(action.payload);
+                            state.products = [ ...state.products, action.payload ];
                         } else {
                             state.products = [ action.payload ];
                         }

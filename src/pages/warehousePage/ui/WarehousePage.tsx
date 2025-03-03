@@ -3,7 +3,7 @@ import ProductCard from "../../../entities/product/ui/ProductCard.tsx";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "../../../app/redux/store.ts";
 import {useEffect} from "react";
-import {getAllProductsAsyncAction} from "../../../features/products/productsAsyncActions.ts";
+import {getAllProductsAsyncAction} from "../../../features/products/actions/productsAsyncActions.ts";
 import {useNavigate} from "react-router-dom";
 
 const WareHouse = () => {
@@ -13,7 +13,9 @@ const WareHouse = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        dispatch(getAllProductsAsyncAction())
+        if (!products || products.length === 0) {
+            dispatch(getAllProductsAsyncAction())
+        }
     }, [])
 
     return (

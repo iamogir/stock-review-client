@@ -1,0 +1,8 @@
+.date {
+    color: white;
+    background-color: rgba(128, 128, 128, 0.84);
+}
+
+.expProducts {
+    display: flex;
+}
