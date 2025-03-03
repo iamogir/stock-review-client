@@ -12,7 +12,7 @@ const DeleteProductButton = ({id}: Props) => {
 
     return (
         <div>
-            <button onClick={() =>dispatch(deleteProductByIdAsyncAction(id))}>Delete</button>
+            <button onClick={() => dispatch(deleteProductByIdAsyncAction(id))}>Delete</button>
         </div>
     );
 };
