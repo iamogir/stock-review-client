@@ -22,7 +22,7 @@ const ProductCard = ({product}: Props) => {
             <p className={style.temp}>Sell by: {dateExpiration.getDate()}/{dateExpiration.getUTCMonth() + 1}/{dateExpiration.getFullYear()}</p>
             <p>Location: {product.storageLocation}</p>
             <h3>Status: {product.status ? 'in stock' : 'out of stock'}</h3>
-            <DeleteProductButton id={product.id} />
+            <DeleteProductButton id={product.id ?? ''} />
             <br/>
         </div>
     );

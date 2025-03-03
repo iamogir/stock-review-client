@@ -70,6 +70,9 @@ export const deleteProductByIdAsyncAction = createAsyncThunk<string, string, { r
     'product/delete_product_ by_ id',
     async(id: string, thunkAPI): Promise<string | ReturnType<typeof thunkAPI.rejectWithValue>> => {
         try{
+            if (id === '')
+                throw new Error('NO ID !!!')
+
             const response = await fetch(API + '/delete_product_by_id/' + id);
             if (response.status === 200 || response.status === 204) {
                 const json = await response.json();
