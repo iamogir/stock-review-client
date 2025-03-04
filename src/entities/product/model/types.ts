@@ -2,6 +2,13 @@ export type ProductDto = {
     _id: string,
     name: string,
     category: string,
+    brand: string,
+    status: boolean,
+}
+
+export type StockEntryDto = {
+    _id: string,
+    productId: ProductDto,
     weight: number,
     unitWeight: string,
     quantityUnits: number,
@@ -11,38 +18,43 @@ export type ProductDto = {
     barcode?: string,
     supplier: string,
     storageLocation: string,
-    status: boolean,
+
 }
 
 export interface Product {
-    id?: string,
+    productId?: string,
     name: string,
     category: string,
+    brand: string,
+    status: boolean,
+}
+
+export interface StockEntry extends Product {
+    entryId?: string,
     weight: number,
     unitWeight: string,
     quantityUnits: number,
     expirationDate: Date,
     supplier: string,
     storageLocation: string,
-    status: boolean,
 }
 
 export type ProductsInitState = {
-    products: Product[] | undefined;
+    stockEntries: StockEntry[] | undefined;
     // expiredProducts: Product[] | undefined;
     loading: boolean;
     error: string | null;
 }
 
 export type FilteredProductsInitState = {
-    expiredProducts: Product[] | undefined;
-    expiringSoonProducts: Product[] | undefined;
+    expiredProducts: StockEntry[] | undefined;
+    expiringSoonProducts: StockEntry[] | undefined;
     loading: boolean;
     error: string | null;
 }
 
 export type ProductsResponse = {
-    products: Product[] | null;
+    stockEntries: StockEntry[] | null;
 }
 
 export type FormatObject = {
