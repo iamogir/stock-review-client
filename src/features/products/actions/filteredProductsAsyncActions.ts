@@ -1,24 +1,24 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {Product, ProductDto, ProductsResponse} from "../../../entities/product/model/types.ts";
-import {fromServerObject} from "../../../entities/product/lib/mapProduct.ts";
+import { StockEntry, StockEntryDto, StockEntryResponse} from "../../../entities/product/model/types.ts";
+import {fromServerStockEntryObject} from "../../../entities/product/lib/mapProduct.ts";
 
 const API = import.meta.env.VITE_API_URL;
 
-export const getExpiredProductsAsyncAction = createAsyncThunk<ProductsResponse>(
+export const getExpiredProductsAsyncAction = createAsyncThunk<StockEntryResponse>(
     'stock_entry/get_expired_products',
-    async(): Promise<ProductsResponse> => {
+    async(): Promise<StockEntryResponse> => {
         try{
-            const expiredProducts: Product[] = [];
+            const expiredProducts: StockEntry[] = [];
             const response = await fetch(API + 'stock_entries/get_expired_products');
             if (response.status === 200 || response.status === 304) {
                 const json = await response.json();
 
-                json.map((pr: ProductDto) => expiredProducts.push(fromServerObject(pr)));
+                json.map((pr: StockEntryDto) => expiredProducts.push(fromServerStockEntryObject(pr)));
 
                 if (expiredProducts.length === 0) {
                     throw new Error('No expired products. Great job!');
                 } else {
-                    return { products: expiredProducts };
+                    return { stockEntries: expiredProducts };
                 }
             } else {
                 throw new Error(response.statusText);
@@ -30,21 +30,21 @@ export const getExpiredProductsAsyncAction = createAsyncThunk<ProductsResponse>(
     }
 )
 
-export const getExpiringSoonProductsAsyncAction = createAsyncThunk<ProductsResponse, number, { rejectValue: string }> (
+export const getExpiringSoonProductsAsyncAction = createAsyncThunk<StockEntryResponse, number, { rejectValue: string }> (
     'stock_entry/get_expiring_soon',
-    async(countDays: number, thunkAPI ): Promise<ProductsResponse | ReturnType<typeof thunkAPI.rejectWithValue>> => {
+    async(countDays: number, thunkAPI ): Promise<StockEntryResponse | ReturnType<typeof thunkAPI.rejectWithValue>> => {
         try {
-            const products: Product[] = [];
+            const products: StockEntry[] = [];
             const response = await fetch(API + 'stock_entries/get_expiring_soon/' + countDays);
             if (response.status === 200 || response.status === 304) {
                 const json = await response.json();
 
-                json.map((pr: ProductDto) => products.push(fromServerObject(pr)));
+                json.map((pr: StockEntryDto) => products.push(fromServerStockEntryObject(pr)));
 
                 if (products.length === 0) {
                     throw new Error('No expired products for next ' + countDays + ' days. Great job!')
                 } else {
-                    return { products };
+                    return { stockEntries: products };
                 }
 
             } else {
