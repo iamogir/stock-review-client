@@ -2,7 +2,7 @@ import {useNavigate} from "react-router-dom";
 import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {
-    getAllProductsAsyncAction,
+    getAllStockEntriesAsyncAction,
 } from "../../../features/products/actions/productsAsyncActions.ts";
 import {AppDispatch, RootState} from "../../../app/redux/store.ts";
 import ProductCard from "../../../entities/product/ui/ProductCard.tsx";
@@ -17,15 +17,15 @@ const HomePage = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
-    const {products, loading} = useSelector((state: RootState) => state.products);
+    const {stockEntries, loading} = useSelector((state: RootState) => state.products);
     const {expiredProducts, expiringSoonProducts} = useSelector((state: RootState)=> state.filteredProducts)
 
     const currentDate = new Date(Date.now());
     const dateString = currentDate.getDate() + '/' + currentDate.getMonth() + '/' + currentDate.getFullYear();
 
     useEffect(() => {
-        if (!products || products.length === 0) {
-            dispatch(getAllProductsAsyncAction())
+        if (!stockEntries || stockEntries.length === 0) {
+            dispatch(getAllStockEntriesAsyncAction())
         }
         if (!expiredProducts || expiredProducts.length === 0) {
             dispatch(getExpiredProductsAsyncAction())
