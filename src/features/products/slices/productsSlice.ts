@@ -1,12 +1,12 @@
 import {createSlice, SliceCaseReducers, SliceSelectors} from "@reduxjs/toolkit";
 import {
-    addNewProductAsyncAction, deleteProductByIdAsyncAction,
-    getAllProductsAsyncAction,
+    addNewStockEntryAsyncAction, deleteStockEntryByIdAsyncAction,
+    getAllStockEntriesAsyncAction,
 } from "../actions/productsAsyncActions.ts";
 import {ProductsInitState} from "../../../entities/product/model/types.ts";
 
 const initialState: ProductsInitState = {
-    products: [],
+    stockEntries: [],
     loading: false,
     error: 'Any error'
 }
@@ -19,75 +19,75 @@ const productsSlice = createSlice<ProductsInitState, SliceCaseReducers<ProductsI
         extraReducers: (builder) => {
             builder
                 .addCase(
-                    (getAllProductsAsyncAction.pending),
+                    (getAllStockEntriesAsyncAction.pending),
                     (state) => {
                         state.loading = true;
-                        state.products = undefined;
+                        state.stockEntries = undefined;
                         state.error = null;
                     }
                 )
                 .addCase(
-                    (getAllProductsAsyncAction.rejected),
+                    (getAllStockEntriesAsyncAction.rejected),
                     (state, action) => {
                         state.loading = false;
                         state.error = action.error.message as string;
                     }
                 )
                 .addCase(
-                    (getAllProductsAsyncAction.fulfilled),
+                    (getAllStockEntriesAsyncAction.fulfilled),
                     (state, action) => {
                         state.loading = false;
                         // state.products ??= [];
-                        if (action.payload.products)
-                            state.products =  [ ...action.payload.products ];
+                        if (action.payload.stockEntries)
+                            state.stockEntries =  [ ...action.payload.stockEntries ];
                     }
                 )
                 .addCase(
-                    (addNewProductAsyncAction.pending),
+                    (addNewStockEntryAsyncAction.pending),
                     (state) => {
                         state.loading = true;
                         state.error = null;
                     }
                 )
                 .addCase(
-                    (addNewProductAsyncAction.rejected),
+                    (addNewStockEntryAsyncAction.rejected),
                     (state, action) => {
                         state.loading = false;
                         state.error = action.error.message as string;
                     }
                 )
                 .addCase(
-                    (addNewProductAsyncAction.fulfilled),
+                    (addNewStockEntryAsyncAction.fulfilled),
                     (state, action) => {
                         state.loading = false;
                         state.error = null;
-                        if (state.products) {
-                            state.products = [ ...state.products, action.payload ];
+                        if (state.stockEntries) {
+                            state.stockEntries = [ ...state.stockEntries, action.payload ];
                         } else {
-                            state.products = [ action.payload ];
+                            state.stockEntries = [ action.payload ];
                         }
                     }
                 )
                 .addCase(
-                    (deleteProductByIdAsyncAction.pending),
+                    (deleteStockEntryByIdAsyncAction.pending),
                     (state) => {
                         state.loading = true;
                         state.error = null;
                     }
                 )
                 .addCase(
-                    (deleteProductByIdAsyncAction.rejected),
+                    (deleteStockEntryByIdAsyncAction.rejected),
                     (state, action) => {
                         state.loading = false;
                         state.error = action.error.message as string;
                     }
                 )
                 .addCase(
-                    (deleteProductByIdAsyncAction.fulfilled),
+                    (deleteStockEntryByIdAsyncAction.fulfilled),
                     (state, action) => {
                         state.loading = false;
                         state.error = null;
-                        state.products = state.products?.filter((pr) => pr.id !== action.payload);
+                        state.stockEntries = state.stockEntries?.filter((pr) => pr.entryId !== action.payload);
                     }
                 )
         }
