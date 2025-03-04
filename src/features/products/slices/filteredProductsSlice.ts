@@ -40,8 +40,8 @@ const filteredProductsSlice = createSlice<FilteredProductsInitState, SliceCaseRe
                         state.loading = false;
                         state.expiredProducts = undefined;
                         state.expiredProducts ??= [];
-                        if (action.payload.products)
-                            state.expiredProducts = [ ...state.expiredProducts, ...action.payload.products ];
+                        if (action.payload.stockEntries)
+                            state.expiredProducts = [ ...state.expiredProducts, ...action.payload.stockEntries ];
                     }
                 )
                 .addCase(
@@ -64,8 +64,8 @@ const filteredProductsSlice = createSlice<FilteredProductsInitState, SliceCaseRe
                     (state, action) => {
                         state.loading = false;
                         state.expiringSoonProducts ??= [];
-                        if (action.payload.products)
-                            state.expiringSoonProducts = [ ...state.expiringSoonProducts, ...action.payload.products ];
+                        if (action.payload.stockEntries)
+                            state.expiringSoonProducts = [ ...state.expiringSoonProducts, ...action.payload.stockEntries ];
                     }
                 )
         }
