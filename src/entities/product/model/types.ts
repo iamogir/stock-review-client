@@ -53,7 +53,7 @@ export type FilteredProductsInitState = {
     error: string | null;
 }
 
-export type ProductsResponse = {
+export type StockEntryResponse = {
     stockEntries: StockEntry[] | null;
 }
 
