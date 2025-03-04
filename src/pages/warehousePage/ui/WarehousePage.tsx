@@ -1,4 +1,4 @@
-import {Product} from "../../../entities/product/model/types.ts";
+import { StockEntry} from "../../../entities/product/model/types.ts";
 import ProductCard from "../../../entities/product/ui/ProductCard.tsx";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "../../../app/redux/store.ts";
@@ -24,13 +24,13 @@ const WareHouse = () => {
             <button onClick={() => navigate('/home')}>Home</button>
             <button onClick={() => navigate("/add_product")}>add product</button>
             <h2>All products in stock</h2>
-            {stockEntries && stockEntries.length > 0 ? stockEntries?.filter(pr => pr.status).map((pr: Product) =>
-                    <ProductCard product={pr} key={pr.name}/>) :
+            {stockEntries && stockEntries.length > 0 ? stockEntries?.filter(pr => pr.status).map((pr: StockEntry) =>
+                    <ProductCard stockEntry={pr} key={pr.name}/>) :
                 <li>no products in stock</li>}
             <h2>All products out of stock</h2>
             {stockEntries && stockEntries.length > 0 ? stockEntries?.filter(pr => !pr.status)
-                .map((pr: Product) =>
-                    <ProductCard product={pr} key={pr.name}/>) : <p>no products out of stock</p>}
+                .map((pr: StockEntry) =>
+                    <ProductCard stockEntry={pr} key={pr.name}/>) : <p>no products out of stock</p>}
         </div>
     );
 };

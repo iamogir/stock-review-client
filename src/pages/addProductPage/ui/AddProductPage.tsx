@@ -1,8 +1,8 @@
 import style from './addProductPage.module.css'
 import {FormEvent, useEffect, useRef} from "react";
-import {Product} from "../../../entities/product/model/types.ts";
+import { StockEntry} from "../../../entities/product/model/types.ts";
 import {useDispatch} from "react-redux";
-import {addNewProductAsyncAction} from "../../../features/products/actions/productsAsyncActions.ts";
+import {addNewStockEntryAsyncAction} from "../../../features/products/actions/productsAsyncActions.ts";
 import {AppDispatch} from "../../../app/redux/store.ts";
 import {useNavigate} from "react-router-dom";
 import {statusUnits, weightUnits} from "../../../shared/consts/product.ts";
@@ -17,8 +17,9 @@ const AddProductPage = () => {
     const addProduct = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const eventTarget = event.target as HTMLFormElement;
-        const infoObject: Product = {
+        const infoObject: StockEntry = {
             name: eventTarget['productName'].value,
+            brand: eventTarget['brand'].value,
             category: eventTarget['category'].value,
             weight: eventTarget['weight'].value,
             unitWeight: eventTarget['unitWeight'].value,
@@ -26,12 +27,12 @@ const AddProductPage = () => {
             expirationDate: new Date(eventTarget['expDate'].value),
             supplier: eventTarget['supplier'].value,
             storageLocation: eventTarget['location'].value,
-            status: eventTarget['status'].value,
+            status: eventTarget['status'].value
         };
 
         console.log(eventTarget['expDate'].value);
 
-        dispatch(addNewProductAsyncAction(infoObject));
+        dispatch(addNewStockEntryAsyncAction(infoObject));
     }
 
     const setDropMenuValue = (event: React.MouseEvent<HTMLElement>) => {
@@ -79,6 +80,8 @@ const AddProductPage = () => {
 
                 <label htmlFor={'productName'}>Name</label>
                 <input type={'text'} id={'productName'} name={'productName'} />
+                <label htmlFor={'brand'}>Unit</label>
+                <input type={'text'} id={'brand'} name={'brand'} />
                 <label htmlFor={'category'}>Category</label>
                 <input type={'text'} id={'category'} name={'category'} />
                 <label htmlFor={'weight'}>Weight</label>
