@@ -6,11 +6,11 @@ import {fromServerObject} from "../../../entities/product/lib/mapProduct.ts";
 const API = import.meta.env.VITE_API_URL;
 
 export const getAllProductsAsyncAction = createAsyncThunk<ProductsResponse>(
-    'product/get_all_products',
+    'stock_entry/get_all_products',
     async(): Promise<ProductsResponse> => {
         try {
             const products: Product[] = [];
-            const response = await fetch(API + 'products/get_all_products');
+            const response = await fetch(API + 'stock_entries/get_all_products');
             if (response.status === 200 || response.status === 304) {
                 const json = await response.json();
 
@@ -34,10 +34,10 @@ export const getAllProductsAsyncAction = createAsyncThunk<ProductsResponse>(
 )
 
 export const addNewProductAsyncAction = createAsyncThunk<Product, Product, { rejectValue: string }>(
-    'product/add_new_product',
+    'stock_entry/add_new_product',
     async(newProduct: Product, thunkAPI): Promise<Product | ReturnType<typeof thunkAPI.rejectWithValue>> => {
         try {
-            const response = await fetch(API + 'products/add_new_product', {
+            const response = await fetch(API + 'stock_entries/add_new_product', {
                 method: "POST",
                 headers: { "Content-Type": "application/json"},
                 body: JSON.stringify(newProduct)});
@@ -67,7 +67,7 @@ export const addNewProductAsyncAction = createAsyncThunk<Product, Product, { rej
 )
 
 export const deleteProductByIdAsyncAction = createAsyncThunk<string, string, { rejectValue: string }>(
-    'product/delete_product_by_id',
+    'stock_entry/delete_product_by_id',
     async(id: string, thunkAPI): Promise<string | ReturnType<typeof thunkAPI.rejectWithValue>> => {
         try{
             if (id === '')
@@ -75,7 +75,7 @@ export const deleteProductByIdAsyncAction = createAsyncThunk<string, string, { r
 
             console.log('DELETE')
 
-            const response = await fetch(API + 'products/delete_product_by_id/' + id, {
+            const response = await fetch(API + 'stock_entries/delete_product_by_id/' + id, {
                 method: "DELETE",
                 headers: { "Content-Type": "text/plain"}
             });

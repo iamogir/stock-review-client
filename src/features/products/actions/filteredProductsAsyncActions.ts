@@ -5,11 +5,11 @@ import {fromServerObject} from "../../../entities/product/lib/mapProduct.ts";
 const API = import.meta.env.VITE_API_URL;
 
 export const getExpiredProductsAsyncAction = createAsyncThunk<ProductsResponse>(
-    'product/get_expired_products',
+    'stock_entry/get_expired_products',
     async(): Promise<ProductsResponse> => {
         try{
             const expiredProducts: Product[] = [];
-            const response = await fetch(API + 'products/get_expired_products');
+            const response = await fetch(API + 'stock_entries/get_expired_products');
             if (response.status === 200 || response.status === 304) {
                 const json = await response.json();
 
@@ -31,11 +31,11 @@ export const getExpiredProductsAsyncAction = createAsyncThunk<ProductsResponse>(
 )
 
 export const getExpiringSoonProductsAsyncAction = createAsyncThunk<ProductsResponse, number, { rejectValue: string }> (
-    'products/get_expiring_soon',
+    'stock_entry/get_expiring_soon',
     async(countDays: number, thunkAPI ): Promise<ProductsResponse | ReturnType<typeof thunkAPI.rejectWithValue>> => {
         try {
             const products: Product[] = [];
-            const response = await fetch(API + 'products/get_expiring_soon/' + countDays);
+            const response = await fetch(API + 'stock_entries/get_expiring_soon/' + countDays);
             if (response.status === 200 || response.status === 304) {
                 const json = await response.json();
 
