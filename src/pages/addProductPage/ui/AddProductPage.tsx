@@ -1,8 +1,7 @@
 import style from './addProductPage.module.css'
 import {FormEvent, useEffect, useRef} from "react";
-import {Product, StockEntry} from "../../../entities/product/model/types.ts";
+import {Product} from "../../../entities/product/model/types.ts";
 import {useDispatch} from "react-redux";
-import {addNewStockEntryAsyncAction} from "../../../features/products/actions/productsAsyncActions.ts";
 import {AppDispatch} from "../../../app/redux/store.ts";
 import {useNavigate} from "react-router-dom";
 import {statusUnits, weightUnits} from "../../../shared/consts/product.ts";
@@ -27,7 +26,7 @@ const AddProductPage = () => {
 
         console.log(eventTarget['expDate'].value);
 
-        // dispatch(addNewStockEntryAsyncAction(infoObject));
+        dispatch(addNewProductAsyncAction(infoObject));
     }
 
     const setDropMenuValue = (event: React.MouseEvent<HTMLElement>) => {

@@ -1,13 +1,30 @@
 import style from './addNewSupplyPage.css'
 import {useNavigate} from "react-router-dom";
 import * as React from "react";
+import {FormEvent} from "react";
+import {Product, StockEntry} from "../../../entities/product/model/types.ts";
 
 const AddNewSupplyPage = () => {
 
     const navigate = useNavigate();
 
-    const addSupply = () => {
+    const addSupply = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const eventTarget = event.target as HTMLFormElement;
+        const infoObject: StockEntry = {
+            productId: eventTarget['type'].value, //TODO: adding product!
+            weight: eventTarget['weight'].value,
+            quantity: eventTarget['quantity'].value,
+            expirationDate: eventTarget['expDate'].value,
+            barcode: eventTarget['barcode'].value,
+            supplier: eventTarget['supplier'].value,
+            location: eventTarget['location'].value,
+        };
 
+        console.log(eventTarget['expDate'].value);
+
+        dispatch(addNewProductAsyncAction(infoObject));
+    }
     }
 
     return (
