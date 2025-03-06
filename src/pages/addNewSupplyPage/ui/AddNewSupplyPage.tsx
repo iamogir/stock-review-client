@@ -1,5 +1,6 @@
 import style from './addNewSupplyPage.css'
 import {useNavigate} from "react-router-dom";
+import * as React from "react";
 
 const AddNewSupplyPage = () => {
 
@@ -16,6 +17,26 @@ const AddNewSupplyPage = () => {
 
             <form className={style.form} onSubmit={addSupply}>
 
+                <label htmlFor={'type'}>Type og product</label>
+                <input type={'hidden'} id={'type'} name={'type'}/>
+
+                <label htmlFor={'weight'}>Weight</label>
+                <input type={'number'} min={0} id={'weight'} name={'weight'} />
+                <label htmlFor={'quantity'}>Quantity units</label>
+                <input type={'number'} min={0} id={'quantity'} name={'quantity'} />
+                <label htmlFor={'expDate'}>Best before:</label>
+                <input type={'date'} id={'expDate'} name={'expDate'} />
+                <label htmlFor={'barcode'}>Barcode</label>
+                <input type={'number'} min={100000000000} id={'barcode'} name={'barcode'} />
+                <label htmlFor={'supplier'}>Supplier</label>
+                <input type={'text'} id={'supplier'} name={'supplier'} />
+                <label htmlFor={'location'}>Location</label>
+                <input type={'text'} id={'location'} name={'location'} />
+
+                <button>
+                    <span>Add product</span>
+                    <input type="submit" style={{display: 'none'}}/>
+                </button>
             </form>
 
         </div>
