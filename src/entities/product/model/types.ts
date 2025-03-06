@@ -13,24 +13,25 @@ export type StockEntryDto = {
     unitWeight: string,
     quantityUnits: number,
     expirationDate: Date,
-    createdAt: Date,
-    updatedAt: Date,
+    // createdAt: Date,
+    // updatedAt: Date,
     barcode?: string,
     supplier: string,
     storageLocation: string,
 
 }
 
-export interface Product {
-    productId?: string,
+export type Product = {
+    id?: string,
     name: string,
     category: string,
     brand: string,
     status: boolean,
 }
 
-export interface StockEntry extends Product {
-    entryId?: string,
+export type StockEntry = {
+    id?: string,
+    productId: Product,
     weight: number,
     unitWeight: string,
     quantityUnits: number,

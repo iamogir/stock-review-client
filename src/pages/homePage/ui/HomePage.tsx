@@ -45,6 +45,7 @@ const HomePage = () => {
             <h1>Stock review</h1>
             <button onClick={() => navigate("/warehouse")}>to warehouse</button>
             <button onClick={() => navigate("/add_product")}>add product</button>
+            <button onClick={() => navigate("/add_new_supply")}>add new supply</button>
             <div className={style.expProducts}>
                 <div>
                     <h2>Expired products:</h2>
