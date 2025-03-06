@@ -15,7 +15,6 @@ export function fromServerStockEntryObject(obj: StockEntryDto): StockEntry {
         id: obj._id,
         productId: product,
         weight: obj.weight,
-        unitWeight: obj.unitWeight,
         quantityUnits: obj.quantityUnits,
         expirationDate: obj.expirationDate,
         supplier: obj.supplier,
@@ -29,6 +28,7 @@ export function fromServerProductObject(obj: ProductDto): Product {
         name: obj.name,
         category: obj.category,
         brand: obj.brand,
+        unitWeight: obj.unitWeight,
         status: obj.status,
     }
 }
