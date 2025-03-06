@@ -36,6 +36,7 @@ export type StockEntry = {
     weight: number,
     quantityUnits: number,
     expirationDate: Date,
+    barcode?: string,
     supplier: string,
     storageLocation: string,
 }

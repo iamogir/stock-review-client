@@ -1,12 +1,14 @@
 import style from './addNewSupplyPage.css'
 import {useNavigate} from "react-router-dom";
-import * as React from "react";
 import {FormEvent} from "react";
 import {Product, StockEntry} from "../../../entities/product/model/types.ts";
+import {addNewStockEntryAsyncAction} from "../../../features/products/actions/productsAsyncActions.ts";
+import {useDispatch} from "react-redux";
 
 const AddNewSupplyPage = () => {
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const addSupply = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -14,17 +16,19 @@ const AddNewSupplyPage = () => {
         const infoObject: StockEntry = {
             productId: eventTarget['type'].value, //TODO: adding product!
             weight: eventTarget['weight'].value,
-            quantity: eventTarget['quantity'].value,
+            quantityUnits: eventTarget['quantity'].value,
             expirationDate: eventTarget['expDate'].value,
-            barcode: eventTarget['barcode'].value,
             supplier: eventTarget['supplier'].value,
-            location: eventTarget['location'].value,
+            storageLocation: eventTarget['location'].value,
         };
+
+        const barcode = eventTarget['barcode'].value;
+        if (barcode && barcode.length > 0 && barcode !== '')
+            infoObject.barcode = barcode;
 
         console.log(eventTarget['expDate'].value);
 
-        dispatch(addNewProductAsyncAction(infoObject));
-    }
+        dispatch(addNewStockEntryAsyncAction(infoObject));
     }
 
     return (
