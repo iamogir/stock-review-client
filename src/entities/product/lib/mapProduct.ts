@@ -7,13 +7,10 @@ import {Product, ProductDto, StockEntry, StockEntryDto} from "../model/types.ts"
 
 export function fromServerStockEntryObject(obj: StockEntryDto): StockEntry {
     console.log(obj.productId)
-    const product = fromServerProductObject(obj.productId);
-
-
 
     return {
         id: obj._id,
-        productId: product,
+        productId: fromServerProductObject(obj.productId),
         weight: obj.weight,
         quantityUnits: obj.quantityUnits,
         expirationDate: obj.expirationDate,
