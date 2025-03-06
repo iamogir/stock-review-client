@@ -3,6 +3,7 @@ export type ProductDto = {
     name: string,
     category: string,
     brand: string,
+    unitWeight: string,
     status: boolean,
 }
 
@@ -10,7 +11,6 @@ export type StockEntryDto = {
     _id: string,
     productId: ProductDto,
     weight: number,
-    unitWeight: string,
     quantityUnits: number,
     expirationDate: Date,
     // createdAt: Date,
@@ -26,6 +26,7 @@ export type Product = {
     name: string,
     category: string,
     brand: string,
+    unitWeight: string,
     status: boolean,
 }
 
@@ -33,7 +34,6 @@ export type StockEntry = {
     id?: string,
     productId: Product,
     weight: number,
-    unitWeight: string,
     quantityUnits: number,
     expirationDate: Date,
     supplier: string,
