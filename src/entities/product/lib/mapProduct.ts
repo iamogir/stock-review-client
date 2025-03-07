@@ -10,7 +10,7 @@ export function fromServerStockEntryObject(obj: StockEntryDto): StockEntry {
 
     return {
         id: obj._id,
-        productId: fromServerProductObject(obj.productId),
+        productId: obj.productId,
         weight: obj.weight,
         quantityUnits: obj.quantityUnits,
         expirationDate: obj.expirationDate,

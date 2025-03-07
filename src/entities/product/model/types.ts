@@ -1,5 +1,5 @@
 export type ProductDto = {
-    _id: string,
+    _id?: string,
     name: string,
     category: string,
     brand: string,
@@ -8,13 +8,11 @@ export type ProductDto = {
 }
 
 export type StockEntryDto = {
-    _id: string,
-    productId: ProductDto,
+    _id?: string,
+    productId: string,
     weight: number,
     quantityUnits: number,
     expirationDate: Date,
-    // createdAt: Date,
-    // updatedAt: Date,
     barcode?: string,
     supplier: string,
     storageLocation: string,
