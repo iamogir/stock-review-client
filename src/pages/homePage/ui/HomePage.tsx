@@ -3,13 +3,13 @@ import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {
     getAllStockEntriesAsyncAction,
-} from "../../../features/products/actions/productsAsyncActions.ts";
+} from "../../../features/products/actions/stockEntriesAsyncActions.ts";
 import {AppDispatch, RootState} from "../../../app/redux/store.ts";
 import ProductCard from "../../../entities/product/ui/ProductCard.tsx";
 import {
     getExpiredProductsAsyncAction,
     getExpiringSoonProductsAsyncAction
-} from "../../../features/products/actions/filteredProductsAsyncActions.ts";
+} from "../../../features/products/actions/filteredStockEntriesAsyncActions.ts";
 import {EXPIRING_SOON_DAYS} from "../../../shared/consts/product.ts";
 import style from './homePage.module.css'
 
@@ -49,11 +49,11 @@ const HomePage = () => {
             <div className={style.expProducts}>
                 <div>
                     <h2>Expired products:</h2>
-                    {expiredProducts && expiredProducts.map((pr) => <ProductCard key={pr.name} product={pr}/>)}
+                    {expiredProducts && expiredProducts.map((pr) => <ProductCard key={pr.id} stockEntry={pr}/>)}
                 </div>
                 <div>
                     <h2>Expire in {EXPIRING_SOON_DAYS} days:</h2>
-                    {expiringSoonProducts && expiringSoonProducts.length > 0 ? expiringSoonProducts.map((pr) => <ProductCard key={pr.name + '_exp'} product={pr}/>) :
+                    {expiringSoonProducts && expiringSoonProducts.length > 0 ? expiringSoonProducts.map((pr) => <ProductCard key={pr.id + '_exp'} stockEntry={pr}/>) :
                     <p>No expired products for next {EXPIRING_SOON_DAYS} days. Great job!</p>}
                 </div>
             </div>
