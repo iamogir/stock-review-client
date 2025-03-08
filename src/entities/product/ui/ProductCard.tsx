@@ -1,6 +1,8 @@
 import style from './productCard.module.css';
-import { StockEntry} from "../model/types.ts";
+import {Product, StockEntry} from "../model/types.ts";
 import DeleteProductButton from "../../../features/products/deleteProductButton/ui/DeleteProductButton.tsx";
+import {useSelector} from "react-redux";
+import {RootState} from "../../../app/redux/store.ts";
 
 interface Props {
     stockEntry: StockEntry;
@@ -9,20 +11,23 @@ interface Props {
 const ProductCard = ({stockEntry}: Props) => {
 
     const dateExpiration = new Date(stockEntry.expirationDate);
+    const {products, loading} = useSelector((state: RootState) => state.products);
 
-    return (
+    const product: Product | undefined = products?.find(p => p.id === stockEntry.id);
+
+    return ( loading ? <div>Loading...</div> :
         <div>
             <br/>
             <hr/>
-            <h2 className={style.temp2}>{stockEntry.name}</h2>
+            <h2 className={style.temp2}>{product?.name}</h2>
             <h3>Supplier: {stockEntry.supplier}</h3>
-            <h4>Category: {stockEntry.category}</h4>
+            <h4>Category: {product?.category}</h4>
             <p>In stock: {stockEntry.quantityUnits} units</p>
-            <p>General weight: {stockEntry.weight} {stockEntry.unitWeight}</p>
+            <p>General weight: {stockEntry.weight} {product?.unitWeight}</p>
             <p className={style.temp}>Sell by: {dateExpiration.getDate()}/{dateExpiration.getUTCMonth() + 1}/{dateExpiration.getFullYear()}</p>
             <p>Location: {stockEntry.storageLocation}</p>
-            <h3>Status: {stockEntry.status ? 'in stock' : 'out of stock'}</h3>
-            <DeleteProductButton id={stockEntry.entryId ?? ''} />
+            <h3>Status: {product?.status ? 'in stock' : 'out of stock'}</h3>
+            <DeleteProductButton id={stockEntry.id ?? ''} />
             <br/>
         </div>
     );

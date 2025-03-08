@@ -40,6 +40,7 @@ export type StockEntry = {
 }
 
 export type ProductsInitState = {
+    products: Product[] | undefined,
     stockEntries: StockEntry[] | undefined;
     // expiredProducts: Product[] | undefined;
     loading: boolean;
