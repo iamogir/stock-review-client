@@ -1,4 +1,4 @@
-import {Product, StockEntry} from "../../../entities/product/model/types.ts";
+import {Product} from "../../../entities/product/model/types.ts";
 import ProductCard from "../../../entities/product/ui/ProductCard.tsx";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "../../../app/redux/store.ts";
@@ -22,6 +22,7 @@ const WareHouse = () => {
         <div>
             <button onClick={() => navigate('/home')}>Home</button>
             <button onClick={() => navigate("/add_product")}>add product</button>
+            <button onClick={() => navigate('/add_stock_entry')}>add stock entry</button>
             <h2>All products in stock</h2>
             {products && products.length > 0 ? products?.filter(pr => pr.status).map((pr: Product) =>
                     <ProductCard product={pr} key={pr.name}/>) :
