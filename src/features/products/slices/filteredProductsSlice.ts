@@ -3,7 +3,7 @@ import {createSlice, SliceCaseReducers, SliceSelectors} from "@reduxjs/toolkit";
 import {
     getExpiredProductsAsyncAction,
     getExpiringSoonProductsAsyncAction
-} from "../actions/filteredProductsAsyncActions.ts";
+} from "../actions/filteredStockEntriesAsyncActions.ts";
 
 const initialState: FilteredProductsInitState = {
     expiredProducts: [],

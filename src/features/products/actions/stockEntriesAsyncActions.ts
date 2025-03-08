@@ -35,22 +35,22 @@ export const getAllStockEntriesAsyncAction = createAsyncThunk<StockEntryResponse
 
 export const addNewStockEntryAsyncAction = createAsyncThunk<StockEntry, StockEntry, { rejectValue: string }>(
     'stock_entry/add_new_stock_entry',
-    async(newProduct: StockEntry, thunkAPI): Promise<StockEntry | ReturnType<typeof thunkAPI.rejectWithValue>> => {
+    async(newEntry: StockEntry, thunkAPI): Promise<StockEntry | ReturnType<typeof thunkAPI.rejectWithValue>> => {
         try {
             const response = await fetch(API + 'stock_entries/add_new_stock_entry', {
                 method: "POST",
                 headers: { "Content-Type": "application/json"},
-                body: JSON.stringify(newProduct)});
+                body: JSON.stringify(newEntry)});
 
             if (response.status === 201) {
                 const json = await response.json();
                 console.log(json);
-                const returnedProduct = fromServerStockEntryObject(json);
+                const returnedEntry = fromServerStockEntryObject(json);
 
-                if (!returnedProduct) {
-                    throw new Error('Unable to add product ' + response.statusText);
+                if (!returnedEntry) {
+                    throw new Error('Unable to add entry ' + response.statusText);
                 } else {
-                    return returnedProduct;
+                    return returnedEntry;
                 }
             } else {
                 throw new Error(response.statusText);

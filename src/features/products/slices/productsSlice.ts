@@ -2,7 +2,7 @@ import {createSlice, SliceCaseReducers, SliceSelectors} from "@reduxjs/toolkit";
 import {
     addNewStockEntryAsyncAction, deleteStockEntryByIdAsyncAction,
     getAllStockEntriesAsyncAction,
-} from "../actions/productsAsyncActions.ts";
+} from "../actions/stockEntriesAsyncActions.ts";
 import {ProductsInitState} from "../../../entities/product/model/types.ts";
 
 const initialState: ProductsInitState = {

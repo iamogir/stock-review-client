@@ -1,6 +1,6 @@
 import {useDispatch} from "react-redux";
 import {AppDispatch} from "../../../../app/redux/store.ts";
-import {deleteStockEntryByIdAsyncAction} from "../../actions/productsAsyncActions.ts";
+import {deleteStockEntryByIdAsyncAction} from "../../actions/stockEntriesAsyncActions.ts";
 
 interface Props {
     id: string;
