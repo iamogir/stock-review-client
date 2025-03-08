@@ -1,8 +1,8 @@
-import style from './addNewSupplyPage.css'
+import style from './addNewSupplyPage.module.css'
 import {useNavigate} from "react-router-dom";
 import {FormEvent} from "react";
-import {Product, StockEntry} from "../../../entities/product/model/types.ts";
-import {addNewStockEntryAsyncAction} from "../../../features/products/actions/productsAsyncActions.ts";
+import { StockEntry} from "../../../entities/product/model/types.ts";
+import {addNewStockEntryAsyncAction} from "../../../features/products/actions/stockEntriesAsyncActions.ts";
 import {useDispatch} from "react-redux";
 
 const AddNewSupplyPage = () => {

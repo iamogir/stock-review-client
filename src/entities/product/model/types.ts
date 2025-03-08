@@ -58,6 +58,10 @@ export type StockEntryResponse = {
     stockEntries: StockEntry[] | null;
 }
 
+export type ProductsResponse = {
+    products: Product[] | null;
+}
+
 export type FormatObject = {
     key: string,
     value: string

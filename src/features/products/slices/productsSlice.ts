@@ -4,8 +4,10 @@ import {
     getAllStockEntriesAsyncAction,
 } from "../actions/stockEntriesAsyncActions.ts";
 import {ProductsInitState} from "../../../entities/product/model/types.ts";
+import {getAllProductsAsyncAction} from "../actions/productsAsyncActions.ts";
 
 const initialState: ProductsInitState = {
+    products: [],
     stockEntries: [],
     loading: false,
     error: 'Any error'
@@ -18,6 +20,30 @@ const productsSlice = createSlice<ProductsInitState, SliceCaseReducers<ProductsI
         reducers: {},
         extraReducers: (builder) => {
             builder
+                .addCase(
+                    (getAllProductsAsyncAction.pending),
+                    (state) => {
+                        state.loading = true;
+                        state.products = undefined;
+                        state.error = null
+                    }
+                )
+                .addCase(
+                    (getAllProductsAsyncAction.rejected),
+                    (state, action) => {
+                        state.loading = false;
+                        state.error = action.error.message as string;
+
+                    }
+                )
+                .addCase(
+                    (getAllProductsAsyncAction.fulfilled),
+                    (state, action) => {
+                        state.loading = false;
+                        if (action.payload.products)
+                            state.products = [ ...action.payload.products ];
+                    }
+                )
                 .addCase(
                     (getAllStockEntriesAsyncAction.pending),
                     (state) => {
@@ -87,7 +113,7 @@ const productsSlice = createSlice<ProductsInitState, SliceCaseReducers<ProductsI
                     (state, action) => {
                         state.loading = false;
                         state.error = null;
-                        state.stockEntries = state.stockEntries?.filter((pr) => pr.entryId !== action.payload);
+                        state.stockEntries = state.stockEntries?.filter((pr) => pr.id !== action.payload);
                     }
                 )
         }

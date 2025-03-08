@@ -13,21 +13,21 @@ const AddProductPage = () => {
     const navigate = useNavigate();
     const dropMenuRef = useRef<HTMLElement[]>([]);
 
-    const addProduct = (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const eventTarget = event.target as HTMLFormElement;
-        const infoObject: Product = {
-            name: eventTarget['productName'].value,
-            brand: eventTarget['brand'].value,
-            category: eventTarget['category'].value,
-            unitWeight: eventTarget['unitWeight'].value,
-            status: eventTarget['status'].value
-        };
-
-        console.log(eventTarget['expDate'].value);
-
-        dispatch(addNewProductAsyncAction(infoObject));
-    }
+    // const addProduct = (event: FormEvent<HTMLFormElement>) => {
+    //     event.preventDefault();
+    //     const eventTarget = event.target as HTMLFormElement;
+    //     const infoObject: Product = {
+    //         name: eventTarget['productName'].value,
+    //         brand: eventTarget['brand'].value,
+    //         category: eventTarget['category'].value,
+    //         unitWeight: eventTarget['unitWeight'].value,
+    //         status: eventTarget['status'].value
+    //     };
+    //
+    //     console.log(eventTarget['expDate'].value);
+    //
+    //     // dispatch(addNewProductAsyncAction(infoObject));
+    // }
 
     const setDropMenuValue = (event: React.MouseEvent<HTMLElement>) => {
         const eventTarget = event.target as HTMLElement;

@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "../../../app/redux/store.ts";
 import {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
+import {getAllProductsAsyncAction} from "../../../features/products/actions/productsAsyncActions.ts";
 
 const WareHouse = () => {
 
