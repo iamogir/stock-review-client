@@ -12,8 +12,9 @@ export const getAllStockEntriesAsyncAction = createAsyncThunk<StockEntryResponse
         try {
             const { products } = thunkAPI.getState() as RootState;
             const productsArr = products.products;
-            if (!productsArr || productsArr.length === 0) {
-                return thunkAPI.rejectWithValue('Products are already loaded');
+            const stockEntriesArr = products.stockEntries;
+            if (!stockEntriesArr || !productsArr || stockEntriesArr.length === 0 || productsArr.length === 0) {
+                return thunkAPI.rejectWithValue('Entries are already loaded');
             }
 
             const stockEntries: StockEntry[] = [];
@@ -44,6 +45,13 @@ export const addNewStockEntryAsyncAction = createAsyncThunk<StockEntry, StockEnt
     'stock_entry/add_new_stock_entry',
     async(newEntry: StockEntry, thunkAPI): Promise<StockEntry | ReturnType<typeof thunkAPI.rejectWithValue>> => {
         try {
+            const { products } = thunkAPI.getState() as RootState;
+            const productsArr = products.products;
+            const stockEntriesArr = products.stockEntries;
+            if (!stockEntriesArr || !productsArr || stockEntriesArr.length === 0 || productsArr.length === 0) {
+                return thunkAPI.rejectWithValue('Entries are already loaded');
+            }
+
             const response = await fetch(API + 'stock_entries/add_new_stock_entry', {
                 method: "POST",
                 headers: { "Content-Type": "application/json"},
@@ -52,7 +60,7 @@ export const addNewStockEntryAsyncAction = createAsyncThunk<StockEntry, StockEnt
             if (response.status === 201) {
                 const json = await response.json();
                 console.log(json);
-                const returnedEntry = fromServerStockEntryObject(json);
+                const returnedEntry = fromServerStockEntryObject(json, productsArr);
 
                 if (!returnedEntry) {
                     throw new Error('Unable to add entry ' + response.statusText);
