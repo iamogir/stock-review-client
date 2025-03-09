@@ -5,12 +5,12 @@ import {Product, ProductDto, StockEntry, StockEntryDto} from "../model/types.ts"
 //     return fromServerStockEntryObject(obj);
 // }
 
-export function fromServerStockEntryObject(obj: StockEntryDto): StockEntry {
+export function fromServerStockEntryObject(obj: StockEntryDto, products: Product[]): StockEntry {
     console.log(obj.productId)
 
     return {
         id: obj._id,
-        productId: obj.productId,
+        productInfo: findProductOfEntry(obj.productId, products),
         weight: obj.weight,
         quantityUnits: obj.quantityUnits,
         expirationDate: obj.expirationDate,
@@ -28,4 +28,8 @@ export function fromServerProductObject(obj: ProductDto): Product {
         unitWeight: obj.unitWeight,
         status: obj.status,
     }
+}
+
+function findProductOfEntry(productId: string, products: Product[]): Product | undefined  {
+    return products.find(p => p.id === productId);
 }
