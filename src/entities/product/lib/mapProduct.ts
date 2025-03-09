@@ -6,7 +6,6 @@ import {Product, ProductDto, StockEntry, StockEntryDto} from "../model/types.ts"
 // }
 
 export function fromServerStockEntryObject(obj: StockEntryDto, products: Product[]): StockEntry {
-    console.log(obj.productId)
 
     return {
         id: obj._id,
