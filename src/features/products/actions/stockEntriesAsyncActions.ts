@@ -2,24 +2,31 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import { StockEntry, StockEntryDto, StockEntryResponse} from "../../../entities/product/model/types.ts";
 import {fromServerStockEntryObject} from "../../../entities/product/lib/mapProduct.ts";
+import {RootState} from "../../../app/redux/store.ts";
 
 const API = import.meta.env.VITE_API_URL;
 
-export const getAllStockEntriesAsyncAction = createAsyncThunk<StockEntryResponse>(
+export const getAllStockEntriesAsyncAction = createAsyncThunk<StockEntryResponse, { rejectValue: string }>(
     'stock_entry/get_all_stock_entries',
-    async(): Promise<StockEntryResponse> => {
+    async(_, thunkAPI): Promise<StockEntryResponse | ReturnType<typeof thunkAPI.rejectWithValue>> => {
         try {
-            const products: StockEntry[] = [];
+            const { products } = thunkAPI.getState() as RootState;
+            const productsArr = products.products;
+            if (!productsArr || productsArr.length === 0) {
+                return thunkAPI.rejectWithValue('Products are already loaded');
+            }
+
+            const stockEntries: StockEntry[] = [];
             const response = await fetch(API + 'stock_entries/get_all_stock_entries');
             if (response.status === 200 || response.status === 304) {
                 const json = await response.json();
 
-                json.map((el: StockEntryDto) => products.push(fromServerStockEntryObject(el)));
+                json.map((el: StockEntryDto) => stockEntries.push(fromServerStockEntryObject(el, productsArr)));
 
-                if (products.length === 0) {
+                if (stockEntries.length === 0) {
                     throw new Error("no data " + response.statusText);
                 } else {
-                    return { stockEntries: products };
+                    return { stockEntries };
                 }
 
             } else {
