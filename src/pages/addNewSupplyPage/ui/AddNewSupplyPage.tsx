@@ -14,7 +14,7 @@ const AddNewSupplyPage = () => {
         event.preventDefault();
         const eventTarget = event.target as HTMLFormElement;
         const infoObject: StockEntry = {
-            productId: eventTarget['type'].value, //TODO: adding product!
+            productInfo: eventTarget['type'].value, //TODO: adding product!
             weight: eventTarget['weight'].value,
             quantityUnits: eventTarget['quantity'].value,
             expirationDate: eventTarget['expDate'].value,
