@@ -1,11 +1,11 @@
 import style from './productCard.module.css';
-import {Product} from "../model/types.ts";
+import {Product} from "entities/product";
 
 interface Props {
     product: Product;
 }
 
-const ProductCard = ({product}: Props) => {
+export const ProductCard = ({product}: Props) => {
 
     return (
         <div>
@@ -20,5 +20,3 @@ const ProductCard = ({product}: Props) => {
         </div>
     );
 };
-
-export default ProductCard;

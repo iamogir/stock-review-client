@@ -1,9 +1,9 @@
-import {FilteredProductsInitState} from "../../../entities/product/model/types.ts";
+import {FilteredProductsInitState} from "entities/product";
 import {createSlice, SliceCaseReducers, SliceSelectors} from "@reduxjs/toolkit";
 import {
     getExpiredProductsAsyncAction,
     getExpiringSoonProductsAsyncAction
-} from "../actions/filteredStockEntriesAsyncActions.ts";
+} from "features/products";
 
 const initialState: FilteredProductsInitState = {
     expiredProducts: [],

@@ -1,10 +1,9 @@
 import {createSlice, SliceCaseReducers, SliceSelectors} from "@reduxjs/toolkit";
 import {
     addNewStockEntryAsyncAction, deleteStockEntryByIdAsyncAction,
-    getAllStockEntriesAsyncAction,
-} from "../actions/stockEntriesAsyncActions.ts";
-import {ProductsInitState} from "../../../entities/product/model/types.ts";
-import {getAllProductsAsyncAction} from "../actions/productsAsyncActions.ts";
+    getAllStockEntriesAsyncAction, getAllProductsAsyncAction
+} from "features/products";
+import {ProductsInitState} from "entities/product";
 
 const initialState: ProductsInitState = {
     products: [],

@@ -1,10 +1,10 @@
 import './styles/App.css'
 import {Route, Routes} from "react-router-dom";
-import HomePage from "../pages/homePage/ui/HomePage.tsx";
-import StartPage from "../pages/startPage/ui/StartPage.tsx";
-import AddProductPage from "../pages/addProductPage/ui/AddProductPage.tsx";
-import WarehousePage from "../pages/warehousePage/ui/WarehousePage.tsx";
-import AddNewSupplyPage from "../pages/addNewSupplyPage/ui/AddNewSupplyPage.tsx";
+import HomePage from "pages/homePage";
+import StartPage from "pages/startPage";
+import AddProductPage from "pages/addProductPage";
+import WarehousePage from "pages/warehousePage";
+import AddNewSupplyPage from "pages/addNewSupplyPage";
 
 function App() {
 

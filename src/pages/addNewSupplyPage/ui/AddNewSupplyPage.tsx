@@ -1,11 +1,11 @@
 import style from './addNewSupplyPage.module.css'
 import {useNavigate} from "react-router-dom";
 import {FormEvent} from "react";
-import { StockEntry} from "../../../entities/product/model/types.ts";
-import {addNewStockEntryAsyncAction} from "../../../features/products/actions/stockEntriesAsyncActions.ts";
+import { StockEntry} from "entities/product";
+import {addNewStockEntryAsyncAction} from "features/products";
 import {useDispatch} from "react-redux";
 
-const AddNewSupplyPage = () => {
+export const AddNewSupplyPage = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -63,5 +63,3 @@ const AddNewSupplyPage = () => {
         </div>
     );
 };
-
-export default AddNewSupplyPage;

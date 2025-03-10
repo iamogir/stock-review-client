@@ -1,12 +1,12 @@
 import {useDispatch} from "react-redux";
-import {AppDispatch} from "../../../../app/redux/store.ts";
-import {deleteStockEntryByIdAsyncAction} from "../../actions/stockEntriesAsyncActions.ts";
+import {AppDispatch} from "app/redux";
+import {deleteStockEntryByIdAsyncAction} from "features/products";
 
 interface Props {
     id: string;
 }
 
-const DeleteProductButton = ({id}: Props) => {
+export const DeleteProductButton = ({id}: Props) => {
 
     const dispatch = useDispatch<AppDispatch>();
 
@@ -16,5 +16,3 @@ const DeleteProductButton = ({id}: Props) => {
         </div>
     );
 };
-
-export default DeleteProductButton;

@@ -1,6 +1,6 @@
-import {Product, ProductDto, ProductsResponse} from "../../../entities/product/model/types.ts";
+import {Product, ProductDto, ProductsResponse} from "entities/product";
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {fromServerProductObject} from "../../../entities/product/lib/mapProduct.ts";
+import {fromServerProductObject} from "entities/product";
 
 const API = import.meta.env.VITE_API_URL;
 

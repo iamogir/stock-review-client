@@ -1,4 +1,4 @@
-import {FormatObject} from "../../entities/product/model/types.ts";
+import {FormatObject} from "entities/product";
 
 export const EXPIRING_SOON_DAYS = 3;
 

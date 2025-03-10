@@ -1,0 +1,1 @@
+export { WareHouse } from './ui/WarehousePage'

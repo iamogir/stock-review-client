@@ -1,7 +1,6 @@
-
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import { StockEntry, StockEntryDto, StockEntryResponse} from "../../../entities/product/model/types.ts";
-import {fromServerStockEntryObject} from "../../../entities/product/lib/mapProduct.ts";
+import { StockEntry, StockEntryDto, StockEntryResponse} from "entities/product";
+import {fromServerStockEntryObject} from "entities/product";
 // import {RootState} from "../../../app/redux/store.ts";
 import {checkAvailabilityProducts} from 'shared/lib/common';
 

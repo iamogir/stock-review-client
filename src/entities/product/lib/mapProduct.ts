@@ -1,4 +1,4 @@
-import {Product, ProductDto, StockEntry, StockEntryDto} from "../model/types.ts";
+import {Product, ProductDto, StockEntry, StockEntryDto} from "entities/product";
 
 // export function fromJSON(json: string): StockEntryDto | ProductDto {
 //     const obj = JSON.parse(json);

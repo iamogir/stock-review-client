@@ -1,12 +1,12 @@
 import style from './stockEntryCard.module.css'
-import {StockEntry} from "../../product/model/types.ts";
-import DeleteProductButton from "../../../features/products/deleteProductButton/ui/DeleteProductButton.tsx";
+import {StockEntry} from "entities/product";
+import DeleteProductButton from "features/products/deleteProductButton";
 
 interface Props {
     stockEntry: StockEntry;
 }
 
-const StockEntryCard = ({stockEntry}: Props) => {
+export const StockEntryCard = ({stockEntry}: Props) => {
 
     const dateExpiration = new Date(stockEntry.expirationDate);
 
@@ -27,5 +27,3 @@ const StockEntryCard = ({stockEntry}: Props) => {
             </div>
     );
 };
-
-export default StockEntryCard;

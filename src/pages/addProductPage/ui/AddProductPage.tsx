@@ -1,13 +1,13 @@
 import style from './addProductPage.module.css'
 import {FormEvent, useEffect, useRef} from "react";
-import {Product} from "../../../entities/product/model/types.ts";
+import {Product} from "entities/product";
 import {useDispatch} from "react-redux";
-import {AppDispatch} from "../../../app/redux/store.ts";
+import {AppDispatch} from "app/redux";
 import {useNavigate} from "react-router-dom";
-import {statusUnits, weightUnits} from "../../../shared/consts/product.ts";
+import {statusUnits, weightUnits} from "shared/consts";
 import * as React from "react";
 
-const AddProductPage = () => {
+export const AddProductPage = () => {
 
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
@@ -103,5 +103,3 @@ const AddProductPage = () => {
         </div>
     );
 };
-
-export default AddProductPage;

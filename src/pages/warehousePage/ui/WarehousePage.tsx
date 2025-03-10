@@ -1,12 +1,11 @@
-import {Product} from "../../../entities/product/model/types.ts";
-import ProductCard from "../../../entities/product/ui/ProductCard.tsx";
+import {Product, ProductCard} from "entities/product";
 import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState} from "../../../app/redux/store.ts";
+import {AppDispatch, RootState} from "app/redux";
 import {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
-import {getAllProductsAsyncAction} from "../../../features/products/actions/productsAsyncActions.ts";
+import {getAllProductsAsyncAction} from "features/products";
 
-const WareHouse = () => {
+export const WareHouse = () => {
 
     const {products, loading} = useSelector((state: RootState) => state.products);
     const dispatch = useDispatch<AppDispatch>();
@@ -35,5 +34,3 @@ const WareHouse = () => {
         </div>
     );
 };
-
-export default WareHouse;

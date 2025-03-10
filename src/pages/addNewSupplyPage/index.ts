@@ -1,0 +1,1 @@
+export { AddNewSupplyPage } from './ui/AddNewSupplyPage'

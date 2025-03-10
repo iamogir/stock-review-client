@@ -2,18 +2,15 @@ import {useNavigate} from "react-router-dom";
 import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {
-    getAllStockEntriesAsyncAction,
-} from "../../../features/products/actions/stockEntriesAsyncActions.ts";
-import {AppDispatch, RootState} from "../../../app/redux/store.ts";
-import {
-    getExpiredProductsAsyncAction,
+    getAllStockEntriesAsyncAction, getExpiredProductsAsyncAction,
     getExpiringSoonProductsAsyncAction
-} from "../../../features/products/actions/filteredStockEntriesAsyncActions.ts";
-import {EXPIRING_SOON_DAYS} from "shared/consts/product.ts";
+} from "features/products";
+import {AppDispatch, RootState} from "app/redux";
+import {EXPIRING_SOON_DAYS} from "shared/consts";
 import style from './homePage.module.css'
-import StockEntryCard from "../../../entities/stockEntry/ui/StockEntryCard.tsx";
+import StockEntryCard from "entities/stockEntry";
 
-const HomePage = () => {
+export const HomePage = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
@@ -60,5 +57,3 @@ const HomePage = () => {
         </div>
     );
 };
-
-export default HomePage;

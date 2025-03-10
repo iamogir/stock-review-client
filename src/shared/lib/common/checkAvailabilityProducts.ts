@@ -1,4 +1,4 @@
-import {RootState} from "../../../app/redux/store.ts";
+import {RootState} from "app/redux";
 import {GetThunkAPI} from "@reduxjs/toolkit";
 
 export function checkAvailabilityProducts(thunkAPI:  GetThunkAPI<RootState>) {
