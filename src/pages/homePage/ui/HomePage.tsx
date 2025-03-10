@@ -9,7 +9,7 @@ import {
     getExpiredProductsAsyncAction,
     getExpiringSoonProductsAsyncAction
 } from "../../../features/products/actions/filteredStockEntriesAsyncActions.ts";
-import {EXPIRING_SOON_DAYS} from "../../../shared/consts/product.ts";
+import {EXPIRING_SOON_DAYS} from "shared/consts/product.ts";
 import style from './homePage.module.css'
 import StockEntryCard from "../../../entities/stockEntry/ui/StockEntryCard.tsx";
 
