@@ -1,10 +1,7 @@
 import {RootState} from "../../../app/redux/store.ts";
-import {GetThunkAPI, ThunkDispatch, UnknownAction} from "@reduxjs/toolkit";
+import {GetThunkAPI} from "@reduxjs/toolkit";
 
-export function checkAvailabilityProducts(thunkAPI
-                                          // :
-                                          // GetThunkAPI<{ rejectValue: string, state?: unknown, dispatch?: ThunkDispatch<unknown, unknown, UnknownAction> | undefined, extra?: unknown, serializedErrorType?: unknown, pendingMeta?: unknown, fulfilledMeta?: unknown, rejectedMeta?: unknown }>
-) {
+export function checkAvailabilityProducts(thunkAPI:  GetThunkAPI<RootState>) {
     const { products } = thunkAPI.getState() as RootState;
     const productsArr = products.products;
     const stockEntriesArr = products.stockEntries;
