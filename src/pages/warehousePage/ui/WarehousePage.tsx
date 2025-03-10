@@ -5,7 +5,7 @@ import {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import {getAllProductsAsyncAction} from "features/products";
 
-export const WareHouse = () => {
+export const WarehousePage = () => {
 
     const {products, loading} = useSelector((state: RootState) => state.products);
     const dispatch = useDispatch<AppDispatch>();

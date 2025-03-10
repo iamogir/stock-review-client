@@ -8,7 +8,8 @@ import {
 import {AppDispatch, RootState} from "app/redux";
 import {EXPIRING_SOON_DAYS} from "shared/consts";
 import style from './homePage.module.css'
-import StockEntryCard from "entities/stockEntry";
+import { StockEntryCard } from "entities/stockEntry";
+import {StockEntry} from "entities/product";
 
 export const HomePage = () => {
 
@@ -46,11 +47,11 @@ export const HomePage = () => {
             <div className={style.expProducts}>
                 <div>
                     <h2>Expired products:</h2>
-                    {expiredProducts && expiredProducts.map((pr) => <StockEntryCard key={pr.id} stockEntry={pr}/>)}
+                    {expiredProducts && expiredProducts.map((pr: StockEntry) => <StockEntryCard key={pr.id} stockEntry={pr}/>)}
                 </div>
                 <div>
                     <h2>Expire in {EXPIRING_SOON_DAYS} days:</h2>
-                    {expiringSoonProducts && expiringSoonProducts.length > 0 ? expiringSoonProducts.map((pr) => <StockEntryCard key={pr.id + '_exp'} stockEntry={pr}/>) :
+                    {expiringSoonProducts && expiringSoonProducts.length > 0 ? expiringSoonProducts.map((pr: StockEntry) => <StockEntryCard key={pr.id + '_exp'} stockEntry={pr}/>) :
                     <p>No expired products for next {EXPIRING_SOON_DAYS} days. Great job!</p>}
                 </div>
             </div>

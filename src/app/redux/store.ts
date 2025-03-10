@@ -1,6 +1,6 @@
 import {configureStore} from "@reduxjs/toolkit";
-import productsReducer from 'features/products'
-import filteredProductsReducer from 'features/products'
+import { productsReducer } from 'features/products'
+import { filteredProductsReducer } from 'features/products'
 
 export const store = configureStore({
     reducer: {
