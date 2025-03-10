@@ -2,7 +2,8 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import { StockEntry, StockEntryDto, StockEntryResponse} from "../../../entities/product/model/types.ts";
 import {fromServerStockEntryObject} from "../../../entities/product/lib/mapProduct.ts";
-import {RootState} from "../../../app/redux/store.ts";
+// import {RootState} from "../../../app/redux/store.ts";
+import {checkAvailabilityProducts} from 'shared/lib/common';
 
 const API = import.meta.env.VITE_API_URL;
 
@@ -10,12 +11,17 @@ export const getAllStockEntriesAsyncAction = createAsyncThunk<StockEntryResponse
     'stock_entry/get_all_stock_entries',
     async(_, thunkAPI): Promise<StockEntryResponse | ReturnType<typeof thunkAPI.rejectWithValue>> => {
         try {
-            const { products } = thunkAPI.getState() as RootState;
-            const productsArr = products.products;
-            const stockEntriesArr = products.stockEntries;
-            if (!stockEntriesArr || !productsArr || stockEntriesArr.length === 0 || productsArr.length === 0) {
-                return thunkAPI.rejectWithValue('Entries are already loaded');
-            }
+            // const { products } = thunkAPI.getState() as RootState;
+            // const productsArr = products.products;
+            // const stockEntriesArr = products.stockEntries;
+            // if (!productsArr) {
+            //     return thunkAPI.rejectWithValue('No products are found');
+            // }
+            // if (stockEntriesArr && stockEntriesArr.length > 0 || productsArr && productsArr.length > 0) {
+            //     return thunkAPI.rejectWithValue('Entries are already loaded');
+            // }
+
+            const productsArr = checkAvailabilityProducts(thunkAPI);
 
             const stockEntries: StockEntry[] = [];
             const response = await fetch(API + 'stock_entries/get_all_stock_entries');
@@ -45,12 +51,17 @@ export const addNewStockEntryAsyncAction = createAsyncThunk<StockEntry, StockEnt
     'stock_entry/add_new_stock_entry',
     async(newEntry: StockEntry, thunkAPI): Promise<StockEntry | ReturnType<typeof thunkAPI.rejectWithValue>> => {
         try {
-            const { products } = thunkAPI.getState() as RootState;
-            const productsArr = products.products;
-            const stockEntriesArr = products.stockEntries;
-            if (!stockEntriesArr || !productsArr || stockEntriesArr.length === 0 || productsArr.length === 0) {
-                return thunkAPI.rejectWithValue('Entries are already loaded');
-            }
+            // const { products } = thunkAPI.getState() as RootState;
+            // const productsArr = products.products;
+            // const stockEntriesArr = products.stockEntries;
+            // if (!productsArr) {
+            //     return thunkAPI.rejectWithValue('No products are found');
+            // }
+            // if (stockEntriesArr && stockEntriesArr.length > 0 || productsArr && productsArr.length > 0) {
+            //     return thunkAPI.rejectWithValue('Entries are already loaded');
+            // }
+
+            const productsArr = checkAvailabilityProducts(thunkAPI);
 
             const response = await fetch(API + 'stock_entries/add_new_stock_entry', {
                 method: "POST",
