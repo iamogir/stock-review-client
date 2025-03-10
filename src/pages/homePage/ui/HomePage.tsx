@@ -2,6 +2,7 @@ import {useNavigate} from "react-router-dom";
 import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {
+    getAllProductsAsyncAction,
     getAllStockEntriesAsyncAction, getExpiredProductsAsyncAction,
     getExpiringSoonProductsAsyncAction
 } from "features/products";
@@ -15,22 +16,50 @@ export const HomePage = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
-    const {stockEntries, loading} = useSelector((state: RootState) => state.products);
+    const {products, stockEntries, loading} = useSelector((state: RootState) => state.products);
     const {expiredProducts, expiringSoonProducts} = useSelector((state: RootState)=> state.filteredProducts)
 
     const currentDate = new Date(Date.now());
     const dateString = currentDate.getDate() + '/' + currentDate.getMonth() + '/' + currentDate.getFullYear();
 
-    useEffect(() => {
+    const loadData = async () => {
+        // Проверяем, нужно ли загружать продукты
+        if (!products || products.length === 0) {
+            await dispatch(getAllProductsAsyncAction());
+        }
+
+        // Проверяем, нужно ли загружать записи на складе
         if (!stockEntries || stockEntries.length === 0) {
-            dispatch(getAllStockEntriesAsyncAction())
+            await dispatch(getAllStockEntriesAsyncAction());
         }
+
+        // Проверяем, нужно ли загружать истекшие продукты
         if (!expiredProducts || expiredProducts.length === 0) {
-            dispatch(getExpiredProductsAsyncAction())
+            await dispatch(getExpiredProductsAsyncAction());
         }
+
+        // Проверяем, нужно ли загружать продукты, которые скоро истекут
         if (!expiringSoonProducts || expiringSoonProducts.length === 0) {
-            dispatch(getExpiringSoonProductsAsyncAction(EXPIRING_SOON_DAYS))
+            await dispatch(getExpiringSoonProductsAsyncAction(EXPIRING_SOON_DAYS));
         }
+    };
+
+    useEffect(() => {
+        // if (!products || products.length === 0) {
+        //     dispatch(getAllProductsAsyncAction());
+        // }
+        // if (!stockEntries || stockEntries.length === 0) {
+        //     dispatch(getAllStockEntriesAsyncAction())
+        // }
+        // if (!expiredProducts || expiredProducts.length === 0) {
+        //     dispatch(getExpiredProductsAsyncAction())
+        // }
+        // if (!expiringSoonProducts || expiringSoonProducts.length === 0) {
+        //     dispatch(getExpiringSoonProductsAsyncAction(EXPIRING_SOON_DAYS))
+        // }
+
+        loadData();
+
     }, [])
 
     return (

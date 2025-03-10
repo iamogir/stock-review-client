@@ -1,7 +1,6 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import { StockEntry, StockEntryDto, StockEntryResponse} from "entities/product";
 import {fromServerStockEntryObject} from "entities/product";
-// import {RootState} from "../../../app/redux/store.ts";
 import {checkAvailabilityProducts} from 'shared/lib/common';
 import {RootState} from "app/redux";
 
@@ -12,6 +11,8 @@ export const getAllStockEntriesAsyncAction = createAsyncThunk<StockEntryResponse
     async(_, thunkAPI): Promise<StockEntryResponse | ReturnType<typeof thunkAPI.rejectWithValue>> => {
         try {
             const productsArr = checkAvailabilityProducts(thunkAPI.getState() as RootState);
+
+            console.log('Get All Stock Entries Loading')
 
             const stockEntries: StockEntry[] = [];
             const response = await fetch(API + 'stock_entries/get_all_stock_entries');

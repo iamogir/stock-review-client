@@ -10,7 +10,17 @@ export const getExpiredProductsAsyncAction = createAsyncThunk<StockEntryResponse
     'stock_entry/get_expired_products',
     async(_, thunkAPI): Promise<StockEntryResponse | ReturnType<typeof thunkAPI.rejectWithValue>> => {
         try {
-            const productsArr = checkAvailabilityProducts(thunkAPI.getState() as RootState);
+            const state = thunkAPI.getState() as RootState;
+            const productsArr = checkAvailabilityProducts(state);
+            if (productsArr.length === 0) {
+                throw new Error('No products found');
+            }
+            const expiredProductsArr = state.filteredProducts.expiredProducts;
+            if (expiredProductsArr && expiredProductsArr.length > 0) {
+                throw new Error('Expired products already loaded')
+            }
+
+            console.log('Get All Expired Products Loading')
 
             const expiredProducts: StockEntry[] = [];
             const response = await fetch(API + 'stock_entries/get_expired_products');
@@ -40,14 +50,25 @@ export const getExpiringSoonProductsAsyncAction = createAsyncThunk<StockEntryRes
     'stock_entry/get_expiring_soon',
     async(countDays: number, thunkAPI ): Promise<StockEntryResponse | ReturnType<typeof thunkAPI.rejectWithValue>> => {
         try {
-            const productsArr = checkAvailabilityProducts(thunkAPI.getState() as RootState);
+            const state = thunkAPI.getState() as RootState;
+            const productsArr = checkAvailabilityProducts(state);
+            if (productsArr.length === 0) {
+                throw new Error('No products found');
+            }
+            const expiredProductsSoonArr = state.filteredProducts.expiringSoonProducts;
+            if (expiredProductsSoonArr && expiredProductsSoonArr.length > 0) {
+                throw new Error('Expired soon products already loaded')
+            }
+            const expiredProducts = checkAvailabilityProducts(thunkAPI.getState() as RootState);
+
+            console.log('Get All Expired Soon Loading')
 
             const stockEntries: StockEntry[] = [];
             const response = await fetch(API + 'stock_entries/get_expiring_soon/' + countDays);
             if (response.status === 200 || response.status === 304) {
                 const json = await response.json();
 
-                json.map((pr: StockEntryDto) => stockEntries.push(fromServerStockEntryObject(pr, productsArr)));
+                json.map((pr: StockEntryDto) => stockEntries.push(fromServerStockEntryObject(pr, expiredProducts)));
 
                 if (stockEntries.length === 0) {
                     throw new Error('No expired stockEntries for next ' + countDays + ' days. Great job!')

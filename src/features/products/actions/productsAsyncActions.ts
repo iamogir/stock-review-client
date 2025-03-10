@@ -1,24 +1,34 @@
 import {Product, ProductDto, ProductsResponse} from "entities/product";
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {fromServerProductObject} from "entities/product";
+import {RootState} from "app/redux";
 
 const API = import.meta.env.VITE_API_URL;
 
-export const getAllProductsAsyncAction = createAsyncThunk<ProductsResponse>(
+export const getAllProductsAsyncAction = createAsyncThunk<ProductsResponse, void, { rejectValue: string }>(
     'product/get_all_products',
-    async(): Promise<ProductsResponse> => {
+    async(_, thunkAPI): Promise<ProductsResponse | ReturnType<typeof thunkAPI.rejectWithValue>> => {
         try {
-            const products: Product[] = [];
+
+            const {products} = thunkAPI.getState() as RootState;
+            const temp = products.products;
+            if (temp && temp.length > 0) {
+                throw new Error('Products already loaded')
+            }
+
+            console.log('Get All Products Loading')
+
+            const productsArr: Product[] = [];
             const response = await fetch(API + 'products/get_all_products');
             if (response.status === 200 || response.status === 304) {
                 const json = await response.json();
 
-                json.map((pr: ProductDto) => products.push(fromServerProductObject(pr)));
+                json.map((pr: ProductDto) => productsArr.push(fromServerProductObject(pr)));
 
-                if (products.length === 0) {
+                if (productsArr.length === 0) {
                     throw new Error("no data " + response.statusText)
                 } else {
-                    return { products }
+                    return { products: productsArr }
                 }
             } else {
                 throw new Error(response.statusText);
