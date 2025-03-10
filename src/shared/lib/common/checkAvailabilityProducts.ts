@@ -1,6 +1,6 @@
 import {RootState} from "app/redux";
 
-export function checkAvailabilityProducts({ products }: RootState) { //TODO: remove any type
+export function checkAvailabilityProducts({ products }: RootState) {
     const productsArr = products.products;
     const stockEntriesArr = products.stockEntries;
     if (!productsArr) {

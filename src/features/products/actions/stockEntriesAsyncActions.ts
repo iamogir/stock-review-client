@@ -7,7 +7,7 @@ import {RootState} from "app/redux";
 
 const API = import.meta.env.VITE_API_URL;
 
-export const getAllStockEntriesAsyncAction = createAsyncThunk<StockEntryResponse, { rejectValue: string }>(
+export const getAllStockEntriesAsyncAction = createAsyncThunk<StockEntryResponse, void, { rejectValue: string }>(
     'stock_entry/get_all_stock_entries',
     async(_, thunkAPI): Promise<StockEntryResponse | ReturnType<typeof thunkAPI.rejectWithValue>> => {
         try {
