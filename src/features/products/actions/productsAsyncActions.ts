@@ -10,11 +10,11 @@ export const getAllProductsAsyncAction = createAsyncThunk<ProductsResponse, void
     async(_, thunkAPI): Promise<ProductsResponse | ReturnType<typeof thunkAPI.rejectWithValue>> => {
         try {
 
-            const {products} = thunkAPI.getState() as RootState;
-            const temp = products.products;
-            if (temp && temp.length > 0) {
-                throw new Error('Products already loaded')
-            }
+            // const {products} = thunkAPI.getState() as RootState;
+            // const temp = products.products;
+            // if (temp && temp.length > 0) {
+            //     throw new Error('Products already loaded')
+            // }
 
             console.log('Get All Products Loading')
 
