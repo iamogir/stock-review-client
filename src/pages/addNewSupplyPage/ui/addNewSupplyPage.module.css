@@ -1,3 +1,35 @@
 .form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+}
+
+.menuHeader {
+    border: 1px solid rgba(0, 0, 0, 0.69);
+    border-radius: 2px;
+    width: 142px;
+    height: 19px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.dropMenu {
+    display: none;
+    width: 142px;
+}
+
+.dropMenu > div {
+
+}
+
+.dropMenu > div:hover {
     background-color: #535bf2;
+    color: aqua;
+    cursor: pointer;
+}
+
+.openMenu {
+    display: block;
 }

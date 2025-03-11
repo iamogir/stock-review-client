@@ -1,20 +1,26 @@
 import style from './addNewSupplyPage.module.css'
 import {useNavigate} from "react-router-dom";
-import {FormEvent} from "react";
-import { StockEntry} from "entities/product";
+import {FormEvent, useEffect, useRef} from "react";
+import {StockEntryDto} from "entities/product";
 import {addNewStockEntryAsyncAction} from "features/products";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, RootState} from "app/redux";
+import * as React from "react";
 
 export const AddNewSupplyPage = () => {
 
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
+    const { products } = useSelector((state: RootState) => state.products);
+
+    const dropMenuRef = useRef<HTMLElement[]>([]);
 
     const addSupply = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const eventTarget = event.target as HTMLFormElement;
-        const infoObject: StockEntry = {
-            productInfo: eventTarget['type'].value, //TODO: adding product!
+        console.log(eventTarget['type'].value)
+        const infoObject: StockEntryDto = {
+            productId: eventTarget['type'].value, //TODO: adding product!
             weight: eventTarget['weight'].value,
             quantityUnits: eventTarget['quantity'].value,
             expirationDate: eventTarget['expDate'].value,
@@ -31,6 +37,43 @@ export const AddNewSupplyPage = () => {
         dispatch(addNewStockEntryAsyncAction(infoObject));
     }
 
+    const setDropMenuValue = (event: React.MouseEvent<HTMLElement>) => {
+        const eventTarget = event.target as HTMLElement;
+        const menuHeader = (eventTarget.parentElement as HTMLElement).previousSibling as HTMLElement;
+        const inputElement = menuHeader.previousSibling as HTMLInputElement;
+        const value = eventTarget.dataset.unit;
+        if (value) {
+            console.log(eventTarget)
+            inputElement.value = value;
+            menuHeader.textContent = eventTarget.textContent;
+        }
+
+    }
+
+    const openCloseDropMenu = (event: React.MouseEvent<HTMLElement>) => {
+        const eventTarget = event.target as HTMLFormElement;
+        const menu = eventTarget.nextElementSibling;
+        if (!menu) {
+            console.log('No menu');
+            return;
+        }
+        menu.classList.toggle(style.openMenu);
+    }
+
+    const closeDropMenu = (event: MouseEvent) => {
+        const eventTarget = event.target as HTMLFormElement;
+
+        dropMenuRef.current.map(el => {
+            if (el !== null && eventTarget !== el)
+                el.nextElementSibling?.classList.remove(style.openMenu);
+        })
+    }
+
+    useEffect(() => {
+        document.addEventListener('click', closeDropMenu);
+        return () => document.removeEventListener('click', closeDropMenu);
+    }, []);
+
     return (
         <div>
             <button onClick={() => navigate('/home')}>Home</button>
@@ -38,8 +81,13 @@ export const AddNewSupplyPage = () => {
 
             <form className={style.form} onSubmit={addSupply}>
 
-                <label htmlFor={'type'}>Type og product</label>
+                <label htmlFor={'type'}>Type of product</label>
                 <input type={'hidden'} id={'type'} name={'type'}/>
+                <div className={style.menuHeader} onClick={openCloseDropMenu}
+                     ref={(el) => {if (el) {dropMenuRef.current.push(el)}}}>Choose</div>
+                <div className={style.dropMenu} >
+                    {products?.map(pr => <div key={pr.id} data-unit={pr.id} onClick={setDropMenuValue}>{pr.name}</div>)}
+                </div>
 
                 <label htmlFor={'weight'}>Weight</label>
                 <input type={'number'} min={0} id={'weight'} name={'weight'} />

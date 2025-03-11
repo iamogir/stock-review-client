@@ -13,21 +13,21 @@ export const AddProductPage = () => {
     const navigate = useNavigate();
     const dropMenuRef = useRef<HTMLElement[]>([]);
 
-    // const addProduct = (event: FormEvent<HTMLFormElement>) => {
-    //     event.preventDefault();
-    //     const eventTarget = event.target as HTMLFormElement;
-    //     const infoObject: Product = {
-    //         name: eventTarget['productName'].value,
-    //         brand: eventTarget['brand'].value,
-    //         category: eventTarget['category'].value,
-    //         unitWeight: eventTarget['unitWeight'].value,
-    //         status: eventTarget['status'].value
-    //     };
-    //
-    //     console.log(eventTarget['expDate'].value);
-    //
-    //     // dispatch(addNewProductAsyncAction(infoObject));
-    // }
+    const addProduct = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const eventTarget = event.target as HTMLFormElement;
+        const infoObject: Product = {
+            name: eventTarget['productName'].value,
+            brand: eventTarget['brand'].value,
+            category: eventTarget['category'].value,
+            unitWeight: eventTarget['unitWeight'].value,
+            status: eventTarget['status'].value
+        };
+
+        console.log(eventTarget['expDate'].value);
+
+        // dispatch(addNewProductAsyncAction(infoObject));
+    }
 
     const setDropMenuValue = (event: React.MouseEvent<HTMLElement>) => {
         const eventTarget = event.target as HTMLElement;
@@ -78,6 +78,7 @@ export const AddProductPage = () => {
                 <input type={'text'} id={'brand'} name={'brand'} />
                 <label htmlFor={'category'}>Category</label>
                 <input type={'text'} id={'category'} name={'category'} />
+
                 <label htmlFor={'unitWeight'}>Unit of thw weight</label>
                 <input type={'hidden'} id={'unitWeight'} name={'unitWeight'} />
                 <div className={style.menuHeader} onClick={openCloseDropMenu}
@@ -85,6 +86,7 @@ export const AddProductPage = () => {
                 <div className={style.dropMenu} >
                     {weightUnits.map(unit => <div key={unit.key} data-unit={unit.key} onClick={setDropMenuValue}>{unit.value}</div>)}
                 </div>
+
                 <label htmlFor={'status'}>Status</label>
                 <input type={'hidden'} id={'status'} name={'status'} />
                 <div className={style.menuHeader} onClick={openCloseDropMenu}

@@ -40,9 +40,9 @@ export const getAllStockEntriesAsyncAction = createAsyncThunk<StockEntryResponse
     }
 )
 
-export const addNewStockEntryAsyncAction = createAsyncThunk<StockEntry, StockEntry, { rejectValue: string }>(
+export const addNewStockEntryAsyncAction = createAsyncThunk<StockEntry, StockEntryDto, { rejectValue: string }>(
     'stock_entry/add_new_stock_entry',
-    async(newEntry: StockEntry, thunkAPI): Promise<StockEntry | ReturnType<typeof thunkAPI.rejectWithValue>> => {
+    async(newEntry: StockEntryDto, thunkAPI): Promise<StockEntry | ReturnType<typeof thunkAPI.rejectWithValue>> => {
         try {
             const productsArr = checkAvailabilityProducts(thunkAPI.getState() as RootState);
 

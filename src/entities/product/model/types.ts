@@ -30,7 +30,7 @@ export type Product = {
 
 export type StockEntry = {
     id?: string,
-    productInfo: Product | undefined,
+    productInfo: Product,
     weight: number,
     quantityUnits: number,
     expirationDate: Date,
