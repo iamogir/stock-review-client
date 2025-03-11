@@ -33,7 +33,9 @@ export const getAllStockEntriesAsyncAction = createAsyncThunk<StockEntryResponse
         } 
         catch (error) {
             console.error('get_all_stock_entries ' + error);
-            throw error;
+            return thunkAPI.rejectWithValue(
+                error instanceof Error ? error.message : 'Something went wrong'
+            );
         }
     }
 )
@@ -51,7 +53,6 @@ export const addNewStockEntryAsyncAction = createAsyncThunk<StockEntry, StockEnt
 
             if (response.status === 201) {
                 const json = await response.json();
-                console.log(json);
                 const returnedEntry = fromServerStockEntryObject(json, productsArr);
 
                 if (!returnedEntry) {
@@ -80,15 +81,12 @@ export const deleteStockEntryByIdAsyncAction = createAsyncThunk<string, string, 
             if (id === '')
                 throw new Error('NO ID !!!')
 
-            console.log('DELETE')
-
             const response = await fetch(API + 'stock_entries/delete_stock_entry_by_id/' + id, {
                 method: "DELETE",
                 headers: { "Content-Type": "text/plain"}
             });
             if (response.status === 200 || response.status === 204) {
                 const json = await response.text();
-                console.log(json)
                 return json;
             } else {
                 throw new Error(response.statusText);

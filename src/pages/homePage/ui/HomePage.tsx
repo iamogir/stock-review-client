@@ -23,45 +23,23 @@ export const HomePage = () => {
     const currentDate = new Date(Date.now());
     const dateString = currentDate.getDate() + '/' + Number(currentDate.getMonth() + 1) + '/' + currentDate.getFullYear();
 
-    console.log(products)
-
-    const loadData = async () => {
-        // Проверяем, нужно ли загружать продукты
-        if (!products || products.length === 0) {
-            await dispatch(getAllProductsAsyncAction());
-        }
-
-        // Проверяем, нужно ли загружать записи на складе
-        if (!stockEntries || stockEntries.length === 0) {
-            await dispatch(getAllStockEntriesAsyncAction());
-        }
-
-        // Проверяем, нужно ли загружать истекшие продукты
-        if (!expiredProducts || expiredProducts.length === 0) {
-            await dispatch(getExpiredProductsAsyncAction());
-        }
-
-        // Проверяем, нужно ли загружать продукты, которые скоро истекут
-        if (!expiringSoonProducts || expiringSoonProducts.length === 0) {
-            await dispatch(getExpiringSoonProductsAsyncAction(EXPIRING_SOON_DAYS));
-        }
-    };
-
     useEffect(() => {
-        // if (!products || products.length === 0) {
-        //     dispatch(getAllProductsAsyncAction());
-        // }
-        // if (!stockEntries || stockEntries.length === 0) {
-        //     dispatch(getAllStockEntriesAsyncAction())
-        // }
-        // if (!expiredProducts || expiredProducts.length === 0) {
-        //     dispatch(getExpiredProductsAsyncAction())
-        // }
-        // if (!expiringSoonProducts || expiringSoonProducts.length === 0) {
-        //     dispatch(getExpiringSoonProductsAsyncAction(EXPIRING_SOON_DAYS))
-        // }
 
-        loadData();
+        const loadData = async () => {
+            if (!products || products.length === 0) {
+                await dispatch(getAllProductsAsyncAction());
+            }
+        }
+
+        if (!stockEntries || stockEntries.length === 0) {
+            dispatch(getAllStockEntriesAsyncAction())
+        }
+        if (!expiredProducts || expiredProducts.length === 0) {
+            dispatch(getExpiredProductsAsyncAction())
+        }
+        if (!expiringSoonProducts || expiringSoonProducts.length === 0) {
+            dispatch(getExpiringSoonProductsAsyncAction(EXPIRING_SOON_DAYS))
+        }
 
     }, [])
 

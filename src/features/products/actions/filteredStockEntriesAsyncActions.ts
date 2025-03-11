@@ -12,13 +12,10 @@ export const getExpiredProductsAsyncAction = createAsyncThunk<StockEntryResponse
         try {
             const state = thunkAPI.getState() as RootState;
             const productsArr = checkAvailabilityProducts(state);
-            if (productsArr.length === 0) {
-                throw new Error('No products found');
-            }
-            const expiredProductsArr = state.filteredProducts.expiredProducts;
-            if (expiredProductsArr && expiredProductsArr.length > 0) {
-                throw new Error('Expired products already loaded')
-            }
+            // const expiredProductsArr = state.filteredProducts.expiredProducts; TODO: check best functional #2
+            // if (expiredProductsArr && expiredProductsArr.length > 0) {
+            //     throw new Error('Expired products already loaded')
+            // }
 
             console.log('Get All Expired Products Loading')
 
@@ -52,14 +49,10 @@ export const getExpiringSoonProductsAsyncAction = createAsyncThunk<StockEntryRes
         try {
             const state = thunkAPI.getState() as RootState;
             const productsArr = checkAvailabilityProducts(state);
-            if (productsArr.length === 0) {
-                throw new Error('No products found');
-            }
             const expiredProductsSoonArr = state.filteredProducts.expiringSoonProducts;
             if (expiredProductsSoonArr && expiredProductsSoonArr.length > 0) {
                 throw new Error('Expired soon products already loaded')
             }
-            const expiredProducts = checkAvailabilityProducts(thunkAPI.getState() as RootState);
 
             console.log('Get All Expired Soon Loading')
 
@@ -68,7 +61,7 @@ export const getExpiringSoonProductsAsyncAction = createAsyncThunk<StockEntryRes
             if (response.status === 200 || response.status === 304) {
                 const json = await response.json();
 
-                json.map((pr: StockEntryDto) => stockEntries.push(fromServerStockEntryObject(pr, expiredProducts)));
+                json.map((pr: StockEntryDto) => stockEntries.push(fromServerStockEntryObject(pr, productsArr)));
 
                 if (stockEntries.length === 0) {
                     throw new Error('No expired stockEntries for next ' + countDays + ' days. Great job!')

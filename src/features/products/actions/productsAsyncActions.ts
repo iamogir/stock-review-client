@@ -1,7 +1,6 @@
 import {Product, ProductDto, ProductsResponse} from "entities/product";
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {fromServerProductObject} from "entities/product";
-import {RootState} from "app/redux";
 
 const API = import.meta.env.VITE_API_URL;
 
@@ -10,10 +9,10 @@ export const getAllProductsAsyncAction = createAsyncThunk<ProductsResponse, void
     async(_, thunkAPI): Promise<ProductsResponse | ReturnType<typeof thunkAPI.rejectWithValue>> => {
         try {
 
-            // const {products} = thunkAPI.getState() as RootState;
+            // const {products} = thunkAPI.getState() as RootState; TODO: check best functional
             // const temp = products.products;
             // if (temp && temp.length > 0) {
-            //     throw new Error('Products already loaded')
+            //     return thunkAPI.rejectWithValue('Products are already loaded')
             // }
 
             console.log('Get All Products Loading')
@@ -36,7 +35,9 @@ export const getAllProductsAsyncAction = createAsyncThunk<ProductsResponse, void
 
         } catch (error) {
             console.error('get_all_products ' + error);
-            throw error;
+            return thunkAPI.rejectWithValue(
+                error instanceof Error ? error.message : 'Something went wrong'
+            );
         }
     }
 )
