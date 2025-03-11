@@ -6,7 +6,6 @@ import {Product, ProductDto, StockEntry, StockEntryDto} from "entities/product";
 // }
 
 export function fromServerStockEntryObject(obj: StockEntryDto, products: Product[]): StockEntry {
-
     return {
         id: obj._id,
         productInfo: findProductOfEntry(obj.productId, products),
