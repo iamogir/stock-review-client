@@ -3,8 +3,9 @@ import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {
     getAllProductsAsyncAction,
-    getAllStockEntriesAsyncAction, getExpiredProductsAsyncAction,
-    getExpiringSoonProductsAsyncAction
+    getAllStockEntriesAsyncAction,
+    getExpiredProductsAsyncAction,
+    getExpiringSoonProductsAsyncAction,
 } from "features/products";
 import {AppDispatch, RootState} from "app/redux";
 import {EXPIRING_SOON_DAYS} from "shared/consts";
@@ -20,7 +21,9 @@ export const HomePage = () => {
     const {expiredProducts, expiringSoonProducts} = useSelector((state: RootState)=> state.filteredProducts)
 
     const currentDate = new Date(Date.now());
-    const dateString = currentDate.getDate() + '/' + currentDate.getMonth() + '/' + currentDate.getFullYear();
+    const dateString = currentDate.getDate() + '/' + Number(currentDate.getMonth() + 1) + '/' + currentDate.getFullYear();
+
+    console.log(products)
 
     const loadData = async () => {
         // Проверяем, нужно ли загружать продукты

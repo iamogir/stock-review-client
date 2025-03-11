@@ -1,5 +1,5 @@
 import style from './stockEntryCard.module.css'
-import { StockEntry } from "entities/product";
+import { StockEntry} from "entities/product";
 import { DeleteProductButton } from "features/products/deleteProductButton";
 
 interface Props {
