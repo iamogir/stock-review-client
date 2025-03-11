@@ -29,17 +29,18 @@ export const HomePage = () => {
             if (!products || products.length === 0) {
                 await dispatch(getAllProductsAsyncAction());
             }
+            if (!stockEntries || stockEntries.length === 0) {
+                await dispatch(getAllStockEntriesAsyncAction())
+            }
+            if (!expiredProducts || expiredProducts.length === 0) {
+                await dispatch(getExpiredProductsAsyncAction())
+            }
+            if (!expiringSoonProducts || expiringSoonProducts.length === 0) {
+                await dispatch(getExpiringSoonProductsAsyncAction(EXPIRING_SOON_DAYS))
+            }
         }
 
-        if (!stockEntries || stockEntries.length === 0) {
-            dispatch(getAllStockEntriesAsyncAction())
-        }
-        if (!expiredProducts || expiredProducts.length === 0) {
-            dispatch(getExpiredProductsAsyncAction())
-        }
-        if (!expiringSoonProducts || expiringSoonProducts.length === 0) {
-            dispatch(getExpiringSoonProductsAsyncAction(EXPIRING_SOON_DAYS))
-        }
+        loadData();
 
     }, [])
 
