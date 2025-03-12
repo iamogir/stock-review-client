@@ -44,12 +44,12 @@ export const HomePage = () => {
 
     }, [])
 
-    useEffect(() => {
-        if (stockEntries && stockEntries.length > 0) {
-            dispatch(getExpiredProductsAsyncAction())
-            dispatch(getExpiringSoonProductsAsyncAction(EXPIRING_SOON_DAYS))
-        }
-    }, [stockEntries]);
+    // useEffect(() => {
+    //     if (stockEntries && stockEntries.length > 0) {
+    //         dispatch(getExpiredProductsAsyncAction())
+    //         dispatch(getExpiringSoonProductsAsyncAction(EXPIRING_SOON_DAYS))
+    //     }
+    // }, [stockEntries]);
 
     return (
         loading ? <div>
