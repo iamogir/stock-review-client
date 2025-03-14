@@ -25,8 +25,6 @@ export const AddProductPage = () => {
             status: eventTarget['status'].value
         };
 
-        console.log(eventTarget['expDate'].value);
-
         dispatch(addNewProductAsyncAction(infoObject));
     }
 
@@ -75,12 +73,12 @@ export const AddProductPage = () => {
 
                 <label htmlFor={'productName'}>Name</label>
                 <input type={'text'} id={'productName'} name={'productName'} />
-                <label htmlFor={'brand'}>Unit</label>
+                <label htmlFor={'brand'}>Brand</label>
                 <input type={'text'} id={'brand'} name={'brand'} />
                 <label htmlFor={'category'}>Category</label>
                 <input type={'text'} id={'category'} name={'category'} />
 
-                <label htmlFor={'unitWeight'}>Unit of thw weight</label>
+                <label htmlFor={'unitWeight'}>Unit of the weight</label>
                 <input type={'hidden'} id={'unitWeight'} name={'unitWeight'} />
                 <div className={style.menuHeader} onClick={openCloseDropMenu}
                      ref={(el) => {if (el) {dropMenuRef.current.push(el)}}}>Choose</div>

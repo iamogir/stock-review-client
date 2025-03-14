@@ -1,7 +1,7 @@
 import {createSlice, SliceCaseReducers, SliceSelectors} from "@reduxjs/toolkit";
 import {
     addNewStockEntryAsyncAction, deleteStockEntryByIdAsyncAction,
-    getAllStockEntriesAsyncAction, getAllProductsAsyncAction
+    getAllStockEntriesAsyncAction, getAllProductsAsyncAction, addNewProductAsyncAction
 } from "features/products";
 import {ProductsInitState} from "entities/product";
 
@@ -65,6 +65,33 @@ const productsSlice = createSlice<ProductsInitState, SliceCaseReducers<ProductsI
                         // state.products ??= [];
                         if (action.payload.stockEntries)
                             state.stockEntries =  [ ...action.payload.stockEntries ];
+                    }
+                )
+                .addCase(
+                    (addNewProductAsyncAction.pending),
+                    (state) => {
+                        state.loading = true;
+                        state.error = null;
+                    }
+                )
+                .addCase(
+                    (addNewProductAsyncAction.rejected),
+                    (state, action) => {
+                        state.loading = false;
+                        state.error = action.error.message as string;
+                    }
+                )
+                .addCase(
+                    (addNewProductAsyncAction.fulfilled),
+                    (state, action) => {
+                        state.loading = false;
+                        state.error = null;
+                        if (state.products) {
+                            state.products = [ ...state.products, action.payload ];
+                        } else {
+                            state.products = [ action.payload]
+                        }
+
                     }
                 )
                 .addCase(
