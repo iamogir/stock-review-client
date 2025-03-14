@@ -1,6 +1,6 @@
 import style from './addProductPage.module.css'
 import {FormEvent, useEffect, useRef} from "react";
-import {Product} from "entities/product";
+import {Product, ProductDto} from "entities/product";
 import {useDispatch} from "react-redux";
 import {AppDispatch} from "app/redux";
 import {useNavigate} from "react-router-dom";
@@ -16,7 +16,7 @@ export const AddProductPage = () => {
     const addProduct = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const eventTarget = event.target as HTMLFormElement;
-        const infoObject: Product = {
+        const infoObject: ProductDto = {
             name: eventTarget['productName'].value,
             brand: eventTarget['brand'].value,
             category: eventTarget['category'].value,
@@ -26,7 +26,7 @@ export const AddProductPage = () => {
 
         console.log(eventTarget['expDate'].value);
 
-        // dispatch(addNewProductAsyncAction(infoObject));
+        dispatch(addNewProductAsyncAction(infoObject));
     }
 
     const setDropMenuValue = (event: React.MouseEvent<HTMLElement>) => {
