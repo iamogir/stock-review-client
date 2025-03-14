@@ -1,7 +1,7 @@
 import {useDispatch} from "react-redux";
 import {AppDispatch} from "app/redux";
 import {deleteStockEntryByIdAsyncAction} from "features/products";
-import {updateExpiredProducts} from "features/products/slices/filteredProductsSlice.ts";
+import {updateExpiredProducts} from "features/products";
 
 interface Props {
     id: string;

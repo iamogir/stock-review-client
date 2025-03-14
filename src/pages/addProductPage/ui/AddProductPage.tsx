@@ -1,11 +1,12 @@
 import style from './addProductPage.module.css'
 import {FormEvent, useEffect, useRef} from "react";
-import {Product, ProductDto} from "entities/product";
+import {ProductDto} from "entities/product";
 import {useDispatch} from "react-redux";
 import {AppDispatch} from "app/redux";
 import {useNavigate} from "react-router-dom";
 import {statusUnits, weightUnits} from "shared/consts";
 import * as React from "react";
+import {addNewProductAsyncAction} from "features/products";
 
 export const AddProductPage = () => {
 
