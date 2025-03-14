@@ -1,0 +1,1 @@
+export { EXPIRING_SOON_DAYS, weightUnits, statusUnits } from './product.ts'

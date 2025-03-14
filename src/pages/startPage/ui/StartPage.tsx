@@ -1,6 +1,6 @@
 import {useNavigate} from "react-router-dom";
 
-const StartPage = () => {
+export const StartPage = () => {
     const navigate = useNavigate();
 
     return (
@@ -11,5 +11,3 @@ const StartPage = () => {
         </div>
     );
 };
-
-export default StartPage;

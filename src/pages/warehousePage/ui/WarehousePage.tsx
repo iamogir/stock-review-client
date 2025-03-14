@@ -1,12 +1,11 @@
-import {Product} from "../../../entities/product/model/types.ts";
-import ProductCard from "../../../entities/product/ui/ProductCard.tsx";
+import {Product, ProductCard} from "entities/product";
 import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState} from "../../../app/redux/store.ts";
+import {AppDispatch, RootState} from "app/redux";
 import {useEffect} from "react";
-import {getAllProductsAsyncAction} from "../../../features/products/actions/productsAsyncActions.ts";
 import {useNavigate} from "react-router-dom";
+import {getAllProductsAsyncAction} from "features/products";
 
-const WareHouse = () => {
+export const WarehousePage = () => {
 
     const {products, loading} = useSelector((state: RootState) => state.products);
     const dispatch = useDispatch<AppDispatch>();
@@ -23,6 +22,7 @@ const WareHouse = () => {
         <div>
             <button onClick={() => navigate('/home')}>Home</button>
             <button onClick={() => navigate("/add_product")}>add product</button>
+            <button onClick={() => navigate('/add_stock_entry')}>add stock entry</button>
             <h2>All products in stock</h2>
             {products && products.length > 0 ? products?.filter(pr => pr.status).map((pr: Product) =>
                     <ProductCard product={pr} key={pr.name}/>) :
@@ -34,5 +34,3 @@ const WareHouse = () => {
         </div>
     );
 };
-
-export default WareHouse;

@@ -1,51 +1,31 @@
+import {StockEntry} from "entities/stockEntry";
+
 export type ProductDto = {
-    _id: string,
+    _id?: string,
     name: string,
     category: string,
-    weight: number,
+    brand: string,
     unitWeight: string,
-    quantityUnits: number,
-    expirationDate: Date,
-    createdAt: Date,
-    updatedAt: Date,
-    barcode?: string,
-    supplier: string,
-    storageLocation: string,
     status: boolean,
 }
 
-export interface Product {
+export type Product = {
     id?: string,
     name: string,
     category: string,
-    weight: number,
+    brand: string,
     unitWeight: string,
-    quantityUnits: number,
-    expirationDate: Date,
-    supplier: string,
-    storageLocation: string,
     status: boolean,
 }
 
 export type ProductsInitState = {
-    products: Product[] | undefined;
+    products: Product[] | undefined,
+    stockEntries: StockEntry[] | undefined;
     // expiredProducts: Product[] | undefined;
-    loading: boolean;
-    error: string | null;
-}
-
-export type FilteredProductsInitState = {
-    expiredProducts: Product[] | undefined;
-    expiringSoonProducts: Product[] | undefined;
     loading: boolean;
     error: string | null;
 }
 
 export type ProductsResponse = {
     products: Product[] | null;
-}
-
-export type FormatObject = {
-    key: string,
-    value: string
 }

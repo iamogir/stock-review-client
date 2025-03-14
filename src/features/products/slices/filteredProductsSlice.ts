@@ -1,9 +1,10 @@
-import {FilteredProductsInitState} from "../../../entities/product/model/types.ts";
+import {FilteredProductsInitState} from "entities/product";
 import {createSlice, SliceCaseReducers, SliceSelectors} from "@reduxjs/toolkit";
 import {
     getExpiredProductsAsyncAction,
     getExpiringSoonProductsAsyncAction
-} from "../actions/filteredProductsAsyncActions.ts";
+} from "features/products";
+import {StockEntry} from "entities/stockEntry";
 
 const initialState: FilteredProductsInitState = {
     expiredProducts: [],
@@ -16,7 +17,11 @@ const filteredProductsSlice = createSlice<FilteredProductsInitState, SliceCaseRe
     {
         name: 'filteredProducts',
         initialState,
-        reducers: {},
+        reducers: {
+            updateExpiredProducts: (state, action) => {
+                state.expiredProducts = state.expiredProducts.filter((pr: StockEntry) => pr.id !== action.payload);
+            }
+        },
         extraReducers: (builder) => {
             builder
                 .addCase(
@@ -40,8 +45,8 @@ const filteredProductsSlice = createSlice<FilteredProductsInitState, SliceCaseRe
                         state.loading = false;
                         state.expiredProducts = undefined;
                         state.expiredProducts ??= [];
-                        if (action.payload.products)
-                            state.expiredProducts = [ ...state.expiredProducts, ...action.payload.products ];
+                        if (action.payload.stockEntries)
+                            state.expiredProducts = [ ...state.expiredProducts, ...action.payload.stockEntries ];
                     }
                 )
                 .addCase(
@@ -64,12 +69,13 @@ const filteredProductsSlice = createSlice<FilteredProductsInitState, SliceCaseRe
                     (state, action) => {
                         state.loading = false;
                         state.expiringSoonProducts ??= [];
-                        if (action.payload.products)
-                            state.expiringSoonProducts = [ ...state.expiringSoonProducts, ...action.payload.products ];
+                        if (action.payload.stockEntries)
+                            state.expiringSoonProducts = [ ...state.expiringSoonProducts, ...action.payload.stockEntries ];
                     }
                 )
         }
     }
 )
 
+export const { updateExpiredProducts } = filteredProductsSlice.actions;
 export default filteredProductsSlice.reducer;

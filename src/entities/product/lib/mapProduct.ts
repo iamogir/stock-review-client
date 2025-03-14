@@ -1,21 +1,17 @@
-import {Product, ProductDto} from "../model/types.ts";
+import {Product, ProductDto} from "entities/product";
 
-export function fromJSON(json: string): Product {
-    const obj = JSON.parse(json);
-    return fromServerObject(obj);
-}
+// export function fromJSON(json: string): StockEntryDto | ProductDto {
+//     const obj = JSON.parse(json);
+//     return fromServerStockEntryObject(obj);
+// }
 
-export function fromServerObject(obj: ProductDto): Product {
+export function fromServerProductObject(obj: ProductDto): Product {
     return {
         id: obj._id,
         name: obj.name,
         category: obj.category,
-        weight: obj.weight,
+        brand: obj.brand,
         unitWeight: obj.unitWeight,
-        quantityUnits: obj.quantityUnits,
-        expirationDate: obj.expirationDate,
-        supplier: obj.supplier,
-        storageLocation: obj.storageLocation,
         status: obj.status,
     }
 }

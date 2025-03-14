@@ -1,0 +1,1 @@
+export type { FormatObject } from './type'

@@ -1,12 +1,13 @@
 import {createSlice, SliceCaseReducers, SliceSelectors} from "@reduxjs/toolkit";
 import {
-    addNewProductAsyncAction,
-    getAllProductsAsyncAction,
-} from "../actions/productsAsyncActions.ts";
-import {ProductsInitState} from "../../../entities/product/model/types.ts";
+    addNewStockEntryAsyncAction, deleteStockEntryByIdAsyncAction,
+    getAllStockEntriesAsyncAction, getAllProductsAsyncAction
+} from "features/products";
+import {ProductsInitState} from "entities/product";
 
 const initialState: ProductsInitState = {
     products: [],
+    stockEntries: [],
     loading: false,
     error: 'Any error'
 }
@@ -23,7 +24,7 @@ const productsSlice = createSlice<ProductsInitState, SliceCaseReducers<ProductsI
                     (state) => {
                         state.loading = true;
                         state.products = undefined;
-                        state.error = null;
+                        state.error = null
                     }
                 )
                 .addCase(
@@ -31,41 +32,87 @@ const productsSlice = createSlice<ProductsInitState, SliceCaseReducers<ProductsI
                     (state, action) => {
                         state.loading = false;
                         state.error = action.error.message as string;
+
                     }
                 )
                 .addCase(
                     (getAllProductsAsyncAction.fulfilled),
                     (state, action) => {
                         state.loading = false;
-                        // state.products ??= [];
                         if (action.payload.products)
-                            state.products =  [ ...action.payload.products ];
+                            state.products = [ ...action.payload.products ];
                     }
                 )
                 .addCase(
-                    (addNewProductAsyncAction.pending),
+                    (getAllStockEntriesAsyncAction.pending),
                     (state) => {
                         state.loading = true;
+                        state.stockEntries = undefined;
                         state.error = null;
                     }
                 )
                 .addCase(
-                    (addNewProductAsyncAction.rejected),
+                    (getAllStockEntriesAsyncAction.rejected),
                     (state, action) => {
                         state.loading = false;
                         state.error = action.error.message as string;
                     }
                 )
                 .addCase(
-                    (addNewProductAsyncAction.fulfilled),
+                    (getAllStockEntriesAsyncAction.fulfilled),
+                    (state, action) => {
+                        state.loading = false;
+                        // state.products ??= [];
+                        if (action.payload.stockEntries)
+                            state.stockEntries =  [ ...action.payload.stockEntries ];
+                    }
+                )
+                .addCase(
+                    (addNewStockEntryAsyncAction.pending),
+                    (state) => {
+                        state.loading = true;
+                        state.error = null;
+                    }
+                )
+                .addCase(
+                    (addNewStockEntryAsyncAction.rejected),
+                    (state, action) => {
+                        state.loading = false;
+                        state.error = action.error.message as string;
+                    }
+                )
+                .addCase(
+                    (addNewStockEntryAsyncAction.fulfilled),
                     (state, action) => {
                         state.loading = false;
                         state.error = null;
-                        if (state.products) {
-                            state.products = [ ...state.products, action.payload ];
+                        if (state.stockEntries) {
+                            state.stockEntries = [ ...state.stockEntries, action.payload ];
                         } else {
-                            state.products = [ action.payload ];
+                            state.stockEntries = [ action.payload ];
                         }
+                    }
+                )
+                .addCase(
+                    (deleteStockEntryByIdAsyncAction.pending),
+                    (state) => {
+                        state.loading = true;
+                        state.error = null;
+                    }
+                )
+                .addCase(
+                    (deleteStockEntryByIdAsyncAction.rejected),
+                    (state, action) => {
+                        state.loading = false;
+                        state.error = action.error.message as string;
+                    }
+                )
+                .addCase(
+                    (deleteStockEntryByIdAsyncAction.fulfilled),
+                    (state, action) => {
+                        state.loading = false;
+                        state.error = null;
+                        state.stockEntries = state.stockEntries?.filter((pr) => pr.id !== action.payload);
                     }
                 )
         }
