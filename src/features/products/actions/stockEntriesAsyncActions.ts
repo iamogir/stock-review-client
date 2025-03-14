@@ -1,5 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import { StockEntry, StockEntryDto, StockEntryResponse} from "entities/product";
+import { StockEntry, StockEntryDto, StockEntryResponse} from "entities/stockEntry";
 import {fromServerStockEntryObject} from "entities/stockEntry";
 import {checkAvailabilityProducts} from 'shared/lib';
 import {RootState} from "app/redux";

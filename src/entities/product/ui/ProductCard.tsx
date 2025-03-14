@@ -1,5 +1,6 @@
 import style from './productCard.module.css';
 import {Product} from "entities/product";
+import {DeleteProductButton} from "features/products/deleteProductButton";
 
 interface Props {
     product: Product;
@@ -15,7 +16,7 @@ export const ProductCard = ({product}: Props) => {
             <h4>Category: {product.category}</h4>
             <h4>Brand: {product.brand}</h4>
             <h3>Status: {product.status ? 'in stock' : 'out of stock'}</h3>
-            {/*<DeleteProductButton id={product.id ?? ''} />*/}
+            <DeleteProductButton id={product.id} entity={'product'}/>
             <br/>
         </div>
     );
