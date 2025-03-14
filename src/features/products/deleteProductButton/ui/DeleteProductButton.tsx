@@ -4,16 +4,22 @@ import {deleteStockEntryByIdAsyncAction} from "features/products";
 import {updateExpiredProducts} from "features/products";
 
 interface Props {
-    id: string;
+    id: string | undefined;
+    entity: string
 }
 
-export const DeleteProductButton = ({id}: Props) => {
+export const DeleteProductButton = ({id, entity}: Props) => {
 
     const dispatch = useDispatch<AppDispatch>();
 
     const func = () => {
-        dispatch(deleteStockEntryByIdAsyncAction(id));
+        if (id && entity === 'entry') {
+            dispatch(deleteStockEntryByIdAsyncAction(id));
             dispatch(updateExpiredProducts(id));
+        }
+        if (id && entity === 'product') {
+            dispatch(deleteProductById(id));
+        }
     }
 
     return (
