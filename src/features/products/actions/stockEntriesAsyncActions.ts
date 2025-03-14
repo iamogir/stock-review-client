@@ -86,8 +86,8 @@ export const deleteStockEntryByIdAsyncAction = createAsyncThunk<string, string, 
                 headers: { "Content-Type": "text/plain"}
             });
             if (response.status === 200 || response.status === 204) {
-                const json = await response.text();
-                return json;
+                const text = await response.text();
+                return text;
             } else {
                 throw new Error(response.statusText);
             }

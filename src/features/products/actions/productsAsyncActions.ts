@@ -87,8 +87,8 @@ export const deleteProductByIdAsyncAction = createAsyncThunk<string, string, { r
             });
 
             if (response.status === 200 || response.status === 204) {
-                const json = await response.json();
-                return json;
+                const text = await response.text();
+                return text;
             } else {
                 throw new Error(response.statusText);
             }

@@ -2,6 +2,7 @@ import {useDispatch} from "react-redux";
 import {AppDispatch} from "app/redux";
 import {deleteStockEntryByIdAsyncAction} from "features/products";
 import {updateExpiredProducts} from "features/products";
+import {deleteProductByIdAsyncAction} from "features/products/actions/productsAsyncActions.ts";
 
 interface Props {
     id: string | undefined;
@@ -18,7 +19,7 @@ export const DeleteProductButton = ({id, entity}: Props) => {
             dispatch(updateExpiredProducts(id));
         }
         if (id && entity === 'product') {
-            dispatch(deleteProductById(id));
+            dispatch(deleteProductByIdAsyncAction(id));
         }
     }
 
