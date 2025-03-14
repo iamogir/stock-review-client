@@ -4,6 +4,7 @@ import {
     getAllStockEntriesAsyncAction, getAllProductsAsyncAction, addNewProductAsyncAction
 } from "features/products";
 import {ProductsInitState} from "entities/product";
+import {deleteProductByIdAsyncAction} from "features/products/actions/productsAsyncActions.ts";
 
 const initialState: ProductsInitState = {
     products: [],
@@ -118,6 +119,28 @@ const productsSlice = createSlice<ProductsInitState, SliceCaseReducers<ProductsI
                         } else {
                             state.stockEntries = [ action.payload ];
                         }
+                    }
+                )
+                .addCase(
+                    (deleteProductByIdAsyncAction.pending),
+                    (state) => {
+                        state.loading = true;
+                        state.error = null;
+                    }
+                )
+                .addCase(
+                    (deleteProductByIdAsyncAction.rejected),
+                    (state, action) => {
+                        state.loading = false;
+                        state.error = action.error.message as string;
+                    }
+                )
+                .addCase(
+                    (deleteProductByIdAsyncAction.fulfilled),
+                    (state, action) => {
+                        state.loading = false;
+                        state.error = null;
+                        state.products = state.products?.filter(pr => pr.id !== action.payload);
                     }
                 )
                 .addCase(
