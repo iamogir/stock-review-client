@@ -6,6 +6,7 @@ import {addNewStockEntryAsyncAction} from "features/products";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "app/redux";
 import * as React from "react";
+import {DropMenu} from "shared/ui/dropMenu";
 
 export const AddNewSupplyPage = () => {
 
@@ -88,6 +89,8 @@ export const AddNewSupplyPage = () => {
                 <div className={style.dropMenu} >
                     {products?.map(pr => <div key={pr.id} data-unit={pr.id} onClick={setDropMenuValue}>{pr.name}</div>)}
                 </div>
+
+                <DropMenu id={'id'} variables={[{k: 'v'}]}/>
 
                 <label htmlFor={'weight'}>Weight</label>
                 <input type={'number'} min={0} id={'weight'} name={'weight'} />
