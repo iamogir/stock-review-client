@@ -1,11 +1,12 @@
 import style from './addProductPage.module.css'
 import {FormEvent, useEffect, useRef} from "react";
-import {Product} from "entities/product";
+import {ProductDto} from "entities/product";
 import {useDispatch} from "react-redux";
 import {AppDispatch} from "app/redux";
 import {useNavigate} from "react-router-dom";
 import {statusUnits, weightUnits} from "shared/consts";
 import * as React from "react";
+import {addNewProductAsyncAction} from "features/products";
 
 export const AddProductPage = () => {
 
@@ -16,7 +17,7 @@ export const AddProductPage = () => {
     const addProduct = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const eventTarget = event.target as HTMLFormElement;
-        const infoObject: Product = {
+        const infoObject: ProductDto = {
             name: eventTarget['productName'].value,
             brand: eventTarget['brand'].value,
             category: eventTarget['category'].value,
@@ -24,9 +25,7 @@ export const AddProductPage = () => {
             status: eventTarget['status'].value
         };
 
-        console.log(eventTarget['expDate'].value);
-
-        // dispatch(addNewProductAsyncAction(infoObject));
+        dispatch(addNewProductAsyncAction(infoObject));
     }
 
     const setDropMenuValue = (event: React.MouseEvent<HTMLElement>) => {
@@ -74,12 +73,12 @@ export const AddProductPage = () => {
 
                 <label htmlFor={'productName'}>Name</label>
                 <input type={'text'} id={'productName'} name={'productName'} />
-                <label htmlFor={'brand'}>Unit</label>
+                <label htmlFor={'brand'}>Brand</label>
                 <input type={'text'} id={'brand'} name={'brand'} />
                 <label htmlFor={'category'}>Category</label>
                 <input type={'text'} id={'category'} name={'category'} />
 
-                <label htmlFor={'unitWeight'}>Unit of thw weight</label>
+                <label htmlFor={'unitWeight'}>Unit of the weight</label>
                 <input type={'hidden'} id={'unitWeight'} name={'unitWeight'} />
                 <div className={style.menuHeader} onClick={openCloseDropMenu}
                      ref={(el) => {if (el) {dropMenuRef.current.push(el)}}}>Choose</div>
