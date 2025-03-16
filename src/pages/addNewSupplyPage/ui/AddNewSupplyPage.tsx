@@ -1,7 +1,7 @@
 import style from './addNewSupplyPage.module.css'
 import {useNavigate} from "react-router-dom";
 import {FormEvent, useEffect, useRef} from "react";
-import {StockEntryDto} from "entities/product";
+import {StockEntryDto} from "entities/stockEntry";
 import {addNewStockEntryAsyncAction} from "features/products";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "app/redux";
