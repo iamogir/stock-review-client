@@ -14,7 +14,7 @@ export const AddNewSupplyPage = () => {
     const dispatch = useDispatch<AppDispatch>();
     const { products } = useSelector((state: RootState) => state.products);
 
-    const dropMenuRef = useRef<HTMLElement[]>([]);
+    // const dropMenuRef = useRef<HTMLElement[]>([]);
 
     const addSupply = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -38,42 +38,42 @@ export const AddNewSupplyPage = () => {
         dispatch(addNewStockEntryAsyncAction(infoObject));
     }
 
-    const setDropMenuValue = (event: React.MouseEvent<HTMLElement>) => {
-        const eventTarget = event.target as HTMLElement;
-        const menuHeader = (eventTarget.parentElement as HTMLElement).previousSibling as HTMLElement;
-        const inputElement = menuHeader.previousSibling as HTMLInputElement;
-        const value = eventTarget.dataset.unit;
-        if (value) {
-            console.log(eventTarget)
-            inputElement.value = value;
-            menuHeader.textContent = eventTarget.textContent;
-        }
+    // const setDropMenuValue = (event: React.MouseEvent<HTMLElement>) => {
+    //     const eventTarget = event.target as HTMLElement;
+    //     const menuHeader = (eventTarget.parentElement as HTMLElement).previousSibling as HTMLElement;
+    //     const inputElement = menuHeader.previousSibling as HTMLInputElement;
+    //     const value = eventTarget.dataset.unit;
+    //     if (value) {
+    //         console.log(eventTarget)
+    //         inputElement.value = value;
+    //         menuHeader.textContent = eventTarget.textContent;
+    //     }
+    //
+    // }
 
-    }
+    // const openCloseDropMenu = (event: React.MouseEvent<HTMLElement>) => {
+    //     const eventTarget = event.target as HTMLFormElement;
+    //     const menu = eventTarget.nextElementSibling;
+    //     if (!menu) {
+    //         console.log('No menu');
+    //         return;
+    //     }
+    //     menu.classList.toggle(style.openMenu);
+    // }
 
-    const openCloseDropMenu = (event: React.MouseEvent<HTMLElement>) => {
-        const eventTarget = event.target as HTMLFormElement;
-        const menu = eventTarget.nextElementSibling;
-        if (!menu) {
-            console.log('No menu');
-            return;
-        }
-        menu.classList.toggle(style.openMenu);
-    }
-
-    const closeDropMenu = (event: MouseEvent) => {
-        const eventTarget = event.target as HTMLFormElement;
-
-        dropMenuRef.current.map(el => {
-            if (el !== null && eventTarget !== el)
-                el.nextElementSibling?.classList.remove(style.openMenu);
-        })
-    }
-
-    useEffect(() => {
-        document.addEventListener('click', closeDropMenu);
-        return () => document.removeEventListener('click', closeDropMenu);
-    }, []);
+    // const closeDropMenu = (event: MouseEvent) => {
+    //     const eventTarget = event.target as HTMLFormElement;
+    //
+    //     dropMenuRef.current.map(el => {
+    //         if (el !== null && eventTarget !== el)
+    //             el.nextElementSibling?.classList.remove(style.openMenu);
+    //     })
+    // }
+    //
+    // useEffect(() => {
+    //     document.addEventListener('click', closeDropMenu);
+    //     return () => document.removeEventListener('click', closeDropMenu);
+    // }, []);
 
     return (
         <div>
@@ -83,14 +83,14 @@ export const AddNewSupplyPage = () => {
             <form className={style.form} onSubmit={addSupply}>
 
                 <label htmlFor={'type'}>Type of product</label>
-                <input type={'hidden'} id={'type'} name={'type'}/>
-                <div className={style.menuHeader} onClick={openCloseDropMenu}
-                     ref={(el) => {if (el) {dropMenuRef.current.push(el)}}}>Choose</div>
-                <div className={style.dropMenu} >
-                    {products?.map(pr => <div key={pr.id} data-unit={pr.id} onClick={setDropMenuValue}>{pr.name}</div>)}
-                </div>
+                {/*<input type={'hidden'} id={'type'} name={'type'}/>*/}
+                {/*<div className={style.menuHeader} onClick={openCloseDropMenu}*/}
+                {/*     ref={(el) => {if (el) {dropMenuRef.current.push(el)}}}>Choose</div>*/}
+                {/*<div className={style.dropMenu} >*/}
+                {/*    {products?.map(pr => <div key={pr.id} data-unit={pr.id} onClick={setDropMenuValue}>{pr.name}</div>)}*/}
+                {/*</div>*/}
 
-                <DropMenu id={'id'} variables={[{k: 'v'}]}/>
+                <DropMenu inputId={'type'} variables={products ?? []} unit={'id'} value={'name'}/>
 
                 <label htmlFor={'weight'}>Weight</label>
                 <input type={'number'} min={0} id={'weight'} name={'weight'} />
