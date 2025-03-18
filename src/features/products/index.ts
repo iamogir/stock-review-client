@@ -3,4 +3,4 @@ export { getAllProductsAsyncAction, addNewProductAsyncAction } from './actions/p
 export { getAllStockEntriesAsyncAction, addNewStockEntryAsyncAction, deleteStockEntryByIdAsyncAction } from './actions/stockEntriesAsyncActions'
 export { default as filteredProductsReducer } from './slices/filteredProductsSlice';
 export { default as productsReducer } from './slices/productsSlice';
-export { updateExpiredProducts } from './slices/filteredProductsSlice'
+export { updateExpiredProducts, updateExpiringSoonProducts } from './slices/filteredProductsSlice'

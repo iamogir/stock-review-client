@@ -11,7 +11,7 @@ import {AppDispatch, RootState} from "app/redux";
 import {EXPIRING_SOON_DAYS} from "shared/consts";
 import style from './homePage.module.css'
 import { StockEntryCard } from "entities/stockEntry";
-import {StockEntry} from "entities/product";
+import {StockEntry} from "entities/stockEntry";
 
 export const HomePage = () => {
 
@@ -62,10 +62,18 @@ export const HomePage = () => {
             <button onClick={() => navigate("/warehouse")}>to warehouse</button>
             <button onClick={() => navigate("/add_product")}>add product</button>
             <button onClick={() => navigate("/add_new_supply")}>add new supply</button>
+            <div>
+                <h2>All entries in warehouse:</h2>
+                <div className={style.all} >
+                {stockEntries && stockEntries.length > 0 ? stockEntries.map((pr: StockEntry) => <StockEntryCard key={pr.id + 'card'} stockEntry={pr}/>) :
+                    <p>No products in use</p>}
+                </div>
+            </div>
             <div className={style.expProducts}>
                 <div>
                     <h2>Expired products:</h2>
-                    {expiredProducts && expiredProducts.map((pr: StockEntry) => <StockEntryCard key={pr.id} stockEntry={pr}/>)}
+                    {expiredProducts && expiredProducts.length > 0 ? expiredProducts.map((pr: StockEntry) => <StockEntryCard key={pr.id} stockEntry={pr}/>) :
+                        <p>No expired products. Great job!</p>}
                 </div>
                 <div>
                     <h2>Expire in {EXPIRING_SOON_DAYS} days:</h2>
