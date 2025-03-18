@@ -4,9 +4,9 @@ import {
     deleteStockEntryByIdAsyncAction,
     updateExpiringSoonProducts,
     updateExpiredProducts,
-    getAllStockEntriesAsyncAction
+    getAllStockEntriesAsyncAction,
+    deleteProductByIdAsyncAction
 } from "features/products";
-import {deleteProductByIdAsyncAction} from "features/products/actions/productsAsyncActions.ts";
 
 interface Props {
     id: string | undefined;
