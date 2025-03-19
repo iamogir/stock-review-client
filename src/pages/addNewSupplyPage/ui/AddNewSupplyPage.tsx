@@ -1,7 +1,7 @@
 import style from './addNewSupplyPage.module.css'
 import {useNavigate} from "react-router-dom";
 import {FormEvent} from "react";
-import {StockEntryDto} from "entities/stockEntry";
+import {StockEntry, StockEntryDto} from "entities/stockEntry";
 import {
     addNewStockEntryAsyncAction,
     getAllStockEntriesAsyncAction,
@@ -17,7 +17,7 @@ export const AddNewSupplyPage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
     const { products } = useSelector((state: RootState) => state.products);
-
+    const tempArray: StockEntry[] = [];
 
     const addSupply = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -50,9 +50,7 @@ export const AddNewSupplyPage = () => {
             <button onClick={() => navigate('/warehouse')}>To warehouse</button>
 
             <div>
-                <ul>
-
-                </ul>
+                {tempArray.map((item) => <li>{item.productInfo.name}</li>)}
             </div>
 
             <form className={style.form} onSubmit={addSupply}>
