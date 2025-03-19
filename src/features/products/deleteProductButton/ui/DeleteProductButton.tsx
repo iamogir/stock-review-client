@@ -3,7 +3,7 @@ import {AppDispatch} from "app/redux";
 import {
     deleteStockEntryByIdAsyncAction,
     updateExpiringSoonProducts,
-    updateExpiredProducts,
+    deleteExpiredProduct,
     getAllStockEntriesAsyncAction,
     deleteProductByIdAsyncAction
 } from "features/products";
@@ -20,7 +20,7 @@ export const DeleteProductButton = ({id, entity}: Props) => {
     const func = () => {
         if (id && entity === 'entry') {
             dispatch(deleteStockEntryByIdAsyncAction(id));
-            dispatch(updateExpiredProducts(id));
+            dispatch(deleteExpiredProduct(id));
             dispatch(updateExpiringSoonProducts(id));
         }
         if (id && entity === 'product') {

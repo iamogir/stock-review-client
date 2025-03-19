@@ -18,7 +18,7 @@ const filteredProductsSlice = createSlice<FilteredProductsInitState, SliceCaseRe
         name: 'filteredProducts',
         initialState,
         reducers: {
-            updateExpiredProducts: (state, action) => {
+            deleteExpiredProduct: (state, action) => {
                 state.expiredProducts = state.expiredProducts?.filter((pr: StockEntry) => pr.id !== action.payload);
             },
             updateExpiringSoonProducts: (state, action) => {
@@ -80,5 +80,5 @@ const filteredProductsSlice = createSlice<FilteredProductsInitState, SliceCaseRe
     }
 )
 
-export const { updateExpiredProducts, updateExpiringSoonProducts } = filteredProductsSlice.actions;
+export const { deleteExpiredProduct, updateExpiringSoonProducts } = filteredProductsSlice.actions;
 export default filteredProductsSlice.reducer;

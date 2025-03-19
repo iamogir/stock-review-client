@@ -2,16 +2,22 @@ import style from './addNewSupplyPage.module.css'
 import {useNavigate} from "react-router-dom";
 import {FormEvent} from "react";
 import {StockEntryDto} from "entities/stockEntry";
-import {addNewStockEntryAsyncAction} from "features/products";
+import {
+    addNewStockEntryAsyncAction,
+    getAllStockEntriesAsyncAction,
+    getExpiredProductsAsyncAction, getExpiringSoonProductsAsyncAction
+} from "features/products";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "app/redux";
 import {DropMenu} from "shared/ui/dropMenu";
+import {EXPIRING_SOON_DAYS} from "shared/consts";
 
 export const AddNewSupplyPage = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
     const { products } = useSelector((state: RootState) => state.products);
+
 
     const addSupply = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -33,12 +39,21 @@ export const AddNewSupplyPage = () => {
         console.log(eventTarget['expDate'].value);
 
         dispatch(addNewStockEntryAsyncAction(infoObject));
+        dispatch(getAllStockEntriesAsyncAction());
+        dispatch(getExpiredProductsAsyncAction());
+        dispatch(getExpiringSoonProductsAsyncAction(EXPIRING_SOON_DAYS));
     }
 
     return (
         <div>
             <button onClick={() => navigate('/home')}>Home</button>
             <button onClick={() => navigate('/warehouse')}>To warehouse</button>
+
+            <div>
+                <ul>
+
+                </ul>
+            </div>
 
             <form className={style.form} onSubmit={addSupply}>
 
