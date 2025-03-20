@@ -26,6 +26,12 @@ export type ProductsInitState = {
     error: string | null;
 }
 
+export type AddingProductsInitState = {
+    products: Product[] | undefined;
+    stockEntries: StockEntry[] | undefined;
+    error: string | null;
+}
+
 export type ProductsResponse = {
     products: Product[] | null;
 }
