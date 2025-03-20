@@ -27,8 +27,8 @@ export type ProductsInitState = {
 }
 
 export type AddingProductsInitState = {
-    products: Product[] | undefined;
-    stockEntries: StockEntry[] | undefined;
+    newProducts: Product[] | undefined;
+    newEntries: StockEntry[] | undefined;
     error: string | null;
 }
 

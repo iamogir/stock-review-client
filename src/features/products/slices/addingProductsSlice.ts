@@ -1,15 +1,16 @@
-import {SliceCaseReducers, SliceSelectors} from "@reduxjs/toolkit";
+import {createSlice, SliceCaseReducers, SliceSelectors} from "@reduxjs/toolkit";
+import {AddingProductsInitState} from "entities/product";
 
 const initialState: AddingProductsInitState = {
     newProducts: [],
     newEntries: [],
-    error: null
+    error: 'any error'
 }
 
-const AddingProductsSlice = createSlice<AddingProductsInitState, SliceCaseReducers<AddingProductsInitState, 'addProducts', SliceSelectors<AddingProductsInitState>>>(
+const addingProductsSlice = createSlice<AddingProductsInitState, SliceCaseReducers<AddingProductsInitState>, 'addingProducts', SliceSelectors<AddingProductsInitState>>(
     {
         name: 'addingProducts',
-        initialState: {initialState},
+        initialState,
         reducers: {},
         extraReducers: (builder) => {
             builder

@@ -1,5 +1,5 @@
 export { ProductCard } from './ui/ProductCard'
 export type { ProductDto, Product,
-    ProductsInitState, ProductsResponse
+    ProductsInitState, ProductsResponse, AddingProductsInitState
 } from './model/types'
 export { fromServerProductObject } from './lib/mapProduct'
