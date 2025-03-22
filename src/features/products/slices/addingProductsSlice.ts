@@ -11,9 +11,21 @@ const addingProductsSlice = createSlice<AddingProductsInitState, SliceCaseReduce
     {
         name: 'addingProducts',
         initialState,
-        reducers: {},
-        extraReducers: (builder) => {
-            builder
-                .addCase()
-        }
-    })
+        reducers: {
+            addProduct: (state, action) => {
+                if (state.newProducts)
+                    state.newProducts = [ ...state.newProducts, action.payload];
+            },
+            addEntry: (state, action) => {
+                if (state.newEntries)
+                    state.newEntries = [ ...state.newEntries, action.payload];
+            },
+        },
+        // extraReducers: (builder) => {
+        //     builder
+        //         .addCase()
+        // }
+    }
+)
+
+export const { addProduct, addEntry } = addingProductsSlice.actions;
