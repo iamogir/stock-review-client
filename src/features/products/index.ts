@@ -3,5 +3,6 @@ export { getAllProductsAsyncAction, addNewProductAsyncAction, deleteProductByIdA
 export { getAllStockEntriesAsyncAction, addNewStockEntryAsyncAction, deleteStockEntryByIdAsyncAction } from './actions/stockEntriesAsyncActions'
 export { default as filteredProductsReducer } from './slices/filteredProductsSlice';
 export { default as productsReducer } from './slices/productsSlice';
-export { deleteExpiredProduct, updateExpiringSoonProducts } from './slices/filteredProductsSlice'
-export { addProduct, addEntry } from './slices/addingProductsSlice'
+export { default as addingProductsReducer } from './slices/addingProductsSlice';
+export { deleteExpiredProduct, updateExpiringSoonProducts } from './slices/filteredProductsSlice';
+export { addProduct, addEntry } from './slices/addingProductsSlice';

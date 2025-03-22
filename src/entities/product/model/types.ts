@@ -21,7 +21,6 @@ export type Product = {
 export type ProductsInitState = {
     products: Product[] | undefined,
     stockEntries: StockEntry[] | undefined;
-    // expiredProducts: Product[] | undefined;
     loading: boolean;
     error: string | null;
 }
