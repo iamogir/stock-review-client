@@ -1,4 +1,5 @@
-import {Product, StockEntry, StockEntryDto} from "entities/product";
+import {Product} from "entities/product";
+import {StockEntry, StockEntryDto} from "entities/stockEntry";
 
 export function fromServerStockEntryObject(obj: StockEntryDto, products: Product[]): StockEntry {
     return {
