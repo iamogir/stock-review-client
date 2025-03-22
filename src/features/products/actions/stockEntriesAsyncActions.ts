@@ -74,6 +74,42 @@ export const addNewStockEntryAsyncAction = createAsyncThunk<StockEntry, StockEnt
     }
 )
 
+export const addNewEntriesAsyncAction = createAsyncThunk<StockEntry[], StockEntryDto[], {rejectValue: string}>(
+    'stock_entry/add_new_entries',
+    async(newEntriesArr: StockEntryDto[], thunkAPI): Promise<StockEntry[] | ReturnType<typeof thunkAPI.rejectWithValue>> => {
+        try {
+            const productsArr = checkAvailabilityProducts(thunkAPI.getState() as RootState);
+
+            const response = await fetch(API + 'stock_entries/add_new_entries', {
+                method: "POST",
+                headers: { "Content-Type": "application/json"},
+                body: JSON.stringify(newEntriesArr),
+            })
+
+            if (response.status === 201) {
+                const json = await response.json();
+                const returnedArray: StockEntry[] = json.map((en: StockEntryDto) => fromServerStockEntryObject(en, productsArr));
+
+                if (returnedArray.length === 0) {
+                    throw new Error("No data " + response.statusText);
+                } else {
+                    return returnedArray;
+                }
+            } else {
+                throw new Error(response.statusText);
+            }
+
+        } catch (error) {
+            console.log('add_new_entries', error);
+            return thunkAPI.rejectWithValue(
+                error instanceof Error ? error.message : 'Something went wrong'
+            );
+        }
+
+    }
+
+)
+
 export const deleteStockEntryByIdAsyncAction = createAsyncThunk<string, string, { rejectValue: string }>(
     'stock_entry/delete_stock_entry_by_id',
     async(id: string, thunkAPI): Promise<string | ReturnType<typeof thunkAPI.rejectWithValue>> => {
