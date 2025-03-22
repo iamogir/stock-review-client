@@ -17,6 +17,7 @@ const addingProductsSlice = createSlice<AddingProductsInitState, SliceCaseReduce
                     state.newProducts = [ ...state.newProducts, action.payload];
             },
             addEntry: (state, action) => {
+                console.log(action.payload) //TODO should be StockEntry NOT DTO
                 if (state.newEntries)
                     state.newEntries = [ ...state.newEntries, action.payload];
             },

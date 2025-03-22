@@ -1,8 +1,9 @@
 import style from './addNewSupplyPage.module.css'
 import {useNavigate} from "react-router-dom";
 import {FormEvent} from "react";
-import {StockEntry, StockEntryDto} from "entities/stockEntry";
+import { StockEntryDto} from "entities/stockEntry";
 import {
+    addEntry,
     addNewStockEntryAsyncAction,
     getAllStockEntriesAsyncAction,
     getExpiredProductsAsyncAction, getExpiringSoonProductsAsyncAction
@@ -11,13 +12,14 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "app/redux";
 import {DropMenu} from "shared/ui/dropMenu";
 import {EXPIRING_SOON_DAYS} from "shared/consts";
+import {addNewEntriesAsyncAction} from "features/products/actions/stockEntriesAsyncActions.ts";
 
 export const AddNewSupplyPage = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
     const { products } = useSelector((state: RootState) => state.products);
-    const tempArray: StockEntry[] = [];
+    const { newEntries } = useSelector((state: RootState) => state.addingProducts);
 
     const addSupply = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -38,10 +40,16 @@ export const AddNewSupplyPage = () => {
 
         console.log(eventTarget['expDate'].value);
 
-        dispatch(addNewStockEntryAsyncAction(infoObject));
-        dispatch(getAllStockEntriesAsyncAction());
-        dispatch(getExpiredProductsAsyncAction());
-        dispatch(getExpiringSoonProductsAsyncAction(EXPIRING_SOON_DAYS));
+        // dispatch(addNewStockEntryAsyncAction(infoObject));
+        // dispatch(getAllStockEntriesAsyncAction());
+        // dispatch(getExpiredProductsAsyncAction());
+        // dispatch(getExpiringSoonProductsAsyncAction(EXPIRING_SOON_DAYS));
+        dispatch(addEntry(infoObject));
+    }
+
+    const sentNewSupplies = () => {
+        if (newEntries)
+            dispatch(addNewEntriesAsyncAction(newEntries));
     }
 
     return (
@@ -50,7 +58,7 @@ export const AddNewSupplyPage = () => {
             <button onClick={() => navigate('/warehouse')}>To warehouse</button>
 
             <div>
-                {tempArray.map((item) => <li>{item.productInfo.name}</li>)}
+                {newEntries && newEntries.map((item) => <li>{item.productInfo?.name}</li>)}
             </div>
 
             <form className={style.form} onSubmit={addSupply}>
@@ -81,6 +89,7 @@ export const AddNewSupplyPage = () => {
                     <input type="submit" style={{display: 'none'}}/>
                 </button>
             </form>
+            <button onClick={sentNewSupplies}>SEND</button>
 
         </div>
     );
