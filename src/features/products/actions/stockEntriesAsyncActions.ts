@@ -1,5 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import { StockEntry, StockEntryDto, StockEntryResponse} from "entities/stockEntry";
+import {StockEntry, StockEntryDto, StockEntryResponse, toStockEntryDto} from "entities/stockEntry";
 import {fromServerStockEntryObject} from "entities/stockEntry";
 import {checkAvailabilityProducts} from 'shared/lib';
 import {RootState} from "app/redux";
@@ -74,16 +74,17 @@ export const addNewStockEntryAsyncAction = createAsyncThunk<StockEntry, StockEnt
     }
 )
 
-export const addNewEntriesAsyncAction = createAsyncThunk<StockEntry[], StockEntryDto[], {rejectValue: string}>(
+export const addNewEntriesAsyncAction = createAsyncThunk<StockEntry[], StockEntry[], {rejectValue: string}>(
     'stock_entry/add_new_entries',
-    async(newEntriesArr: StockEntryDto[], thunkAPI): Promise<StockEntry[] | ReturnType<typeof thunkAPI.rejectWithValue>> => {
+    async(newEntriesArr: StockEntry[], thunkAPI): Promise<StockEntry[] | ReturnType<typeof thunkAPI.rejectWithValue>> => {
         try {
             const productsArr = checkAvailabilityProducts(thunkAPI.getState() as RootState);
+            const dtoArray = newEntriesArr.map(en => toStockEntryDto(en));
 
             const response = await fetch(API + 'stock_entries/add_new_entries', {
                 method: "POST",
                 headers: { "Content-Type": "application/json"},
-                body: JSON.stringify(newEntriesArr),
+                body: JSON.stringify(dtoArray),
             })
 
             if (response.status === 201) {
