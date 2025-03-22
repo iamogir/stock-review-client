@@ -2,7 +2,8 @@ import {Product} from "entities/product";
 import {StockEntry, StockEntryDto} from "entities/stockEntry";
 
 export function fromServerStockEntryObject(obj: StockEntryDto, products: Product[]): StockEntry {
-    return {
+
+    const temp: StockEntry = {
         id: obj._id,
         productInfo: findProductOfEntry(obj.productId, products),
         weight: obj.weight,
@@ -11,6 +12,10 @@ export function fromServerStockEntryObject(obj: StockEntryDto, products: Product
         supplier: obj.supplier,
         storageLocation: obj.storageLocation,
     }
+    if (obj.barcode)
+        temp.barcode = obj.barcode;
+
+    return temp;
 }
 
 export function toStockEntryDto(obj: StockEntry): StockEntryDto {
@@ -20,11 +25,10 @@ export function toStockEntryDto(obj: StockEntry): StockEntryDto {
         weight: obj.weight,
         quantityUnits: obj.quantityUnits,
         expirationDate: obj.expirationDate,
-        // barcode?: obj.barcode,
         supplier: obj.supplier,
         storageLocation: obj.storageLocation,
     }
-
+    //
     if (obj.productInfo?.id)
         temp.productId = obj.productInfo.id;
     if (obj.barcode)
@@ -33,6 +37,11 @@ export function toStockEntryDto(obj: StockEntry): StockEntryDto {
     return temp;
 }
 
-function findProductOfEntry(productId: string, products: Product[]): Product | undefined  {
-    return products.find(p => p.id === productId);
+function findProductOfEntry(productId: string, products: Product[]): Product  {
+    const temp: Product | undefined = products.find(p => p.id === productId);
+    if (temp)
+        return temp;
+    else
+        alert('Product not found, check the product of your stock entry.');
+    return <Product>{}; //TODO check this
 }
