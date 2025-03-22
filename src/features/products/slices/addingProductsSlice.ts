@@ -29,3 +29,4 @@ const addingProductsSlice = createSlice<AddingProductsInitState, SliceCaseReduce
 )
 
 export const { addProduct, addEntry } = addingProductsSlice.actions;
+export default addingProductsSlice.reducer;
