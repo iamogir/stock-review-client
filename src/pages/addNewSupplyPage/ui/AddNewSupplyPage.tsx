@@ -1,7 +1,7 @@
 import style from './addNewSupplyPage.module.css'
 import {useNavigate} from "react-router-dom";
 import {FormEvent} from "react";
-import { StockEntryDto} from "entities/stockEntry";
+import {fromServerStockEntryObject, StockEntry, StockEntryDto} from "entities/stockEntry";
 import {
     addEntry,
     addNewStockEntryAsyncAction,
@@ -39,12 +39,15 @@ export const AddNewSupplyPage = () => {
             infoObject.barcode = barcode;
 
         console.log(eventTarget['expDate'].value);
+        if (products) {
+            const object = fromServerStockEntryObject(infoObject, products);
+            dispatch(addEntry(object));
+        }
 
         // dispatch(addNewStockEntryAsyncAction(infoObject));
         // dispatch(getAllStockEntriesAsyncAction());
         // dispatch(getExpiredProductsAsyncAction());
         // dispatch(getExpiringSoonProductsAsyncAction(EXPIRING_SOON_DAYS));
-        dispatch(addEntry(infoObject));
     }
 
     const sentNewSupplies = () => {

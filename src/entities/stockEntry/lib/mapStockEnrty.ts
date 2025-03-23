@@ -28,7 +28,7 @@ export function toStockEntryDto(obj: StockEntry): StockEntryDto {
         supplier: obj.supplier,
         storageLocation: obj.storageLocation,
     }
-    //
+
     if (obj.productInfo?.id)
         temp.productId = obj.productInfo.id;
     if (obj.barcode)
