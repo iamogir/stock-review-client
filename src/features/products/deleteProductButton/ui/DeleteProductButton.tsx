@@ -27,11 +27,14 @@ export const DeleteProductButton = ({id, entity}: Props) => {
             dispatch(deleteProductByIdAsyncAction(id));
             dispatch(getAllStockEntriesAsyncAction());
         }
+
+        //TODO delete btn should be most logic and beauty
     }
 
     return (
         <div>
             <button onClick={func}>Delete</button>
+            <button>DELETE WITH SELECT??</button>
         </div>
     );
 };
