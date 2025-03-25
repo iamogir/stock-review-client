@@ -47,6 +47,9 @@ export const getExpiringSoonProductsAsyncAction = createAsyncThunk<StockEntryRes
     'stock_entry/get_expiring_soon',
     async(countDays: number, thunkAPI ): Promise<StockEntryResponse | ReturnType<typeof thunkAPI.rejectWithValue>> => {
         try {
+
+            console.log('GET PROD')
+
             const state = thunkAPI.getState() as RootState;
             const productsArr = checkAvailabilityProducts(state);
             const expiredProductsSoonArr = state.filteredProducts.expiringSoonProducts;

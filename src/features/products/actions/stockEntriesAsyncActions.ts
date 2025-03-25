@@ -1,8 +1,10 @@
-import {createAsyncThunk} from "@reduxjs/toolkit";
+import {createAsyncThunk, ThunkDispatch} from "@reduxjs/toolkit";
 import {StockEntry, StockEntryDto, StockEntryResponse, toStockEntryDto} from "entities/stockEntry";
 import {fromServerStockEntryObject} from "entities/stockEntry";
 import {checkAvailabilityProducts} from 'shared/lib';
-import {RootState} from "app/redux";
+import {AppDispatch, RootState} from "app/redux";
+import {getExpiringSoonProductsAsyncAction} from "features/products";
+import {EXPIRING_SOON_DAYS} from "shared/consts";
 
 const API = import.meta.env.VITE_API_URL;
 
@@ -74,7 +76,7 @@ export const addNewStockEntryAsyncAction = createAsyncThunk<StockEntry, StockEnt
     }
 )
 
-export const addNewEntriesAsyncAction = createAsyncThunk<StockEntry[], StockEntry[], {rejectValue: string}>(
+export const addNewEntriesAsyncAction = createAsyncThunk<StockEntry[], StockEntry[], { rejectValue: string}>(
     'stock_entry/add_new_entries',
     async(newEntriesArr: StockEntry[], thunkAPI): Promise<StockEntry[] | ReturnType<typeof thunkAPI.rejectWithValue>> => {
         try {
@@ -94,6 +96,9 @@ export const addNewEntriesAsyncAction = createAsyncThunk<StockEntry[], StockEntr
                 if (returnedArray.length === 0) {
                     throw new Error("No data " + response.statusText);
                 } else {
+
+                    await thunkAPI.dispatch(getExpiringSoonProductsAsyncAction(EXPIRING_SOON_DAYS));
+
                     return returnedArray;
                 }
             } else {
