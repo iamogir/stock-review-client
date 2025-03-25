@@ -21,6 +21,12 @@ const addingProductsSlice = createSlice<AddingProductsInitState, SliceCaseReduce
                 if (state.newEntries)
                     state.newEntries = [ ...state.newEntries, action.payload];
             },
+            removeAllProducts: {
+                reducer: (state)=> {
+                    state.newProducts = [];
+                },
+                prepare: () => ({ payload: undefined})
+            },
             removeAllEntries: {
                 reducer: (state)=> {
                     state.newEntries = [];
