@@ -87,8 +87,9 @@ export const deleteProductByIdAsyncAction = createAsyncThunk<string, string, { r
             });
 
             if (response.status === 200 || response.status === 204) {
-                const text = await response.text();
-                return text;
+                const deletedId = await response.text();
+
+                return deletedId;
             } else {
                 throw new Error(response.statusText);
             }

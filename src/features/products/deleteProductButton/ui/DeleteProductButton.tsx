@@ -2,7 +2,6 @@ import {useDispatch} from "react-redux";
 import {AppDispatch} from "app/redux";
 import {
     deleteStockEntryByIdAsyncAction,
-    getAllStockEntriesAsyncAction,
     deleteProductByIdAsyncAction
 } from "features/products";
 
@@ -21,7 +20,6 @@ export const DeleteProductButton = ({id, entity}: Props) => {
         }
         if (id && entity === 'product') {
             dispatch(deleteProductByIdAsyncAction(id));
-            dispatch(getAllStockEntriesAsyncAction());
         }
     }
 

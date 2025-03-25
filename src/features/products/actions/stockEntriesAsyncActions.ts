@@ -3,7 +3,12 @@ import {StockEntry, StockEntryDto, StockEntryResponse, toStockEntryDto} from "en
 import {fromServerStockEntryObject} from "entities/stockEntry";
 import {checkAvailabilityProducts} from 'shared/lib';
 import {RootState} from "app/redux";
-import {deleteExpiredProduct, getExpiringSoonProductsAsyncAction, updateExpiringSoonProducts} from "features/products";
+import {
+    deleteExpiredProduct,
+    getExpiringSoonProductsAsyncAction,
+    deleteExpiringSoonProducts,
+    getExpiredProductsAsyncAction
+} from "features/products";
 import {EXPIRING_SOON_DAYS} from "shared/consts";
 
 const API = import.meta.env.VITE_API_URL;
@@ -96,8 +101,10 @@ export const addNewEntriesAsyncAction = createAsyncThunk<StockEntry[], StockEntr
                 if (returnedArray.length === 0) {
                     throw new Error("No data " + response.statusText);
                 } else {
-
-                    await thunkAPI.dispatch(getExpiringSoonProductsAsyncAction(EXPIRING_SOON_DAYS));
+                    await Promise.all([
+                        thunkAPI.dispatch(getExpiringSoonProductsAsyncAction(EXPIRING_SOON_DAYS)),
+                        thunkAPI.dispatch(getExpiredProductsAsyncAction())
+                    ])
                     return returnedArray;
                 }
             } else {
@@ -128,8 +135,10 @@ export const deleteStockEntryByIdAsyncAction = createAsyncThunk<string, string, 
             });
             if (response.status === 200 || response.status === 204) {
                 const deletedId = await response.text();
-                thunkAPI.dispatch(deleteExpiredProduct(deletedId));
-                thunkAPI.dispatch(updateExpiringSoonProducts(deletedId));
+                await Promise.all([
+                    thunkAPI.dispatch(getExpiringSoonProductsAsyncAction(EXPIRING_SOON_DAYS)),
+                    thunkAPI.dispatch(getExpiredProductsAsyncAction())
+                ])
                 return deletedId;
             } else {
                 throw new Error(response.statusText);

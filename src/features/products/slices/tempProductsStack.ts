@@ -7,7 +7,7 @@ const initialState: AddingProductsInitState = {
     error: 'any error'
 }
 
-const addingProductsSlice = createSlice<AddingProductsInitState, SliceCaseReducers<AddingProductsInitState>, 'addingProducts', SliceSelectors<AddingProductsInitState>>(
+const tempProductsStack = createSlice<AddingProductsInitState, SliceCaseReducers<AddingProductsInitState>, 'addingProducts', SliceSelectors<AddingProductsInitState>>(
     {
         name: 'addingProducts',
         initialState,
@@ -41,5 +41,5 @@ const addingProductsSlice = createSlice<AddingProductsInitState, SliceCaseReduce
     }
 )
 
-export const { addProduct, addEntry, removeAllEntries } = addingProductsSlice.actions;
-export default addingProductsSlice.reducer;
+export const { addProduct, addEntry, removeAllEntries } = tempProductsStack.actions;
+export default tempProductsStack.reducer;
