@@ -21,6 +21,12 @@ const addingProductsSlice = createSlice<AddingProductsInitState, SliceCaseReduce
                 if (state.newEntries)
                     state.newEntries = [ ...state.newEntries, action.payload];
             },
+            removeAllEntries: {
+                reducer: (state)=> {
+                    state.newEntries = [];
+                },
+                prepare: () => ({ payload: undefined})
+            }
         },
         // extraReducers: (builder) => {
         //     builder
@@ -29,5 +35,5 @@ const addingProductsSlice = createSlice<AddingProductsInitState, SliceCaseReduce
     }
 )
 
-export const { addProduct, addEntry } = addingProductsSlice.actions;
+export const { addProduct, addEntry, removeAllEntries } = addingProductsSlice.actions;
 export default addingProductsSlice.reducer;
