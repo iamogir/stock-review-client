@@ -21,6 +21,9 @@ const tempProductsStack = createSlice<AddingProductsInitState, SliceCaseReducers
                 if (state.newEntries)
                     state.newEntries = [ ...state.newEntries, action.payload];
             },
+            removeOneEntry: (state, action) => {
+                state.newEntries.splice(state.newEntries.indexOf(action.payload), 1);
+            },
             removeAllProducts: {
                 reducer: (state)=> {
                     state.newProducts = [];
@@ -41,5 +44,5 @@ const tempProductsStack = createSlice<AddingProductsInitState, SliceCaseReducers
     }
 )
 
-export const { addProduct, addEntry, removeAllEntries } = tempProductsStack.actions;
+export const { addProduct, addEntry, removeOneEntry, removeAllProducts, removeAllEntries } = tempProductsStack.actions;
 export default tempProductsStack.reducer;
