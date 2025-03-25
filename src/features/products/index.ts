@@ -5,4 +5,4 @@ export { default as filteredProductsReducer } from './slices/filteredProductsSli
 export { default as productsReducer } from './slices/productsSlice';
 export { default as addingProductsReducer } from './slices/tempProductsStack.ts';
 export { deleteExpiredProduct, deleteExpiringSoonProducts } from './slices/filteredProductsSlice';
-export { addProduct, addEntry, removeAllEntries } from './slices/tempProductsStack.ts';
+export { addProduct, addEntry, removeOneEntry, removeAllProducts, removeAllEntries } from './slices/tempProductsStack.ts';
