@@ -6,7 +6,7 @@ import {
     addEntry,
     addNewStockEntryAsyncAction,
     getAllStockEntriesAsyncAction,
-    getExpiredProductsAsyncAction, getExpiringSoonProductsAsyncAction
+    getExpiredProductsAsyncAction, getExpiringSoonProductsAsyncAction, removeAllEntries
 } from "features/products";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "app/redux";
@@ -50,9 +50,13 @@ export const AddNewSupplyPage = () => {
         // dispatch(getExpiringSoonProductsAsyncAction(EXPIRING_SOON_DAYS));
     }
 
-    const sentNewSupplies = () => {
-        if (newEntries)
-            dispatch(addNewEntriesAsyncAction(newEntries));
+    const sentNewSupplies = async() => {
+        if (newEntries) {
+            const anyth = await dispatch(addNewEntriesAsyncAction(newEntries));
+            if (anyth.type.includes('fulfilled'))
+                dispatch(removeAllEntries());
+        }
+
     }
 
     return (
