@@ -22,7 +22,8 @@ const tempProductsStack = createSlice<AddingProductsInitState, SliceCaseReducers
                     state.newEntries = [ ...state.newEntries, action.payload];
             },
             removeOneEntry: (state, action) => {
-                state.newEntries.splice(state.newEntries.indexOf(action.payload), 1);
+                console.log(action.payload)
+                state.newEntries.splice(action.payload, 1);
             },
             removeAllProducts: {
                 reducer: (state)=> {
