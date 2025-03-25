@@ -2,8 +2,6 @@ import {useDispatch} from "react-redux";
 import {AppDispatch} from "app/redux";
 import {
     deleteStockEntryByIdAsyncAction,
-    updateExpiringSoonProducts,
-    deleteExpiredProduct,
     getAllStockEntriesAsyncAction,
     deleteProductByIdAsyncAction
 } from "features/products";
@@ -20,15 +18,11 @@ export const DeleteProductButton = ({id, entity}: Props) => {
     const func = () => {
         if (id && entity === 'entry') {
             dispatch(deleteStockEntryByIdAsyncAction(id));
-            dispatch(deleteExpiredProduct(id));
-            dispatch(updateExpiringSoonProducts(id));
         }
         if (id && entity === 'product') {
             dispatch(deleteProductByIdAsyncAction(id));
             dispatch(getAllStockEntriesAsyncAction());
         }
-
-        //TODO delete btn should be most logic and beauty
     }
 
     return (

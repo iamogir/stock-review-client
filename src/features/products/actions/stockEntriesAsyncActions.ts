@@ -3,7 +3,7 @@ import {StockEntry, StockEntryDto, StockEntryResponse, toStockEntryDto} from "en
 import {fromServerStockEntryObject} from "entities/stockEntry";
 import {checkAvailabilityProducts} from 'shared/lib';
 import {RootState} from "app/redux";
-import {getExpiringSoonProductsAsyncAction} from "features/products";
+import {deleteExpiredProduct, getExpiringSoonProductsAsyncAction, updateExpiringSoonProducts} from "features/products";
 import {EXPIRING_SOON_DAYS} from "shared/consts";
 
 const API = import.meta.env.VITE_API_URL;
@@ -127,8 +127,10 @@ export const deleteStockEntryByIdAsyncAction = createAsyncThunk<string, string, 
                 headers: { "Content-Type": "text/plain"}
             });
             if (response.status === 200 || response.status === 204) {
-                const text = await response.text();
-                return text;
+                const deletedId = await response.text();
+                thunkAPI.dispatch(deleteExpiredProduct(deletedId));
+                thunkAPI.dispatch(updateExpiringSoonProducts(deletedId));
+                return deletedId;
             } else {
                 throw new Error(response.statusText);
             }
