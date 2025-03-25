@@ -1,8 +1,8 @@
-import {createAsyncThunk, ThunkDispatch} from "@reduxjs/toolkit";
+import {createAsyncThunk} from "@reduxjs/toolkit";
 import {StockEntry, StockEntryDto, StockEntryResponse, toStockEntryDto} from "entities/stockEntry";
 import {fromServerStockEntryObject} from "entities/stockEntry";
 import {checkAvailabilityProducts} from 'shared/lib';
-import {AppDispatch, RootState} from "app/redux";
+import {RootState} from "app/redux";
 import {getExpiringSoonProductsAsyncAction} from "features/products";
 import {EXPIRING_SOON_DAYS} from "shared/consts";
 
@@ -98,7 +98,6 @@ export const addNewEntriesAsyncAction = createAsyncThunk<StockEntry[], StockEntr
                 } else {
 
                     await thunkAPI.dispatch(getExpiringSoonProductsAsyncAction(EXPIRING_SOON_DAYS));
-
                     return returnedArray;
                 }
             } else {
