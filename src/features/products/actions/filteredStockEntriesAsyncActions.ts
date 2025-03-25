@@ -47,15 +47,13 @@ export const getExpiringSoonProductsAsyncAction = createAsyncThunk<StockEntryRes
     'stock_entry/get_expiring_soon',
     async(countDays: number, thunkAPI ): Promise<StockEntryResponse | ReturnType<typeof thunkAPI.rejectWithValue>> => {
         try {
-
-            console.log('GET PROD')
-
             const state = thunkAPI.getState() as RootState;
             const productsArr = checkAvailabilityProducts(state);
-            const expiredProductsSoonArr = state.filteredProducts.expiringSoonProducts;
-            if (expiredProductsSoonArr && expiredProductsSoonArr.length > 0) {
-                throw new Error('Expired soon products already loaded')
-            }
+            // const expiredProductsSoonArr = state.filteredProducts.expiringSoonProducts;
+            // console.log(expiredProductsSoonArr && expiredProductsSoonArr.length > 0)
+            // if (expiredProductsSoonArr && expiredProductsSoonArr.length > 0) {
+            //     throw new Error('Expired soon products already loaded')
+            // }
 
             console.log('Get All Expired Soon Loading')
 
