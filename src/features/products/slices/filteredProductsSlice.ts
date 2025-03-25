@@ -4,7 +4,6 @@ import {
     getExpiredProductsAsyncAction,
     getExpiringSoonProductsAsyncAction
 } from "features/products";
-// import {StockEntry} from "entities/stockEntry";
 
 const initialState: FilteredProductsInitState = {
     expiredProducts: [],
@@ -17,14 +16,7 @@ const filteredProductsSlice = createSlice<FilteredProductsInitState, SliceCaseRe
     {
         name: 'filteredProducts',
         initialState,
-        reducers: {
-            // deleteExpiredProduct: (state, action) => {
-            //     state.expiredProducts = state.expiredProducts?.filter((pr: StockEntry) => pr.id !== action.payload);
-            // },
-            // deleteExpiringSoonProducts: (state, action) => {
-            //     state.expiringSoonProducts = state.expiringSoonProducts?.filter((pr: StockEntry) => pr.id !== action.payload);
-            // }
-        },
+        reducers: {},
         extraReducers: (builder) => {
             builder
                 .addCase(
@@ -80,5 +72,4 @@ const filteredProductsSlice = createSlice<FilteredProductsInitState, SliceCaseRe
     }
 )
 
-export const { deleteExpiredProduct, deleteExpiringSoonProducts } = filteredProductsSlice.actions;
 export default filteredProductsSlice.reducer;

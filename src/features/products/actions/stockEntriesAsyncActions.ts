@@ -4,9 +4,7 @@ import {fromServerStockEntryObject} from "entities/stockEntry";
 import {checkAvailabilityProducts} from 'shared/lib';
 import {RootState} from "app/redux";
 import {
-    deleteExpiredProduct,
     getExpiringSoonProductsAsyncAction,
-    deleteExpiringSoonProducts,
     getExpiredProductsAsyncAction
 } from "features/products";
 import {EXPIRING_SOON_DAYS} from "shared/consts";

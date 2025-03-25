@@ -2,7 +2,7 @@ import style from './addNewSupplyPage.module.css'
 import {useNavigate} from "react-router-dom";
 import {FormEvent} from "react";
 import {fromServerStockEntryObject, StockEntryDto} from "entities/stockEntry";
-import { addEntry, removeAllEntries, removeOneEntry } from "features/products";
+import { addEntry, removeAllEntries } from "features/products";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "app/redux";
 import {DropMenu} from "shared/ui/dropMenu";
