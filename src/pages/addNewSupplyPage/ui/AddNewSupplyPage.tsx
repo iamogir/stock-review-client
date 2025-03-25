@@ -1,17 +1,11 @@
 import style from './addNewSupplyPage.module.css'
 import {useNavigate} from "react-router-dom";
 import {FormEvent} from "react";
-import {fromServerStockEntryObject, StockEntry, StockEntryDto} from "entities/stockEntry";
-import {
-    addEntry,
-    addNewStockEntryAsyncAction,
-    getAllStockEntriesAsyncAction,
-    getExpiredProductsAsyncAction, getExpiringSoonProductsAsyncAction, removeAllEntries
-} from "features/products";
+import {fromServerStockEntryObject, StockEntryDto} from "entities/stockEntry";
+import { addEntry, removeAllEntries } from "features/products";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "app/redux";
 import {DropMenu} from "shared/ui/dropMenu";
-import {EXPIRING_SOON_DAYS} from "shared/consts";
 import {addNewEntriesAsyncAction} from "features/products/actions/stockEntriesAsyncActions.ts";
 
 export const AddNewSupplyPage = () => {
@@ -38,22 +32,16 @@ export const AddNewSupplyPage = () => {
         if (barcode && barcode.length > 0 && barcode !== '')
             infoObject.barcode = barcode;
 
-        console.log(eventTarget['expDate'].value);
         if (products) {
             const object = fromServerStockEntryObject(infoObject, products);
             dispatch(addEntry(object));
         }
-
-        // dispatch(addNewStockEntryAsyncAction(infoObject));
-        // dispatch(getAllStockEntriesAsyncAction());
-        // dispatch(getExpiredProductsAsyncAction());
-        // dispatch(getExpiringSoonProductsAsyncAction(EXPIRING_SOON_DAYS));
     }
 
     const sentNewSupplies = async() => {
         if (newEntries) {
-            const anyth = await dispatch(addNewEntriesAsyncAction(newEntries));
-            if (anyth.type.includes('fulfilled'))
+            const temp = await dispatch(addNewEntriesAsyncAction(newEntries)); //TODO request status remove
+            if (temp.type.includes('fulfilled'))
                 dispatch(removeAllEntries());
         }
 
