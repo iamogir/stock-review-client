@@ -1,7 +1,7 @@
 import {createSlice, SliceCaseReducers, SliceSelectors} from "@reduxjs/toolkit";
 import {
     addNewStockEntryAsyncAction, deleteStockEntryByIdAsyncAction,
-    getAllStockEntriesAsyncAction, getAllProductsAsyncAction, addNewProductAsyncAction, addNewEntriesAsyncAction
+    getAllStockEntriesAsyncAction, getAllProductsAsyncAction, addNewProductAsyncAction, addNewEntriesStackAsyncAction
 } from "features/products";
 import {ProductsInitState} from "entities/product";
 import {deleteProductByIdAsyncAction} from "features/products/actions/productsAsyncActions.ts";
@@ -122,21 +122,21 @@ const productsSlice = createSlice<ProductsInitState, SliceCaseReducers<ProductsI
                     }
                 )
                 .addCase(
-                    (addNewEntriesAsyncAction.pending),
+                    (addNewEntriesStackAsyncAction.pending),
                     (state) => {
                         state.loading = true;
                         state.error = null;
                     }
                 )
                 .addCase(
-                    (addNewEntriesAsyncAction.rejected),
+                    (addNewEntriesStackAsyncAction.rejected),
                     (state, action) => {
                         state.loading = false;
                         state.error = action.error.message as string;
                     }
                 )
                 .addCase(
-                    (addNewEntriesAsyncAction.fulfilled),
+                    (addNewEntriesStackAsyncAction.fulfilled),
                     (state, action) => {
                         state.loading = false;
                         state.error = null;

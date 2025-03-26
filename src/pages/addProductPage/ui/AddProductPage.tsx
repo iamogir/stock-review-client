@@ -1,17 +1,23 @@
 import style from './addProductPage.module.css'
 import {FormEvent} from "react";
 import {ProductDto} from "entities/product";
-import {useDispatch} from "react-redux";
-import {AppDispatch} from "app/redux";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, RootState} from "app/redux";
 import {useNavigate} from "react-router-dom";
 import {statusUnits, weightUnits} from "shared/consts";
-import {addNewProductAsyncAction} from "features/products";
+import {
+    addNewEntriesStackAsyncAction,
+    addNewProductAsyncAction,
+    removeAllEntries,
+    removeAllProducts
+} from "features/products";
 import {DropMenu} from "shared/ui/dropMenu";
 
 export const AddProductPage = () => {
 
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
+    const { newProducts } = useSelector((state: RootState) => state.addingProducts);
 
     const addProduct = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -25,6 +31,14 @@ export const AddProductPage = () => {
         };
 
         dispatch(addNewProductAsyncAction(infoObject));
+    }
+
+    const sentNewProducts = () => {
+        if (newProducts) {
+            const temp = await dispatch(addNewProductsStackAsyncAction(newProducts)); //TODO request status remove
+            if (temp.type.includes('fulfilled'))
+                dispatch(removeAllProducts());
+        }
     }
 
     return (
@@ -54,6 +68,7 @@ export const AddProductPage = () => {
                     <input type="submit" style={{display: 'none'}}/>
                 </button>
             </form>
+            <button onClick={sentNewProducts}>SEND</button>
 
         </div>
     );

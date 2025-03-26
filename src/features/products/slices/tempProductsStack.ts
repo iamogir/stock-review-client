@@ -17,15 +17,16 @@ const tempProductsStack = createSlice<AddingProductsInitState, SliceCaseReducers
                     state.newProducts = [ ...state.newProducts, action.payload];
             },
             addEntry: (state, action) => {
-                console.log(action.payload) //TODO should be StockEntry NOT DTO
                 if (state.newEntries)
                     state.newEntries = [ ...state.newEntries, action.payload];
             },
             removeOneProduct: (state, action) => {
-                state.newEntries.splice(action.payload, 1);
+                if (state.newProducts)
+                    state.newProducts.splice(action.payload, 1);
             },
             removeOneEntry: (state, action) => {
-                state.newEntries.splice(action.payload, 1);
+                if (state.newEntries)
+                    state.newEntries.splice(action.payload, 1);
             },
             removeAllProducts: {
                 reducer: (state)=> {

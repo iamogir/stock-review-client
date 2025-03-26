@@ -74,6 +74,8 @@ export const addNewProductAsyncAction = createAsyncThunk<Product, ProductDto, { 
     }
 )
 
+export const addNewProductsStackAsyncAction = createAsyncThunk<
+
 export const deleteProductByIdAsyncAction = createAsyncThunk<string, string, { rejectValue: string }>(
     'product/delete_product_by_id',
     async (id: string, thunkAPI): Promise<string | ReturnType<typeof thunkAPI.rejectWithValue>> => {

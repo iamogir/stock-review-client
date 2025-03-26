@@ -79,7 +79,7 @@ export const addNewStockEntryAsyncAction = createAsyncThunk<StockEntry, StockEnt
     }
 )
 
-export const addNewEntriesAsyncAction = createAsyncThunk<StockEntry[], StockEntry[], { rejectValue: string}>(
+export const addNewEntriesStackAsyncAction = createAsyncThunk<StockEntry[], StockEntry[], { rejectValue: string}>(
     'stock_entry/add_new_entries',
     async(newEntriesArr: StockEntry[], thunkAPI): Promise<StockEntry[] | ReturnType<typeof thunkAPI.rejectWithValue>> => {
         try {

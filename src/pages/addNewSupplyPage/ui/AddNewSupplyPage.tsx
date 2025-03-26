@@ -6,7 +6,7 @@ import { addEntry, removeAllEntries } from "features/products";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "app/redux";
 import {DropMenu} from "shared/ui/dropMenu";
-import {addNewEntriesAsyncAction} from "features/products/actions/stockEntriesAsyncActions.ts";
+import {addNewEntriesStackAsyncAction} from "features/products/actions/stockEntriesAsyncActions.ts";
 import {DeleteTempProductButton} from "features/products/deleteTempProductButton";
 
 export const AddNewSupplyPage = () => {
@@ -41,11 +41,10 @@ export const AddNewSupplyPage = () => {
 
     const sentNewSupplies = async() => {
         if (newEntries) {
-            const temp = await dispatch(addNewEntriesAsyncAction(newEntries)); //TODO request status remove
+            const temp = await dispatch(addNewEntriesStackAsyncAction(newEntries)); //TODO request status remove
             if (temp.type.includes('fulfilled'))
                 dispatch(removeAllEntries());
         }
-
     }
 
     return (
