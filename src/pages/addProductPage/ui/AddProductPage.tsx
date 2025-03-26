@@ -7,7 +7,7 @@ import {useNavigate} from "react-router-dom";
 import {statusUnits, weightUnits} from "shared/consts";
 import {
     addNewEntriesStackAsyncAction,
-    addNewProductAsyncAction,
+    addNewProductAsyncAction, addNewProductsStackAsyncAction,
     removeAllEntries,
     removeAllProducts
 } from "features/products";
@@ -33,10 +33,10 @@ export const AddProductPage = () => {
         dispatch(addNewProductAsyncAction(infoObject));
     }
 
-    const sentNewProducts = () => {
+    const sentNewProducts = async() => {
         if (newProducts) {
-            const temp = await dispatch(addNewProductsStackAsyncAction(newProducts)); //TODO request status remove
-            if (temp.type.includes('fulfilled'))
+            const temp = await dispatch(addNewProductsStackAsyncAction(newProducts));
+            if (temp.type.includes('fulfilled')) //TODO request status remove
                 dispatch(removeAllProducts());
         }
     }

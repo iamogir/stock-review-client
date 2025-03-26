@@ -41,8 +41,8 @@ export const AddNewSupplyPage = () => {
 
     const sentNewSupplies = async() => {
         if (newEntries) {
-            const temp = await dispatch(addNewEntriesStackAsyncAction(newEntries)); //TODO request status remove
-            if (temp.type.includes('fulfilled'))
+            const temp = await dispatch(addNewEntriesStackAsyncAction(newEntries));
+            if (temp.type.includes('fulfilled')) //TODO request status remove
                 dispatch(removeAllEntries());
         }
     }
