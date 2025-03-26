@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "app/redux";
 import {useNavigate} from "react-router-dom";
 import {statusUnits, weightUnits} from "shared/consts";
-import {addNewProductsStackAsyncAction, addProduct, removeAllProducts} from "features/products";
+import {addNewProductsStackAsyncAction, addProduct, removeAllProducts, removeOneProduct} from "features/products";
 import {DropMenu} from "shared/ui/dropMenu";
 import {DeleteTempProductButton} from "features/products/deleteTempProductButton";
 
@@ -43,7 +43,7 @@ export const AddProductPage = () => {
             <button onClick={() => navigate('/warehouse')}>To warehouse</button>
 
             <div>
-                {newProducts && newProducts.map((item, index) => <li>{item.name} <DeleteTempProductButton key={index} entity={'product'} index={index} /></li>)}
+                {newProducts && newProducts.map((item, index) => <li>{item.name} <DeleteTempProductButton key={index} index={index} deleteFunc={removeOneProduct} /></li>)}
             </div>
 
             <form className={style.form} onSubmit={addNewProduct}> {/*novalidate - disable browser validation*/}

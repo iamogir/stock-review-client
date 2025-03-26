@@ -1,30 +1,22 @@
-import {
-    removeOneEntry,
-    removeOneProduct
-} from "features/products";
 import style from './deleteTempProductButton.module.css'
 import {AppDispatch} from "app/redux";
 import {useDispatch} from "react-redux";
+import {ActionCreatorWithPayload} from "@reduxjs/toolkit";
 
-interface Props {
-    index: number,
-    entity: string
+interface Props<T extends string | number> {
+    index: T,
+    deleteFunc: ActionCreatorWithPayload<T>;
 }
 
-export const DeleteTempProductButton = ({ index, entity }: Props) => {
+export const DeleteTempProductButton = <T extends string | number>({ index, deleteFunc }: Props<T>) => {
 
     const dispatch = useDispatch<AppDispatch>();
 
-    const func = () => {
-        if (entity === 'entry') {
-            dispatch(removeOneEntry(index));
-        }
-        if (entity === 'product') {
-            dispatch(removeOneProduct(index));
-        }
+    const temp = () => {
+        dispatch(deleteFunc(index));
     }
 
     return (
-        <button className={style.color} onClick={func}>Delete</button>
+        <button className={style.color} onClick={temp}>Delete</button>
     );
 };

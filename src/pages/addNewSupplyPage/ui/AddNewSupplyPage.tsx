@@ -2,7 +2,7 @@ import style from './addNewSupplyPage.module.css'
 import {useNavigate} from "react-router-dom";
 import {FormEvent} from "react";
 import {fromServerStockEntryObject, StockEntryDto} from "entities/stockEntry";
-import { addEntry, removeAllEntries } from "features/products";
+import {addEntry, removeAllEntries, removeOneEntry} from "features/products";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "app/redux";
 import {DropMenu} from "shared/ui/dropMenu";
@@ -53,7 +53,7 @@ export const AddNewSupplyPage = () => {
             <button onClick={() => navigate('/warehouse')}>To warehouse</button>
 
             <div>
-                {newEntries && newEntries.map((item, index) => <li>{item.productInfo?.name} <DeleteTempProductButton key={index} entity={'entry'} index={index} /></li>)}
+                {newEntries && newEntries.map((item, index) => <li>{item.productInfo?.name} <DeleteTempProductButton key={index} index={index} deleteFunc={removeOneEntry} /></li>)}
             </div>
 
             <form className={style.form} onSubmit={addSupply}>
