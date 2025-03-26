@@ -3,14 +3,14 @@ import * as React from "react";
 import {useEffect, useRef} from "react";
 
 
-interface Props<T extends Record<string, unknown>> {
+interface Props<T> {
     inputId: string
     variables: T[];
     unit: keyof T;
     value: keyof T;
 }
 
-export const DropMenu = <T extends Record<string, unknown>>({inputId, variables, unit, value}: Props<T>) => {
+export const DropMenu = <T,>({inputId, variables, unit, value}: Props<T>) => {
 
     const dropMenuRef = useRef<HTMLElement[]>([]);
 
