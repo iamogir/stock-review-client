@@ -53,7 +53,7 @@ export const AddNewSupplyPage = () => {
             <button onClick={() => navigate('/warehouse')}>To warehouse</button>
 
             <div>
-                {newEntries && newEntries.map((item, index) => <li>{item.productInfo?.name} <DeleteTempProductButton key={index} index={index} /></li>)}
+                {newEntries && newEntries.map((item, index) => <li>{item.productInfo?.name} <DeleteTempProductButton key={index} entity={'entry'} index={index} /></li>)}
             </div>
 
             <form className={style.form} onSubmit={addSupply}>

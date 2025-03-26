@@ -1,17 +1,13 @@
 import style from './addProductPage.module.css'
 import {FormEvent} from "react";
-import {ProductDto} from "entities/product";
+import {fromServerProductObject, ProductDto} from "entities/product";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "app/redux";
 import {useNavigate} from "react-router-dom";
 import {statusUnits, weightUnits} from "shared/consts";
-import {
-    addNewEntriesStackAsyncAction,
-    addNewProductAsyncAction, addNewProductsStackAsyncAction,
-    removeAllEntries,
-    removeAllProducts
-} from "features/products";
+import {addNewProductsStackAsyncAction, addProduct, removeAllProducts} from "features/products";
 import {DropMenu} from "shared/ui/dropMenu";
+import {DeleteTempProductButton} from "features/products/deleteTempProductButton";
 
 export const AddProductPage = () => {
 
@@ -19,7 +15,7 @@ export const AddProductPage = () => {
     const navigate = useNavigate();
     const { newProducts } = useSelector((state: RootState) => state.addingProducts);
 
-    const addProduct = (event: FormEvent<HTMLFormElement>) => {
+    const addNewProduct = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const eventTarget = event.target as HTMLFormElement;
         const infoObject: ProductDto = {
@@ -30,7 +26,7 @@ export const AddProductPage = () => {
             status: eventTarget['status'].value
         };
 
-        dispatch(addNewProductAsyncAction(infoObject));
+        dispatch(addProduct(fromServerProductObject(infoObject)));
     }
 
     const sentNewProducts = async() => {
@@ -45,7 +41,12 @@ export const AddProductPage = () => {
         <div>
             <button onClick={() => navigate('/home')}>Home</button>
             <button onClick={() => navigate('/warehouse')}>To warehouse</button>
-            <form className={style.form} onSubmit={addProduct}> {/*novalidate - disable browser validation*/}
+
+            <div>
+                {newProducts && newProducts.map((item, index) => <li>{item.name} <DeleteTempProductButton key={index} entity={'product'} index={index} /></li>)}
+            </div>
+
+            <form className={style.form} onSubmit={addNewProduct}> {/*novalidate - disable browser validation*/}
 
                 <label htmlFor={'productName'}>Name</label>
                 <input type={'text'} id={'productName'} name={'productName'} />
