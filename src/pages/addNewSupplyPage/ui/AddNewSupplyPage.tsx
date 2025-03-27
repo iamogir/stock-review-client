@@ -7,7 +7,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "app/redux";
 import {DropMenu} from "shared/ui/dropMenu";
 import {addNewEntriesStackAsyncAction} from "features/products/actions/stockEntriesAsyncActions.ts";
-import {DeleteTempProductButton} from "features/products/deleteTempProductButton";
+import {DeleteProductButton} from "features/products/deleteProductButton";
 
 export const AddNewSupplyPage = () => {
 
@@ -53,7 +53,7 @@ export const AddNewSupplyPage = () => {
             <button onClick={() => navigate('/warehouse')}>To warehouse</button>
 
             <div>
-                {newEntries && newEntries.map((item, index) => <li>{item.productInfo?.name} <DeleteTempProductButton key={index} index={index} deleteFunc={removeOneEntry} /></li>)}
+                {newEntries && newEntries.map((item, index) => <li>{item.productInfo?.name} <DeleteProductButton key={index} index={index} deleteFunc={removeOneEntry} /></li>)}
             </div>
 
             <form className={style.form} onSubmit={addSupply}>

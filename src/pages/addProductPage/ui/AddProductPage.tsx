@@ -8,6 +8,7 @@ import {statusUnits, weightUnits} from "shared/consts";
 import {addNewProductsStackAsyncAction, addProduct, removeAllProducts, removeOneProduct} from "features/products";
 import {DropMenu} from "shared/ui/dropMenu";
 import {DeleteTempProductButton} from "features/products/deleteTempProductButton";
+import {DeleteProductButton} from "features/products/deleteProductButton";
 
 export const AddProductPage = () => {
 
@@ -43,7 +44,7 @@ export const AddProductPage = () => {
             <button onClick={() => navigate('/warehouse')}>To warehouse</button>
 
             <div>
-                {newProducts && newProducts.map((item, index) => <li>{item.name} <DeleteTempProductButton key={index} index={index} deleteFunc={removeOneProduct} /></li>)}
+                {newProducts && newProducts.map((item, index) => <li>{item.name} <DeleteProductButton key={index} index={index} deleteFunc={removeOneProduct} /></li>)}
             </div>
 
             <form className={style.form} onSubmit={addNewProduct}> {/*novalidate - disable browser validation*/}
