@@ -1,7 +1,12 @@
 import {createSlice, SliceCaseReducers, SliceSelectors} from "@reduxjs/toolkit";
 import {
-    addNewStockEntryAsyncAction, deleteStockEntryByIdAsyncAction,
-    getAllStockEntriesAsyncAction, getAllProductsAsyncAction, addNewProductAsyncAction, addNewEntriesStackAsyncAction
+    addNewStockEntryAsyncAction,
+    deleteStockEntryByIdAsyncAction,
+    getAllStockEntriesAsyncAction,
+    getAllProductsAsyncAction,
+    addNewProductAsyncAction,
+    addNewEntriesStackAsyncAction,
+    addNewProductsStackAsyncAction
 } from "features/products";
 import {ProductsInitState} from "entities/product";
 import {deleteProductByIdAsyncAction} from "features/products/actions/productsAsyncActions.ts";
@@ -96,6 +101,29 @@ const productsSlice = createSlice<ProductsInitState, SliceCaseReducers<ProductsI
                     }
                 )
                 .addCase(
+                    (addNewProductsStackAsyncAction.pending),
+                    (state) => {
+                        state.loading = true;
+                        state.error = null;
+                    }
+                )
+                .addCase(
+                    (addNewProductsStackAsyncAction.rejected),
+                    (state, action) => {
+                        state.loading = false;
+                        state.error = action.error.message as string;
+                    }
+                )
+                .addCase(
+                    (addNewProductsStackAsyncAction.fulfilled),
+                    (state, action) => {
+                        state.loading = false;
+                        state.error = null;
+                        if (state.products)
+                            state.products = [ ...state.products, ...action.payload ];
+                    }
+                )
+                .addCase(
                     (addNewStockEntryAsyncAction.pending),
                     (state) => {
                         state.loading = true;
@@ -161,9 +189,11 @@ const productsSlice = createSlice<ProductsInitState, SliceCaseReducers<ProductsI
                 .addCase(
                     (deleteProductByIdAsyncAction.fulfilled),
                     (state, action) => {
+                        console.log('DELETE PRO')
                         state.loading = false;
                         state.error = null;
-                        state.products = state.products?.filter(pr => pr.id !== action.payload);
+                        state.products = state.products?.filter((pr) => pr.id !== action.payload);
+                        // state.products = [];
                     }
                 )
                 .addCase(
@@ -183,6 +213,7 @@ const productsSlice = createSlice<ProductsInitState, SliceCaseReducers<ProductsI
                 .addCase(
                     (deleteStockEntryByIdAsyncAction.fulfilled),
                     (state, action) => {
+                        console.log('DELETE')
                         state.loading = false;
                         state.error = null;
                         state.stockEntries = state.stockEntries?.filter((pr) => pr.id !== action.payload);
