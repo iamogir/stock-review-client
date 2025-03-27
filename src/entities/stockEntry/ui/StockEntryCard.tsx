@@ -1,6 +1,7 @@
 import style from './stockEntryCard.module.css'
 import { StockEntry} from "entities/stockEntry";
-import { DeleteProductButton } from "features/products/deleteProductButton";
+import {DeleteTempProductButton} from "features/products/deleteTempProductButton";
+import {deleteStockEntryByIdAsyncAction} from "features/products";
 
 interface Props {
     stockEntry: StockEntry;
@@ -22,7 +23,8 @@ export const StockEntryCard = ({stockEntry}: Props) => {
                 <p className={style.temp}>Sell by: {dateExpiration.getDate()}/{dateExpiration.getUTCMonth() + 1}/{dateExpiration.getFullYear()}</p>
                 <p>Location: {stockEntry.storageLocation}</p>
                 <h3>Status: {stockEntry.productInfo?.status ? 'in stock' : 'out of stock'}</h3>
-                <DeleteProductButton id={stockEntry.id} entity={'entry'} />
+                {/*<DeleteProductButton id={stockEntry.id} entity={'entry'} />*/}
+                <DeleteTempProductButton index={stockEntry.id} deleteFunc={deleteStockEntryByIdAsyncAction}/>
                 <br/>
             </div>
     );

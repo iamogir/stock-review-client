@@ -1,27 +1,30 @@
 import {useDispatch} from "react-redux";
 import {AppDispatch} from "app/redux";
-import {
-    deleteStockEntryByIdAsyncAction,
-    deleteProductByIdAsyncAction
-} from "features/products";
+import {ActionCreatorWithPayload, AsyncThunk, isAsyncThunkAction} from "@reduxjs/toolkit";
 
-interface Props {
-    id: string | undefined;
-    entity: string
-}
+type AppAsyncThunk = AsyncThunk<string, string, { rejectValue: string }>;
 
-export const DeleteProductButton = ({id, entity}: Props) => {
+type Props =
+    {
+        index: number,
+        deleteFunc: ActionCreatorWithPayload<number> | AppAsyncThunk
+    }
+    | {
+        index: string,
+        deleteFunc: AppAsyncThunk;
+    }
+
+export const DeleteProductButton = ({index, deleteFunc}: Props) => {
 
     const dispatch = useDispatch<AppDispatch>();
 
     const func = () => {
-        if (id && entity === 'entry') {
-            dispatch(deleteStockEntryByIdAsyncAction(id));
+        if (isAsyncThunkAction(deleteFunc)) {
+            dispatch(deleteFunc(index as never));
+        } else {
+            dispatch(deleteFunc(index as never));
         }
-        if (id && entity === 'product') {
-            dispatch(deleteProductByIdAsyncAction(id));
-        }
-    }
+    };
 
     return (
         <div>
