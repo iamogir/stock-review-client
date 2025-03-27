@@ -120,9 +120,9 @@ export const deleteProductByIdAsyncAction = createAsyncThunk<string, string, { r
             });
 
             if (response.status === 200 || response.status === 204) {
-                const deletedId = await response.text();
-
-                return deletedId;
+                const deletedId = await response.json();
+                // console.log(deletedId);
+                return deletedId.id; //TODO: deleting all entries of deleting product
             } else {
                 throw new Error(response.statusText);
             }
