@@ -34,3 +34,8 @@ export type AddingProductsInitState = {
 export type ProductsResponse = {
     products: Product[] | null;
 }
+
+export type DeletedProductData = {
+    id: string,
+    count: number;
+}

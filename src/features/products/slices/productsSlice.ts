@@ -192,9 +192,7 @@ const productsSlice = createSlice<ProductsInitState, SliceCaseReducers<ProductsI
                         console.log('DELETE PRO')
                         state.loading = false;
                         state.error = null;
-                        console.log(state.products?.filter((pr) => pr.id !== action.payload))
                         state.products = state.products?.filter((pr) => pr.id !== action.payload);
-                        // state.products = [];
                     }
                 )
                 .addCase(
