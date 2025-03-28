@@ -23,7 +23,7 @@ export const StockEntryCard = ({stockEntry}: Props) => {
                 <p className={style.temp}>Sell by: {dateExpiration.getDate()}/{dateExpiration.getUTCMonth() + 1}/{dateExpiration.getFullYear()}</p>
                 <p>Location: {stockEntry.storageLocation}</p>
                 <h3>Status: {stockEntry.productInfo?.status ? 'in stock' : 'out of stock'}</h3>
-                <DeleteProductButton index={stockEntry.id} deleteFunc={deleteStockEntryByIdAsyncAction} />
+                <DeleteProductButton name={stockEntry.productInfo.name} index={stockEntry.id} deleteFunc={deleteStockEntryByIdAsyncAction} />
                 <br/>
             </div>
     );
