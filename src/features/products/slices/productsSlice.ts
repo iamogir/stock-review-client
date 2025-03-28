@@ -189,10 +189,9 @@ const productsSlice = createSlice<ProductsInitState, SliceCaseReducers<ProductsI
                 .addCase(
                     (deleteProductByIdAsyncAction.fulfilled),
                     (state, action) => {
-                        console.log('DELETE PRO')
                         state.loading = false;
                         state.error = null;
-                        state.products = state.products?.filter((pr) => pr.id !== action.payload);
+                        state.products = state.products?.filter((pr) => pr.id !== action.payload.id);
                     }
                 )
                 .addCase(

@@ -16,11 +16,14 @@ type Props =
 
 export const DeleteProductButton = ({index, deleteFunc}: Props) => {
 
+
     const dispatch = useDispatch<AppDispatch>();
 
-    const func = () => {
+    const func = async () => {
         if (isAsyncThunkAction(deleteFunc)) {
-            dispatch(deleteFunc(index as never));
+            const temp = await dispatch(deleteFunc(index as never));
+            alert('Were deleted ' + temp.payload.id + ' and ' + temp.payload.count + ' entries of supply');
+            // console.log(temp.payload?.(count as number) + ' TEMP');
         } else {
             dispatch(deleteFunc(index as never));
         }
