@@ -1,6 +1,12 @@
 import {DeletedProductData, Product, ProductDto, ProductsResponse} from "entities/product";
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {fromServerProductObject} from "entities/product";
+import {
+    getAllStockEntriesAsyncAction,
+    getExpiredProductsAsyncAction,
+    getExpiringSoonProductsAsyncAction
+} from "features/products";
+import {EXPIRING_SOON_DAYS} from "shared/consts";
 
 const API = import.meta.env.VITE_API_URL;
 
@@ -120,7 +126,19 @@ export const deleteProductByIdAsyncAction = createAsyncThunk<DeletedProductData,
             });
 
             if (response.status === 200 || response.status === 204) {
-                return await response.json();
+                const deletedData: DeletedProductData = await response.json();
+                try {
+                    await Promise.all([
+                        thunkAPI.dispatch(getAllStockEntriesAsyncAction()),
+                        thunkAPI.dispatch(getExpiredProductsAsyncAction()),
+                        thunkAPI.dispatch(getExpiringSoonProductsAsyncAction(EXPIRING_SOON_DAYS))
+                    ]);
+                } catch (error) {
+                    throw new Error(error instanceof Error ? error.message : 'Something went wrong');
+                }
+
+
+                return deletedData;
             } else {
                 throw new Error(response.statusText);
             }

@@ -1,6 +1,7 @@
 import {useDispatch} from "react-redux";
 import {AppDispatch} from "app/redux";
 import {ActionCreatorWithPayload, AsyncThunk, isAsyncThunkAction} from "@reduxjs/toolkit";
+import {DeletedProductData} from "entities/product";
 
 type AppAsyncThunk = AsyncThunk<string, string, { rejectValue: string }>;
 
@@ -23,7 +24,8 @@ export const DeleteProductButton = ({name, index, deleteFunc}: Props) => {
     const func = async () => {
         if (isAsyncThunkAction(deleteFunc)) {
             const response = await dispatch(deleteFunc(index as never));
-            alert('Were deleted: \n' + "product: " + name + '\nand ' + response.payload?.count + ' entries of supply');
+            const payload = response.payload as unknown as DeletedProductData;
+            alert('Were deleted: \n' + "product: " + name + '\nand ' + payload + ' entries of supply');
         } else {
             dispatch(deleteFunc(index as never));
         }
