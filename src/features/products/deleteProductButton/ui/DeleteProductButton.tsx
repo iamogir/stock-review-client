@@ -6,24 +6,25 @@ type AppAsyncThunk = AsyncThunk<string, string, { rejectValue: string }>;
 
 type Props =
     {
+        name: string,
         index: number,
         deleteFunc: ActionCreatorWithPayload<number> | AppAsyncThunk
     }
     | {
+        name: string,
         index: string,
         deleteFunc: AppAsyncThunk;
     }
 
-export const DeleteProductButton = ({index, deleteFunc}: Props) => {
-
+export const DeleteProductButton = ({name, index, deleteFunc}: Props) => {
 
     const dispatch = useDispatch<AppDispatch>();
 
     const func = async () => {
         if (isAsyncThunkAction(deleteFunc)) {
-            const temp = await dispatch(deleteFunc(index as never));
-            alert('Were deleted ' + temp.payload.id + ' and ' + temp.payload.count + ' entries of supply');
-            // console.log(temp.payload?.(count as number) + ' TEMP');
+            const response = await dispatch(deleteFunc(index as never));
+            setDeletedProduct();
+            alert('Were deleted ' + name + ' and ' + response.payload?.count + ' entries of supply');
         } else {
             dispatch(deleteFunc(index as never));
         }

@@ -44,7 +44,7 @@ export const AddProductPage = () => {
             <button onClick={() => navigate('/warehouse')}>To warehouse</button>
 
             <div>
-                {newProducts && newProducts.map((item, index) => <li>{item.name} <DeleteProductButton key={index} index={index} deleteFunc={removeOneProduct} /></li>)}
+                {newProducts && newProducts.map((item, index) => <li>{item.name} <DeleteProductButton key={index} name={item.name} index={index} deleteFunc={removeOneProduct} /></li>)}
             </div>
 
             <form className={style.form} onSubmit={addNewProduct}> {/*novalidate - disable browser validation*/}
