@@ -21,6 +21,7 @@ export const HomePage = () => {
     const {expiredProducts, expiringSoonProducts} = useSelector((state: RootState)=> state.filteredProducts)
 
     const currentDate = new Date(Date.now());
+    console.log(currentDate)
     const dateString = currentDate.getDate() + '/' + Number(currentDate.getMonth() + 1) + '/' + currentDate.getFullYear();
 
     useEffect(() => {
@@ -75,7 +76,11 @@ export const HomePage = () => {
                 </div>
                 <div>
                     <h2>Expiring today:</h2>
-
+                    {expiredProducts && expiredProducts.length > 0 ? expiredProducts.map((pr: StockEntry) =>
+                            (new Date(pr.expirationDate).getFullYear() === currentDate.getFullYear() &&
+                                new Date(pr.expirationDate).getMonth() === currentDate.getMonth() &&
+                                    new Date(pr.expirationDate).getDate() === currentDate.getDate()) ? <StockEntryCard key={pr.id + '_exp'} stockEntry={pr}/> : <></>) :
+                    <p>No expired products for next {EXPIRING_SOON_DAYS} days. Great job!</p>}
                 </div>
             </div>
         </div>
