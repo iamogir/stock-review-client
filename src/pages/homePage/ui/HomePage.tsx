@@ -73,6 +73,10 @@ export const HomePage = () => {
                     {expiringSoonProducts && expiringSoonProducts.length > 0 ? expiringSoonProducts.map((pr: StockEntry) => <StockEntryCard key={pr.id + '_exp'} stockEntry={pr}/>) :
                     <p>No expired products for next {EXPIRING_SOON_DAYS} days. Great job!</p>}
                 </div>
+                <div>
+                    <h2>Expiring today:</h2>
+
+                </div>
             </div>
         </div>
     );
