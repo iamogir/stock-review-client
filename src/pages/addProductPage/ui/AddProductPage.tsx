@@ -24,7 +24,7 @@ export const AddProductPage = () => {
             brand: eventTarget['brand'].value,
             category: eventTarget['category'].value,
             unitWeight: eventTarget['unitWeight'].value,
-            status: eventTarget['status'].value
+            status: false
         };
 
         dispatch(addProduct(fromServerProductObject(infoObject)));
@@ -61,8 +61,8 @@ export const AddProductPage = () => {
                 <label htmlFor={'unitWeight'}>Unit of the weight</label>
                 <DropMenu inputId={'unitWeight'} variables={weightUnits ?? []} unit={'key'} value={'value'}/>
 
-                <label htmlFor={'status'}>Status</label>
-                <DropMenu inputId={'status'} variables={statusUnits ?? []} unit={'key'} value={'value'}/>
+                {/*<label htmlFor={'status'}>Status</label>*/}
+                {/*<DropMenu inputId={'status'} variables={statusUnits ?? []} unit={'key'} value={'value'}/>*/}
 
                 <br/>
                 <button>
