@@ -80,7 +80,7 @@ export const HomePage = () => {
                             (new Date(pr.expirationDate).getFullYear() === currentDate.getFullYear() &&
                                 new Date(pr.expirationDate).getMonth() === currentDate.getMonth() &&
                                     new Date(pr.expirationDate).getDate() === currentDate.getDate()) ? <StockEntryCard key={pr.id + '_exp'} stockEntry={pr}/> : <></>) :
-                    <p>No expired products for next {EXPIRING_SOON_DAYS} days. Great job!</p>}
+                    <p>No expired products today. Great job!</p>}
                 </div>
             </div>
         </div>
