@@ -1,7 +1,6 @@
 import {useDispatch} from "react-redux";
 import {AppDispatch} from "app/redux";
 import {ActionCreatorWithPayload, AsyncThunk, isAsyncThunkAction} from "@reduxjs/toolkit";
-import {DeletedProductData} from "entities/product";
 
 type AppAsyncThunk = AsyncThunk<string, string, { rejectValue: string }>;
 
