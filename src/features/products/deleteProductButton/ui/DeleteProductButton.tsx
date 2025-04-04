@@ -23,9 +23,8 @@ export const DeleteProductButton = ({name, index, deleteFunc}: Props) => {
 
     const func = async () => {
         if (isAsyncThunkAction(deleteFunc)) {
-            const response = await dispatch(deleteFunc(index as never));
-            const payload = response.payload as unknown as DeletedProductData;
-            alert('Were deleted: \n' + "product: " + name + '\nand ' + payload.count + ' entries of supply');
+            await dispatch(deleteFunc(index as never));
+            alert('Was deleted product: ' + name);
         } else {
             dispatch(deleteFunc(index as never));
         }

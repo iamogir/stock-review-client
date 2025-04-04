@@ -1,4 +1,4 @@
-import {DeletedProductData, Product, ProductDto, ProductsResponse} from "entities/product";
+import {Product, ProductDto, ProductsResponse} from "entities/product";
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {fromServerProductObject} from "entities/product";
 import {
@@ -113,9 +113,9 @@ export const addNewProductsStackAsyncAction = createAsyncThunk<Product[], Produc
     }
 )
 
-export const deleteProductByIdAsyncAction = createAsyncThunk<DeletedProductData, string, { rejectValue: string }>(
+export const deleteProductByIdAsyncAction = createAsyncThunk<string, string, { rejectValue: string }>(
     'product/delete_product_by_id',
-    async (id: string, thunkAPI): Promise<DeletedProductData | ReturnType<typeof thunkAPI.rejectWithValue>> => {
+    async (id: string, thunkAPI): Promise<string | ReturnType<typeof thunkAPI.rejectWithValue>> => {
         try {
             if (id === '')
                 throw new Error('NO ID !!!')
@@ -126,7 +126,7 @@ export const deleteProductByIdAsyncAction = createAsyncThunk<DeletedProductData,
             });
 
             if (response.status === 200 || response.status === 204) {
-                const deletedData: DeletedProductData = await response.json();
+                const deletedId: string = await response.json();
                 try {
                     await Promise.all([
                         thunkAPI.dispatch(getAllStockEntriesAsyncAction()),
@@ -138,7 +138,7 @@ export const deleteProductByIdAsyncAction = createAsyncThunk<DeletedProductData,
                 }
 
 
-                return deletedData;
+                return deletedId;
             } else {
                 throw new Error(response.statusText);
             }
