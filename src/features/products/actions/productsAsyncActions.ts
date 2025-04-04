@@ -126,7 +126,8 @@ export const deleteProductByIdAsyncAction = createAsyncThunk<string, string, { r
             });
 
             if (response.status === 200 || response.status === 204) {
-                const deletedId: string = await response.json();
+                const deletedId = await response.text();
+                console.log(deletedId);
                 try {
                     await Promise.all([
                         thunkAPI.dispatch(getAllStockEntriesAsyncAction()),

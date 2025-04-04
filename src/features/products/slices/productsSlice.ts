@@ -70,7 +70,7 @@ const productsSlice = createSlice<ProductsInitState, SliceCaseReducers<ProductsI
                         state.loading = false;
                         // state.products ??= [];
                         if (action.payload.stockEntries)
-                            state.stockEntries =  [ ...action.payload.stockEntries ];
+                            state.stockEntries = [...action.payload.stockEntries];
                     }
                 )
                 .addCase(
@@ -191,7 +191,7 @@ const productsSlice = createSlice<ProductsInitState, SliceCaseReducers<ProductsI
                     (state, action) => {
                         state.loading = false;
                         state.error = null;
-                        state.products = state.products?.filter((pr) => pr.id !== action.payload.id);
+                        state.products = state.products?.filter((pr) => pr.id !== action.payload);
                     }
                 )
                 .addCase(
