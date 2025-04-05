@@ -6,3 +6,7 @@
 .expProducts {
     display: flex;
 }
+
+.all {
+    display: flex;
+}

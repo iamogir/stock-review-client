@@ -22,7 +22,7 @@ export const WarehousePage = () => {
         <div>
             <button onClick={() => navigate('/home')}>Home</button>
             <button onClick={() => navigate("/add_product")}>add product</button>
-            <button onClick={() => navigate('/add_stock_entry')}>add stock entry</button>
+            <button onClick={() => navigate("/add_new_supply")}>add new supply</button>
             <h2>All products in stock</h2>
             {products && products.length > 0 ? products?.filter(pr => pr.status).map((pr: Product) =>
                     <ProductCard product={pr} key={pr.name}/>) :

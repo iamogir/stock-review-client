@@ -1,5 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import { StockEntry, StockEntryDto, StockEntryResponse} from "entities/product";
+import { StockEntry, StockEntryDto, StockEntryResponse} from "entities/stockEntry";
 import {fromServerStockEntryObject} from "entities/stockEntry";
 import {checkAvailabilityProducts} from "shared/lib";
 import {RootState} from "app/redux";
@@ -49,10 +49,11 @@ export const getExpiringSoonProductsAsyncAction = createAsyncThunk<StockEntryRes
         try {
             const state = thunkAPI.getState() as RootState;
             const productsArr = checkAvailabilityProducts(state);
-            const expiredProductsSoonArr = state.filteredProducts.expiringSoonProducts;
-            if (expiredProductsSoonArr && expiredProductsSoonArr.length > 0) {
-                throw new Error('Expired soon products already loaded')
-            }
+            // const expiredProductsSoonArr = state.filteredProducts.expiringSoonProducts;
+            // console.log(expiredProductsSoonArr && expiredProductsSoonArr.length > 0)
+            // if (expiredProductsSoonArr && expiredProductsSoonArr.length > 0) {
+            //     throw new Error('Expired soon products already loaded')
+            // }
 
             console.log('Get All Expired Soon Loading')
 

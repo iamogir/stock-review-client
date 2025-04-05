@@ -1,41 +1,34 @@
-import {useDispatch} from "react-redux";
+import style from './deleteTempProductButton.module.css'
 import {AppDispatch} from "app/redux";
+import {useDispatch} from "react-redux";
 import {ActionCreatorWithPayload, AsyncThunk, isAsyncThunkAction} from "@reduxjs/toolkit";
 
 type AppAsyncThunk = AsyncThunk<string, string, { rejectValue: string }>;
 
 type Props =
     {
-        name: string,
         index: number,
         deleteFunc: ActionCreatorWithPayload<number> | AppAsyncThunk
     }
     | {
-        name: string,
         index: string,
         deleteFunc: AppAsyncThunk;
     }
-
-export const DeleteProductButton = ({name, index, deleteFunc}: Props) => {
+//TODO COMPONENT IN RESERVATION!!!
+export const DeleteTempProductButton = ({ index, deleteFunc }: Props) => {
 
     const dispatch = useDispatch<AppDispatch>();
 
-    const func = async () => {
+    const func = () => {
         if (isAsyncThunkAction(deleteFunc)) {
-            const answer = confirm('Are you sure?');
-            if (answer) {
-                await dispatch(deleteFunc(index as never));
-                alert('Was deleted product: ' + name);
-            }
+            dispatch(deleteFunc(index as never));
         } else {
             dispatch(deleteFunc(index as never));
         }
     };
 
     return (
-        <div>
-            <button onClick={func}>Delete</button>
-            <button>DELETE WITH SELECT??</button>
-        </div>
+        <button className={style.color} onClick={func}>Delete</button>
+
     );
 };

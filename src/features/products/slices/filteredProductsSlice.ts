@@ -1,10 +1,9 @@
-import {FilteredProductsInitState} from "entities/product";
+import {FilteredProductsInitState} from "entities/stockEntry";
 import {createSlice, SliceCaseReducers, SliceSelectors} from "@reduxjs/toolkit";
 import {
     getExpiredProductsAsyncAction,
     getExpiringSoonProductsAsyncAction
 } from "features/products";
-import {StockEntry} from "entities/stockEntry";
 
 const initialState: FilteredProductsInitState = {
     expiredProducts: [],
@@ -17,11 +16,7 @@ const filteredProductsSlice = createSlice<FilteredProductsInitState, SliceCaseRe
     {
         name: 'filteredProducts',
         initialState,
-        reducers: {
-            updateExpiredProducts: (state, action) => {
-                state.expiredProducts = state.expiredProducts.filter((pr: StockEntry) => pr.id !== action.payload);
-            }
-        },
+        reducers: {},
         extraReducers: (builder) => {
             builder
                 .addCase(
@@ -77,5 +72,4 @@ const filteredProductsSlice = createSlice<FilteredProductsInitState, SliceCaseRe
     }
 )
 
-export const { updateExpiredProducts } = filteredProductsSlice.actions;
 export default filteredProductsSlice.reducer;

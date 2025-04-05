@@ -1,17 +1,20 @@
 import style from './addNewSupplyPage.module.css'
 import {useNavigate} from "react-router-dom";
 import {FormEvent} from "react";
-import {StockEntryDto} from "entities/stockEntry";
-import {addNewStockEntryAsyncAction} from "features/products";
+import {fromServerStockEntryObject, StockEntryDto} from "entities/stockEntry";
+import {addEntry, removeAllEntries, removeOneEntry} from "features/products";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "app/redux";
 import {DropMenu} from "shared/ui/dropMenu";
+import {addNewEntriesStackAsyncAction} from "features/products/actions/stockEntriesAsyncActions.ts";
+import {DeleteProductButton} from "features/products/deleteProductButton";
 
 export const AddNewSupplyPage = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
     const { products } = useSelector((state: RootState) => state.products);
+    const { newEntries } = useSelector((state: RootState) => state.addingProducts);
 
     const addSupply = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -30,15 +33,28 @@ export const AddNewSupplyPage = () => {
         if (barcode && barcode.length > 0 && barcode !== '')
             infoObject.barcode = barcode;
 
-        console.log(eventTarget['expDate'].value);
+        if (products) {
+            const object = fromServerStockEntryObject(infoObject, products);
+            dispatch(addEntry(object));
+        }
+    }
 
-        dispatch(addNewStockEntryAsyncAction(infoObject));
+    const sentNewSupplies = async() => {
+        if (newEntries) {
+            const temp = await dispatch(addNewEntriesStackAsyncAction(newEntries));
+            if (temp.type.includes('fulfilled')) //TODO request status remove
+                dispatch(removeAllEntries());
+        }
     }
 
     return (
         <div>
             <button onClick={() => navigate('/home')}>Home</button>
             <button onClick={() => navigate('/warehouse')}>To warehouse</button>
+
+            <div>
+                {newEntries && newEntries.map((item, index) => <li>{item.productInfo?.name} <DeleteProductButton key={index} name={item.productInfo?.name} index={index} deleteFunc={removeOneEntry} /></li>)}
+            </div>
 
             <form className={style.form} onSubmit={addSupply}>
 
@@ -68,6 +84,7 @@ export const AddNewSupplyPage = () => {
                     <input type="submit" style={{display: 'none'}}/>
                 </button>
             </form>
+            <button onClick={sentNewSupplies}>SEND</button>
 
         </div>
     );

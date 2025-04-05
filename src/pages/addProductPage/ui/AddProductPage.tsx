@@ -1,19 +1,22 @@
 import style from './addProductPage.module.css'
 import {FormEvent} from "react";
-import {ProductDto} from "entities/product";
-import {useDispatch} from "react-redux";
-import {AppDispatch} from "app/redux";
+import {fromServerProductObject, ProductDto} from "entities/product";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, RootState} from "app/redux";
 import {useNavigate} from "react-router-dom";
 import {statusUnits, weightUnits} from "shared/consts";
-import {addNewProductAsyncAction} from "features/products";
+import {addNewProductsStackAsyncAction, addProduct, removeAllProducts, removeOneProduct} from "features/products";
 import {DropMenu} from "shared/ui/dropMenu";
+import {DeleteTempProductButton} from "features/products/deleteTempProductButton";
+import {DeleteProductButton} from "features/products/deleteProductButton";
 
 export const AddProductPage = () => {
 
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
+    const { newProducts } = useSelector((state: RootState) => state.addingProducts);
 
-    const addProduct = (event: FormEvent<HTMLFormElement>) => {
+    const addNewProduct = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const eventTarget = event.target as HTMLFormElement;
         const infoObject: ProductDto = {
@@ -21,17 +24,30 @@ export const AddProductPage = () => {
             brand: eventTarget['brand'].value,
             category: eventTarget['category'].value,
             unitWeight: eventTarget['unitWeight'].value,
-            status: eventTarget['status'].value
+            status: false
         };
 
-        dispatch(addNewProductAsyncAction(infoObject));
+        dispatch(addProduct(fromServerProductObject(infoObject)));
+    }
+
+    const sentNewProducts = async() => {
+        if (newProducts) {
+            const temp = await dispatch(addNewProductsStackAsyncAction(newProducts));
+            if (temp.type.includes('fulfilled')) //TODO request status remove
+                dispatch(removeAllProducts());
+        }
     }
 
     return (
         <div>
             <button onClick={() => navigate('/home')}>Home</button>
             <button onClick={() => navigate('/warehouse')}>To warehouse</button>
-            <form className={style.form} onSubmit={addProduct}> {/*novalidate - disable browser validation*/}
+
+            <div>
+                {newProducts && newProducts.map((item, index) => <li>{item.name} <DeleteProductButton key={index} name={item.name} index={index} deleteFunc={removeOneProduct} /></li>)}
+            </div>
+
+            <form className={style.form} onSubmit={addNewProduct}> {/*novalidate - disable browser validation*/}
 
                 <label htmlFor={'productName'}>Name</label>
                 <input type={'text'} id={'productName'} name={'productName'} />
@@ -45,8 +61,8 @@ export const AddProductPage = () => {
                 <label htmlFor={'unitWeight'}>Unit of the weight</label>
                 <DropMenu inputId={'unitWeight'} variables={weightUnits ?? []} unit={'key'} value={'value'}/>
 
-                <label htmlFor={'status'}>Status</label>
-                <DropMenu inputId={'status'} variables={statusUnits ?? []} unit={'key'} value={'value'}/>
+                {/*<label htmlFor={'status'}>Status</label>*/}
+                {/*<DropMenu inputId={'status'} variables={statusUnits ?? []} unit={'key'} value={'value'}/>*/}
 
                 <br/>
                 <button>
@@ -54,6 +70,7 @@ export const AddProductPage = () => {
                     <input type="submit" style={{display: 'none'}}/>
                 </button>
             </form>
+            <button onClick={sentNewProducts}>SEND</button>
 
         </div>
     );

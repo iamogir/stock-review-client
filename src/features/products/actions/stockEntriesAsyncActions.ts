@@ -1,8 +1,13 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import { StockEntry, StockEntryDto, StockEntryResponse} from "entities/stockEntry";
+import {StockEntry, StockEntryDto, StockEntryResponse, toStockEntryDto} from "entities/stockEntry";
 import {fromServerStockEntryObject} from "entities/stockEntry";
 import {checkAvailabilityProducts} from 'shared/lib';
 import {RootState} from "app/redux";
+import {
+    getExpiringSoonProductsAsyncAction,
+    getExpiredProductsAsyncAction
+} from "features/products";
+import {EXPIRING_SOON_DAYS} from "shared/consts";
 
 const API = import.meta.env.VITE_API_URL;
 
@@ -74,6 +79,47 @@ export const addNewStockEntryAsyncAction = createAsyncThunk<StockEntry, StockEnt
     }
 )
 
+export const addNewEntriesStackAsyncAction = createAsyncThunk<StockEntry[], StockEntry[], { rejectValue: string}>(
+    'stock_entry/add_new_entries_stack',
+    async(newEntriesArr: StockEntry[], thunkAPI): Promise<StockEntry[] | ReturnType<typeof thunkAPI.rejectWithValue>> => {
+        try {
+            const productsArr = checkAvailabilityProducts(thunkAPI.getState() as RootState);
+            const dtoArray = newEntriesArr.map(en => toStockEntryDto(en));
+
+            const response = await fetch(API + 'stock_entries/add_new_entries_stack', {
+                method: "POST",
+                headers: { "Content-Type": "application/json"},
+                body: JSON.stringify(dtoArray),
+            })
+
+            if (response.status === 201) {
+                const json = await response.json();
+                const returnedArray: StockEntry[] = json.map((en: StockEntryDto) => fromServerStockEntryObject(en, productsArr));
+
+                if (returnedArray.length === 0) {
+                    throw new Error("No data " + response.statusText);
+                } else {
+                    await Promise.all([
+                        thunkAPI.dispatch(getExpiringSoonProductsAsyncAction(EXPIRING_SOON_DAYS)),
+                        thunkAPI.dispatch(getExpiredProductsAsyncAction())
+                    ])
+                    return returnedArray;
+                }
+            } else {
+                throw new Error(response.statusText);
+            }
+
+        } catch (error) {
+            console.log('add_new_entries_stack', error);
+            return thunkAPI.rejectWithValue(
+                error instanceof Error ? error.message : 'Something went wrong'
+            );
+        }
+
+    }
+
+)
+
 export const deleteStockEntryByIdAsyncAction = createAsyncThunk<string, string, { rejectValue: string }>(
     'stock_entry/delete_stock_entry_by_id',
     async(id: string, thunkAPI): Promise<string | ReturnType<typeof thunkAPI.rejectWithValue>> => {
@@ -86,8 +132,12 @@ export const deleteStockEntryByIdAsyncAction = createAsyncThunk<string, string, 
                 headers: { "Content-Type": "text/plain"}
             });
             if (response.status === 200 || response.status === 204) {
-                const text = await response.text();
-                return text;
+                const deletedId = await response.text();
+                await Promise.all([
+                    thunkAPI.dispatch(getExpiringSoonProductsAsyncAction(EXPIRING_SOON_DAYS)),
+                    thunkAPI.dispatch(getExpiredProductsAsyncAction())
+                ])
+                return deletedId;
             } else {
                 throw new Error(response.statusText);
             }
